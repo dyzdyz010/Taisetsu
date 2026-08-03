@@ -39,6 +39,11 @@ jobs:
           xcodegen generate
           git diff --exit-code -- LifeTimer.xcodeproj LifeTimer/Info.plist LifeTimer/LifeTimer.entitlements LifeTimerWidget/Info.plist LifeTimerWidget/LifeTimerWidget.entitlements
 
+      - name: Check localization completeness and drift
+        run: |
+          swift scripts/generate-localizations.swift --check
+          bash scripts/localization-check.sh
+
       - name: Lint Swift formatting
         run: xcrun swift-format lint --recursive LifeTimer LifeTimerCore LifeTimerWidget LifeTimerTests LifeTimerUITests
 
@@ -84,11 +89,17 @@ jobs:
       - name: Generate project
         run: xcodegen generate
 
+      - name: Check localization completeness and drift
+        run: |
+          swift scripts/generate-localizations.swift --check
+          bash scripts/localization-check.sh
+
       - name: Run editor smoke flows
         run: |
           LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
             -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState \
-            -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls
+            -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
+            -only-testing:LifeTimerUITests/LifeTimerUITests/testLaunchesWithEnglishLocalization
 
       - name: Upload UI failure evidence
         if: failure()

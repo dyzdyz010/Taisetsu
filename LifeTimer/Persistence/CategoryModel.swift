@@ -24,3 +24,10 @@ final class CategoryModel {
         self.sortOrder = sortOrder
     }
 }
+
+extension CategoryModel {
+    @MainActor
+    func displayName(locale: Locale = .current) -> String {
+        DefaultCategorySeeder.localizedName(for: id, locale: locale) ?? name
+    }
+}

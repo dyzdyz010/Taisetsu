@@ -1,6 +1,8 @@
-# LifeTimer · 生命倒计时
+# Taisetsu · Important Days
 
-LifeTimer 是一个原生 iPhone / iPad 纪念日应用：记录值得期待或回望的日期，支持公历、农历、自定义周期、多提醒、分类与自由标签，并在桌面小组件中自动展示最近的事件。
+Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或回望的日期，支持公历、农历、自定义周期、多提醒、分类与自由标签，并在桌面小组件中自动展示最近的事件。
+
+**Keep the days that matter close.** / **把重要的日子，放在心上。**
 
 ## 功能
 
@@ -12,10 +14,12 @@ LifeTimer 是一个原生 iPhone / iPad 纪念日应用：记录值得期待或�
 - 全天或精确到时分；倒计时、正计时或同时显示
 - 每个纪念日可配置多个本地提醒
 - 月历视图与系统日历单向导出
-- 再次导出会更新原系统日历事件；只导出由 LifeTimer 计算出的下一次日期
+- 再次导出会更新原系统日历事件；只导出由 Taisetsu 计算出的下一次日期
 - WidgetKit 小、中、大组件分别显示 1、4、5 个最近事件
 - SwiftData 本地优先存储，可连接用户私人 CloudKit
-- 简体中文界面、深色模式、动态字体和 VoiceOver 语义
+- 英语、简体中文、繁体中文、日语、韩语、西班牙语、法语、德语、巴西葡萄牙语、意大利语和阿拉伯语
+- 区域化日期顺序、星期起始日、相对时间和周期表达
+- 深色模式、动态字体、VoiceOver 语义和阿拉伯语从右到左布局
 
 ## 技术结构
 
@@ -24,6 +28,8 @@ LifeTimerCore   日期/周期、排序筛选、小组件快照（无 UI、可独
 LifeTimer       SwiftUI、SwiftData、通知、EventKit、应用协调
 LifeTimerWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
 ```
+
+`Taisetsu` 是所有语言地区统一使用的公开品牌名。现有的 `LifeTimer` target、bundle identifier、App Group、CloudKit 容器及持久化标识属于兼容性边界，不随品牌名改动。
 
 `OccurrenceCalculator` 是原始日期、上一/下一次、已过/剩余时间的唯一来源。通知、系统日历、首页、月历和小组件不会各自实现一套日期规则。
 
@@ -51,7 +57,7 @@ open LifeTimer.xcodeproj
 ## 验证
 
 ```bash
-# 工程漂移、格式、无签名构建、27 个单元测试、Core 覆盖率门槛
+# 本地化、工程漂移、格式、无签名构建、单元测试和 Core 覆盖率门槛
 bash scripts/verify.sh
 
 # 额外执行新增纪念日 UI 流程
@@ -61,6 +67,7 @@ LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/verify.sh
 CI 使用 GitHub `macos-26` + Xcode 26.6，包含：
 
 - XcodeGen 生成结果漂移检查
+- 11 个语言地区的 String Catalog 完整性与生成结果漂移检查
 - `swift-format` lint
 - App + Core + Widget 无签名构建
 - 单元测试与 `xcresult` 证据
@@ -71,7 +78,9 @@ CI 使用 GitHub `macos-26` + Xcode 26.6，包含：
 
 ## 数据与隐私
 
-LifeTimer 没有自建服务器或账户系统。纪念日保存在设备与用户私人 iCloud 数据库中；小组件只读取 App Group 内的最小展示快照。日历导出和通知权限只在对应功能需要时请求。
+Taisetsu 没有自建服务器或账户系统。重要日保存在设备与用户私人 iCloud 数据库中；小组件只读取 App Group 内的最小展示快照。日历导出和通知权限只在对应功能需要时请求。
+
+品牌与本地化维护规则见 [docs/brand-localization.md](docs/brand-localization.md)。
 
 ## 许可证
 

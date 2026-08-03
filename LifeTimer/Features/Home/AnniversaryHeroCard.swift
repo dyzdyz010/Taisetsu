@@ -2,27 +2,33 @@ import LifeTimerCore
 import SwiftUI
 
 struct AnniversaryHeroCard: View {
+    @Environment(\.locale) private var locale
     let presentation: AnniversaryPresentation
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 Label(
-                    presentation.record.category?.name ?? "最近纪念日",
+                    presentation.record.category?.name
+                        ?? AppLocalization.string("Nearest Important Day", locale: locale),
                     systemImage: presentation.record.category?.symbolName ?? "calendar"
                 )
                 .font(.subheadline.weight(.semibold))
                 Spacer()
                 if presentation.record.isPinned {
                     Image(systemName: "pin.fill")
-                        .accessibilityLabel("已置顶")
+                        .accessibilityLabel("Pinned")
                 }
             }
             Text(presentation.record.title)
                 .font(.title2.weight(.bold))
                 .lineLimit(2)
             Text(
-                AnniversaryFormatters.relative(presentation.occurrence, mode: presentation.record.displayMode)
+                AnniversaryFormatters.relative(
+                    presentation.occurrence,
+                    mode: presentation.record.displayMode,
+                    locale: locale
+                )
             )
             .font(.system(.largeTitle, design: .rounded, weight: .bold))
             .minimumScaleFactor(0.65)

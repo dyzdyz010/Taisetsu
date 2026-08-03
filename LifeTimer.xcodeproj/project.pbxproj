@@ -18,7 +18,9 @@
 		2D4A244971EFE68CF16C408C /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3772CE469445A72DC3DA0E63 /* ReminderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EA84A82AE50F112973B74E /* ReminderSchedulerTests.swift */; };
 		39C4BDD8509327F88B73E585 /* LifeTimerWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A467C7CFD4D1A2A5E35E835 /* LifeTimerWidgetView.swift */; };
+		3BC1A76F60E90B195F8F7016 /* AppLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F223EAE44734C4510CFA79 /* AppLocalization.swift */; };
 		40ED39D8BA434AED9E0C2DE2 /* WidgetSnapshotStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E4ED038D914D6B6D530DB6 /* WidgetSnapshotStoreTests.swift */; };
+		46BA95D08584CE01272DE03A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = FD2392B7BA1505AAA404245B /* Localizable.xcstrings */; };
 		46D5043AB8FC1FB176E79C13 /* ReminderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1992795A1E55EFFE05BF561C /* ReminderSection.swift */; };
 		48FA6F84AD328714A2309DE8 /* NotificationCenterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C944B6B7B3C1A43823D68E48 /* NotificationCenterClient.swift */; };
 		52FA98E689055D8999B6A7EF /* AnniversaryFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6640860668D8BF24E9121DF /* AnniversaryFormatters.swift */; };
@@ -63,6 +65,7 @@
 		C825231BF27A961E67A3A284 /* AnniversaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2F6594D4EEE2C4CA6EF7F /* AnniversaryRow.swift */; };
 		CBF5BD57B3AF668ED85C0C47 /* OccurrenceCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */; };
 		CD7C3B221E09A13FC53871B8 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982B1E27E57CCD9825FC6D8E /* CategoryModel.swift */; };
+		CDA1BC08252D6F641CF07E15 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 22683494B52D995949299B3F /* InfoPlist.xcstrings */; };
 		CFE656D5E7EC655AA4620305 /* LifeTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */; };
 		D327FD4ADC4512454FE578A7 /* AnniversaryHeroCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7BAE0883C45F274BBBA0C3 /* AnniversaryHeroCard.swift */; };
 		D46EBEA051BFA6B520076536 /* AnniversaryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982811843A3A7557FFA0DC4 /* AnniversaryRecord.swift */; };
@@ -72,6 +75,7 @@
 		E610D4C97BB019B501510B2C /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A50848DD6D0A2CCBB64F92 /* AppRootView.swift */; };
 		EB8DF33018D3AB39A7341D8C /* AnniversaryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D4DA72788BDFDFA28A43D /* AnniversaryDraft.swift */; };
 		ECA14EFDB0942DC2E547733B /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		EF48877D6EB95B69E76FE78C /* AppLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD7541E958DC199D45595E6 /* AppLocalizationTests.swift */; };
 		F109BCC8F0DDA4339A1237AF /* CategoryTagManagementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C96A6A16AE13EBE08E3319 /* CategoryTagManagementTests.swift */; };
 		F1930C01DD298AFB44B703AE /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */; };
 		F3573540A2CA780778D6A572 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB2A5F994F153B3D63561 /* WidgetSnapshot.swift */; };
@@ -169,6 +173,7 @@
 		070D465A0244F0A252EFEAFE /* CalendarExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportServiceTests.swift; sourceTree = "<group>"; };
 		07C96A6A16AE13EBE08E3319 /* CategoryTagManagementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTagManagementTests.swift; sourceTree = "<group>"; };
 		088934527EB9ADE4EBC118D8 /* CategoryManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManagerView.swift; sourceTree = "<group>"; };
+		09F223EAE44734C4510CFA79 /* AppLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocalization.swift; sourceTree = "<group>"; };
 		0B0F10A2813F5034A0EA67F3 /* RecurrenceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceSection.swift; sourceTree = "<group>"; };
 		14F2F6594D4EEE2C4CA6EF7F /* AnniversaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRow.swift; sourceTree = "<group>"; };
 		18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -176,6 +181,7 @@
 		1A3108D2B92ACB44B34859AB /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		1FA13FDB71650B7CD8879A25 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		20B5A7100CA19E4C6C0E296F /* AnniversaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRepository.swift; sourceTree = "<group>"; };
+		22683494B52D995949299B3F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		2D6A41F59175F9035F663664 /* LifeTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LifeTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35198379499AB2B16A0611E1 /* ReconciliationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconciliationCoordinator.swift; sourceTree = "<group>"; };
 		369C118B98D35A3F7D8D75BD /* CategoryTagSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTagSection.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 		773256362E630F2CD7D97BBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Occurrence.swift; sourceTree = "<group>"; };
 		787C7F1171FB2BDE84F3860D /* AnniversaryFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilterTests.swift; sourceTree = "<group>"; };
+		7AD7541E958DC199D45595E6 /* AppLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocalizationTests.swift; sourceTree = "<group>"; };
 		8ADC35A0855F3539BF95692D /* CalendarExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportService.swift; sourceTree = "<group>"; };
 		8E142E179D47685B6138C8E5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		94D26F997E10A8EDAE1BFEDC /* AnniversaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryModel.swift; sourceTree = "<group>"; };
@@ -239,6 +246,7 @@
 		F93CE3712D30C454453363B4 /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
 		FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSpec.swift; sourceTree = "<group>"; };
 		FC59F58F4DDD3D6597522309 /* DateRuleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRuleSection.swift; sourceTree = "<group>"; };
+		FD2392B7BA1505AAA404245B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidgetBundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -293,6 +301,7 @@
 				787C7F1171FB2BDE84F3860D /* AnniversaryFilterTests.swift */,
 				4D240EF1BC8985FDFABB7A72 /* AnniversaryOrderingTests.swift */,
 				F4D4DDD035497E9D147EA1E7 /* AnniversaryRepositoryTests.swift */,
+				7AD7541E958DC199D45595E6 /* AppLocalizationTests.swift */,
 				070D465A0244F0A252EFEAFE /* CalendarExportServiceTests.swift */,
 				07C96A6A16AE13EBE08E3319 /* CategoryTagManagementTests.swift */,
 				F553BB7AADD0F7AD06D6F095 /* DefaultCategorySeederTests.swift */,
@@ -421,7 +430,16 @@
 		B1E385876FCCD39CF925CD0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				22683494B52D995949299B3F /* InfoPlist.xcstrings */,
 				59CFCB5EBBE172E560AA7454 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BCF24D859B01AD169F72DCC2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FD2392B7BA1505AAA404245B /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -452,6 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				B6640860668D8BF24E9121DF /* AnniversaryFormatters.swift */,
+				09F223EAE44734C4510CFA79 /* AppLocalization.swift */,
 				E1CE3F3A2DB5DC232818FDEC /* CategoryStyle.swift */,
 			);
 			path = Shared;
@@ -518,6 +537,7 @@
 		EB1132705ED83C9DB92E4409 /* LifeTimerWidget */ = {
 			isa = PBXGroup;
 			children = (
+				BCF24D859B01AD169F72DCC2 /* Resources */,
 				773256362E630F2CD7D97BBF /* Info.plist */,
 				3FBFF3C8A44DB767BBD9E4C8 /* LifeTimerWidget.entitlements */,
 				A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */,
@@ -557,6 +577,7 @@
 			buildConfigurationList = 2232EDE21FB7DE6A5F663B51 /* Build configuration list for PBXNativeTarget "LifeTimerWidget" */;
 			buildPhases = (
 				0D954E38C224DDA23F4C0166 /* Sources */,
+				CB5DC0F643E5305742C15A31 /* Resources */,
 				C931715D2435AD7DDC78358D /* Frameworks */,
 			);
 			buildRules = (
@@ -641,14 +662,27 @@
 					9EB66313BDE179A56CFAEE18 = {
 						TestTargetID = A73E3BAA561886C49D66BEEA;
 					};
+					A73E3BAA561886C49D66BEEA = {
+						DevelopmentTeam = 98GGXKMU33;
+					};
 				};
 			};
 			buildConfigurationList = DAA76078E646DCA73841CD8C /* Build configuration list for PBXProject "LifeTimer" */;
-			developmentRegion = "zh-Hans";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				ar,
+				de,
+				en,
+				es,
+				fr,
+				it,
+				ja,
+				ko,
+				"pt-BR",
 				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 96D0922BA4DD9B271D63A2A6;
 			minimizedProjectReferenceProxies = 1;
@@ -672,8 +706,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B612D355556CAB455D11D697 /* Assets.xcassets in Resources */,
+				CDA1BC08252D6F641CF07E15 /* InfoPlist.xcstrings in Resources */,
 				FB9970261EB37C38F2CF5D4A /* Localizable.xcstrings in Resources */,
 				023B9CD8F22C997B82581344 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB5DC0F643E5305742C15A31 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46BA95D08584CE01272DE03A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +737,7 @@
 				6E2F0C3374826264C24BF11E /* AnniversaryRepository.swift in Sources */,
 				C825231BF27A961E67A3A284 /* AnniversaryRow.swift in Sources */,
 				7D1E5952A4D4D380F1B84129 /* AppDependencies.swift in Sources */,
+				3BC1A76F60E90B195F8F7016 /* AppLocalization.swift in Sources */,
 				E610D4C97BB019B501510B2C /* AppRootView.swift in Sources */,
 				FA5C10B7BCD7AFA8DDDC9E42 /* CalendarExportService.swift in Sources */,
 				098C2963157C6C3019937269 /* CalendarView.swift in Sources */,
@@ -758,6 +802,7 @@
 				A06C0BE7999C1E6CF836AFC3 /* AnniversaryFilterTests.swift in Sources */,
 				70AA9E4AAF216386931F6025 /* AnniversaryOrderingTests.swift in Sources */,
 				16E08321FA662CDCD6960F4D /* AnniversaryRepositoryTests.swift in Sources */,
+				EF48877D6EB95B69E76FE78C /* AppLocalizationTests.swift in Sources */,
 				54B5959BF8DDE44B9061DF38 /* CalendarExportServiceTests.swift in Sources */,
 				F109BCC8F0DDA4339A1237AF /* CategoryTagManagementTests.swift in Sources */,
 				20B6D4F6B2F8370B79C8410D /* DefaultCategorySeederTests.swift in Sources */,
@@ -906,7 +951,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 98GGXKMU33;
 				INFOPLIST_FILE = LifeTimer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -941,7 +988,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 98GGXKMU33;
 				INFOPLIST_FILE = LifeTimer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

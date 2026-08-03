@@ -7,16 +7,16 @@ struct TagManagerView: View {
 
     var body: some View {
         List {
-            Section("新标签") {
-                TextField("标签名称", text: $name)
-                Button("添加标签", systemImage: "plus") {
+            Section("New Tag") {
+                TextField("Tag Name", text: $name)
+                Button("Add Tag", systemImage: "plus") {
                     _ = try? repository.saveTag(name: name)
                     name = ""
                     reload()
                 }
                 .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
-            Section("已有标签") {
+            Section("Tags") {
                 ForEach(tags) { tag in Label(tag.name, systemImage: "tag") }
                     .onDelete { offsets in
                         for index in offsets { try? repository.deleteTag(id: tags[index].id) }
@@ -24,7 +24,7 @@ struct TagManagerView: View {
                     }
             }
         }
-        .navigationTitle("标签管理")
+        .navigationTitle("Manage Tags")
         .onAppear(perform: reload)
     }
 

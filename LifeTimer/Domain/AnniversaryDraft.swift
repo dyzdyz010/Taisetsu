@@ -54,8 +54,9 @@ enum AnniversaryValidationError: Error, Equatable, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .emptyTitle: "请输入纪念日名称"
-        case .invalidRecurrenceInterval: "重复间隔必须大于零"
+        case .emptyTitle: AppLocalization.string("Enter a name")
+        case .invalidRecurrenceInterval:
+            AppLocalization.string("The repeat interval must be greater than zero")
         }
     }
 }

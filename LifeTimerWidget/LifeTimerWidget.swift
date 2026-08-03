@@ -55,11 +55,11 @@ struct LifeTimerProvider: TimelineProvider {
     private static let placeholderSnapshot = WidgetSnapshot(
         generatedAt: .now,
         timeZoneIdentifier: TimeZone.current.identifier,
-        localeIdentifier: "zh-Hans",
+        localeIdentifier: Locale.current.identifier,
         events: [
             WidgetEventSnapshot(
                 id: UUID(),
-                title: "生日",
+                title: "Birthday",
                 targetDate: Calendar.current.date(byAdding: .day, value: 12, to: .now)!,
                 originalDate: Calendar.current.date(byAdding: .year, value: -20, to: .now)!,
                 isAllDay: true,
@@ -77,8 +77,8 @@ struct LifeTimerWidget: Widget {
         StaticConfiguration(kind: AppConfiguration.widgetKind, provider: LifeTimerProvider()) { entry in
             LifeTimerWidgetView(entry: entry)
         }
-        .configurationDisplayName("最近纪念日")
-        .description("自动显示置顶和离现在最近的纪念日。")
+        .configurationDisplayName("Taisetsu — Important Days")
+        .description("Shows pinned and nearest important days automatically.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }

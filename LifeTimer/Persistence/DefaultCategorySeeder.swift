@@ -28,6 +28,20 @@ enum DefaultCategorySeeder {
             symbolName: "briefcase", colorToken: "blue"),
     ]
 
+    static func localizedName(for id: UUID, locale: Locale = .current) -> String? {
+        guard let seed = seeds.first(where: { $0.id == id }) else { return nil }
+        let key: String
+        switch seed.symbolName {
+        case "house": key = "Family"
+        case "heart": key = "Love"
+        case "birthday.cake": key = "Birthday"
+        case "heart.text.square": key = "Health"
+        case "briefcase": key = "Work"
+        default: return nil
+        }
+        return AppLocalization.string(key, locale: locale)
+    }
+
     static func seed(in context: ModelContext) throws {
         let existing = try context.fetch(FetchDescriptor<CategoryModel>())
         let existingIDs = Set(existing.map(\.id))

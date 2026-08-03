@@ -28,6 +28,25 @@ struct CalendarExportServiceTests {
         #expect(client.draft?.isAllDay == true)
     }
 
+    @Test func exportAttributionUsesTheRequestedLocaleAndTaisetsuBrand() async throws {
+        let client = CalendarClientSpy()
+        let service = CalendarExportService(client: client)
+        let record = AnniversaryRecord(
+            title: "Anniversary",
+            notes: "Dinner",
+            date: AnniversaryDate(year: 2026, month: 8, day: 8)
+        )
+
+        _ = try await service.export(
+            record: record,
+            relativeTo: date("2026-08-03T00:00:00Z"),
+            timeZone: TimeZone(secondsFromGMT: 0)!,
+            locale: Locale(identifier: "en_US")
+        )
+
+        #expect(client.draft?.notes == "Dinner\n\nCreated with Taisetsu")
+    }
+
     private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }
 }
 

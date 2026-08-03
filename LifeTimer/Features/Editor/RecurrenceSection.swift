@@ -16,46 +16,53 @@ enum RecurrenceEditorSelection {
 }
 
 struct RecurrenceSection: View {
+    @Environment(\.locale) private var locale
     @Binding var draft: AnniversaryDraft
 
     var body: some View {
-        Section("重复与显示") {
-            Toggle("重复", isOn: recurrenceEnabledBinding)
+        Section("Repeat & Count") {
+            Toggle("Repeat", isOn: recurrenceEnabledBinding)
                 .accessibilityIdentifier("recurrence-enabled")
 
             if draft.recurrenceUnit != nil {
                 HStack(spacing: 10) {
-                    Text("每")
+                    Text("Every")
                     Text(draft.recurrenceInterval, format: .number)
                         .monospacedDigit()
                         .frame(minWidth: 24, alignment: .trailing)
 
-                    Picker("单位", selection: recurrenceUnitBinding) {
+                    Picker("Unit", selection: recurrenceUnitBinding) {
                         ForEach(RecurrenceRule.Unit.allCases, id: \.self) { unit in
-                            Text(unitTitle(unit)).tag(unit)
+                            Text(unitTitle(unit, count: draft.recurrenceInterval)).tag(unit)
                         }
                     }
                     .pickerStyle(.menu)
                     .labelsHidden()
-                    .accessibilityLabel("重复单位")
+                    .accessibilityLabel("Repeat Unit")
                     .accessibilityIdentifier("recurrence-unit")
 
                     Spacer(minLength: 8)
 
-                    Stepper("重复数量", value: $draft.recurrenceInterval, in: 1...999)
+                    Stepper("Repeat Quantity", value: $draft.recurrenceInterval, in: 1...999)
                         .labelsHidden()
-                        .accessibilityLabel("重复数量")
+                        .accessibilityLabel("Repeat Quantity")
                         .accessibilityValue(
-                            "每 \(draft.recurrenceInterval) \(unitTitle(draft.recurrenceUnit ?? .year))"
+                            AnniversaryFormatters.recurrence(
+                                RecurrenceRule(
+                                    unit: draft.recurrenceUnit,
+                                    interval: draft.recurrenceInterval
+                                ),
+                                locale: locale
+                            )
                         )
                         .accessibilityIdentifier("recurrence-interval")
                 }
             }
 
-            Picker("计时方式", selection: $draft.displayMode) {
-                Text("倒计时").tag(DisplayMode.countdown)
-                Text("正计时").tag(DisplayMode.countUp)
-                Text("同时显示").tag(DisplayMode.both)
+            Picker("Count Style", selection: $draft.displayMode) {
+                Text("Countdown").tag(DisplayMode.countdown)
+                Text("Count Up").tag(DisplayMode.countUp)
+                Text("Show Both").tag(DisplayMode.both)
             }
         }
     }
@@ -78,12 +85,13 @@ struct RecurrenceSection: View {
         )
     }
 
-    private func unitTitle(_ unit: RecurrenceRule.Unit) -> String {
-        switch unit {
-        case .day: "天"
-        case .week: "周"
-        case .month: "月"
-        case .year: "年"
+    private func unitTitle(_ unit: RecurrenceRule.Unit, count: Int) -> String {
+        let singular = count == 1
+        return switch unit {
+        case .day: AppLocalization.string(singular ? "Day" : "Days", locale: locale)
+        case .week: AppLocalization.string(singular ? "Week" : "Weeks", locale: locale)
+        case .month: AppLocalization.string(singular ? "Month" : "Months", locale: locale)
+        case .year: AppLocalization.string(singular ? "Year" : "Years", locale: locale)
         }
     }
 }

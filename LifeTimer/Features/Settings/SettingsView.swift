@@ -6,32 +6,32 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("整理") {
+                Section("Organization") {
                     NavigationLink {
                         CategoryManagerView(repository: repository)
                     } label: {
-                        Label("分类管理", systemImage: "folder")
+                        Label("Manage Categories", systemImage: "folder")
                     }
                     NavigationLink {
                         TagManagerView(repository: repository)
                     } label: {
-                        Label("标签管理", systemImage: "tag")
+                        Label("Manage Tags", systemImage: "tag")
                     }
                 }
-                Section("同步与权限") {
-                    LabeledContent("iCloud", value: "自动同步")
-                    Label("通知权限在首次添加提醒时申请", systemImage: "bell")
-                    Label("日历权限在导出时申请", systemImage: "calendar.badge.plus")
+                Section("Sync & Permissions") {
+                    LabeledContent("iCloud", value: "Automatic Sync")
+                    Label("Notification access is requested when you add a reminder", systemImage: "bell")
+                    Label("Calendar access is requested when you export", systemImage: "calendar.badge.plus")
                 }
-                Section("关于") {
+                Section("About") {
                     LabeledContent(
-                        "版本",
+                        "Version",
                         value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-                    Text("数据优先保存在你的设备与私人 iCloud 中。")
+                    Text("Your data stays on your device and in your private iCloud database.")
                         .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("Settings")
         }
     }
 }

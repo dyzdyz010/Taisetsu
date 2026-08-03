@@ -8,9 +8,9 @@ enum CalendarExportError: Error, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .accessDenied: "没有日历访问权限"
-        case .noFutureOccurrence: "这个纪念日没有可导出的下一次日期"
-        case .missingIdentifier: "系统日历没有返回事件标识"
+        case .accessDenied: AppLocalization.string("Calendar access is not available")
+        case .noFutureOccurrence: AppLocalization.string("This important day has no upcoming date to export")
+        case .missingIdentifier: AppLocalization.string("Calendar did not return an event identifier")
         }
     }
 }
@@ -26,7 +26,8 @@ struct CalendarExportService {
     func export(
         record: AnniversaryRecord,
         relativeTo referenceDate: Date = .now,
-        timeZone: TimeZone = .current
+        timeZone: TimeZone = .current,
+        locale: Locale = .current
     ) async throws -> String {
         guard try await client.requestAccess() else { throw CalendarExportError.accessDenied }
         let occurrence = try OccurrenceCalculator().calculate(
@@ -41,7 +42,8 @@ struct CalendarExportService {
                 value: 1,
                 to: startDate
             ) ?? startDate.addingTimeInterval(record.isAllDay ? 86_400 : 3_600)
-        let sourceNote = record.notes.isEmpty ? "来自生命倒计时" : "\(record.notes)\n\n来自生命倒计时"
+        let attribution = AppLocalization.string("Created with Taisetsu", locale: locale)
+        let sourceNote = record.notes.isEmpty ? attribution : "\(record.notes)\n\n\(attribution)"
         return try await client.upsert(
             CalendarEventDraft(
                 title: record.title,

@@ -2,6 +2,7 @@ import LifeTimerCore
 import SwiftUI
 
 struct AnniversaryRow: View {
+    @Environment(\.locale) private var locale
     let presentation: AnniversaryPresentation
 
     var body: some View {
@@ -22,7 +23,10 @@ struct AnniversaryRow: View {
                 }
                 Text(
                     AnniversaryFormatters.relative(
-                        presentation.occurrence, mode: presentation.record.displayMode)
+                        presentation.occurrence,
+                        mode: presentation.record.displayMode,
+                        locale: locale
+                    )
                 )
                 .font(.subheadline)
                 .foregroundStyle(.secondary)

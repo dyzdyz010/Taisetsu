@@ -6,16 +6,16 @@ struct AppRootView: View {
 
     var body: some View {
         TabView {
-            Tab("首页", systemImage: "house") {
+            Tab("Home", systemImage: "house") {
                 HomeView(
                     repository: dependencies.repository,
                     reconciliationCoordinator: dependencies.reconciliationCoordinator
                 )
             }
-            Tab("日历", systemImage: "calendar") {
+            Tab("Calendar", systemImage: "calendar") {
                 CalendarView(repository: dependencies.repository)
             }
-            Tab("设置", systemImage: "gearshape") {
+            Tab("Settings", systemImage: "gearshape") {
                 SettingsView(repository: dependencies.repository)
             }
         }

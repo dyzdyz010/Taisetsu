@@ -2,6 +2,8 @@ import LifeTimerCore
 import SwiftUI
 
 struct CalendarView: View {
+    @Environment(\.calendar) private var calendar
+    @Environment(\.locale) private var locale
     let repository: AnniversaryRepository
     @State private var displayedMonth = Calendar.current.startOfDay(for: .now)
     @State private var records: [AnniversaryRecord] = []
@@ -29,20 +31,20 @@ struct CalendarView: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("日历")
+            .navigationTitle("Calendar")
             .onAppear { records = repository.fetch() }
         }
     }
 
     private var monthHeader: some View {
         HStack {
-            Button("上个月", systemImage: "chevron.left") { moveMonth(-1) }
+            Button("Previous Month", systemImage: "chevron.left") { moveMonth(-1) }
                 .labelStyle(.iconOnly)
             Spacer()
             Text(displayedMonth, format: .dateTime.year().month(.wide))
                 .font(.title3.bold())
             Spacer()
-            Button("下个月", systemImage: "chevron.right") { moveMonth(1) }
+            Button("Next Month", systemImage: "chevron.right") { moveMonth(1) }
                 .labelStyle(.iconOnly)
         }
         .padding(.horizontal)
@@ -50,7 +52,7 @@ struct CalendarView: View {
 
     private var weekdayHeader: some View {
         LazyVGrid(columns: columns) {
-            ForEach(Calendar.current.veryShortWeekdaySymbols, id: \.self) { symbol in
+            ForEach(LocalizedCalendarLayout.weekdaySymbols(for: localizedCalendar), id: \.self) { symbol in
                 Text(symbol).font(.caption).foregroundStyle(.secondary)
             }
         }
@@ -59,9 +61,9 @@ struct CalendarView: View {
 
     private var monthEvents: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("本月纪念日").font(.headline)
+            Text("Important Days This Month").font(.headline)
             if eventsInMonth.isEmpty {
-                Text("这个月还没有纪念日").foregroundStyle(.secondary)
+                Text("No important days this month").foregroundStyle(.secondary)
             } else {
                 ForEach(eventsInMonth) { item in
                     HStack {
@@ -98,7 +100,10 @@ struct CalendarView: View {
             Calendar.current.isDateInToday(date) ? Color.accentColor.opacity(0.12) : .clear,
             in: RoundedRectangle(cornerRadius: 10)
         )
-        .accessibilityLabel(date.formatted(date: .complete, time: .omitted) + (hasEvent ? "，有纪念日" : ""))
+        .accessibilityLabel(
+            date.formatted(date: .complete, time: .omitted)
+                + (hasEvent ? ", " + AppLocalization.string("has an important day", locale: locale) : "")
+        )
     }
 
     private var eventsInMonth: [AnniversaryPresentation] {
@@ -117,7 +122,6 @@ struct CalendarView: View {
     }
 
     private var monthCells: [Date?] {
-        let calendar = Calendar.current
         guard let interval = calendar.dateInterval(of: .month, for: displayedMonth),
             let dayRange = calendar.range(of: .day, in: .month, for: displayedMonth)
         else { return [] }
@@ -131,5 +135,11 @@ struct CalendarView: View {
     private func moveMonth(_ value: Int) {
         displayedMonth =
             Calendar.current.date(byAdding: .month, value: value, to: displayedMonth) ?? displayedMonth
+    }
+
+    private var localizedCalendar: Calendar {
+        var value = calendar
+        value.locale = locale
+        return value
     }
 }

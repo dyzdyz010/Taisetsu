@@ -11,6 +11,8 @@ done
 xcodegen generate
 git diff --exit-code -- LifeTimer.xcodeproj LifeTimer/Info.plist LifeTimer/LifeTimer.entitlements \
     LifeTimerWidget/Info.plist LifeTimerWidget/LifeTimerWidget.entitlements
+swift scripts/generate-localizations.swift --check
+bash scripts/localization-check.sh
 xcrun swift-format lint --recursive LifeTimer LifeTimerCore LifeTimerWidget LifeTimerTests LifeTimerUITests
 xcodebuild build \
     -project LifeTimer.xcodeproj \
@@ -22,6 +24,7 @@ bash scripts/coverage-check.sh
 
 if [[ "${LIFETIMER_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
     LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
-        -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState
+        -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState \
+        -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
+        -only-testing:LifeTimerUITests/LifeTimerUITests/testLaunchesWithEnglishLocalization
 fi
-

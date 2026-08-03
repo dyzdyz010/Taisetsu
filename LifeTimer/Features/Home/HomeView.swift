@@ -23,31 +23,36 @@ struct HomeView: View {
             Group {
                 switch viewModel.state {
                 case .loading:
-                    ProgressView("正在读取纪念日…")
+                    ProgressView("Loading important days…")
                 case .empty:
                     ContentUnavailableView {
-                        Label("还没有纪念日", systemImage: "calendar.badge.plus")
+                        Label("No important days yet", systemImage: "calendar.badge.plus")
                     } description: {
-                        Text("记录生日、相识日或任何值得期待的日子。")
+                        Text("Keep birthdays, anniversaries, and every day worth looking forward to close.")
                     } actions: {
-                        Button("新建纪念日") { showingNew = true }
+                        Button("Add Important Day") { showingNew = true }
                             .buttonStyle(.borderedProminent)
                     }
                 case .failed(let message):
                     ContentUnavailableView(
-                        "无法读取纪念日", systemImage: "exclamationmark.triangle", description: Text(message))
+                        "Unable to Load Important Days",
+                        systemImage: "exclamationmark.triangle",
+                        description: Text(message)
+                    )
                 case .content:
                     content
                 }
             }
-            .navigationTitle("生命倒计时")
-            .searchable(text: $viewModel.query, prompt: "搜索名称、备注、分类或标签")
+            .navigationTitle("Taisetsu")
+            .searchable(text: $viewModel.query, prompt: "Search names, notes, categories, or tags")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("筛选", systemImage: "line.3.horizontal.decrease.circle") { showingFilters = true }
+                    Button("Filter", systemImage: "line.3.horizontal.decrease.circle") {
+                        showingFilters = true
+                    }
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button("新建纪念日", systemImage: "plus") { showingNew = true }
+                    Button("Add Important Day", systemImage: "plus") { showingNew = true }
                         .accessibilityIdentifier("add-anniversary")
                 }
             }
@@ -86,15 +91,15 @@ struct HomeView: View {
                     .buttonStyle(.plain)
                 }
                 section(
-                    "置顶",
+                    "Pinned",
                     items: viewModel.sections.pinned.dropFirst(
                         viewModel.hero?.record.isPinned == true ? 1 : 0))
                 section(
-                    "即将到来",
+                    "Upcoming",
                     items: viewModel.sections.upcoming.dropFirst(
                         viewModel.hero?.record.isPinned == false ? 1 : 0))
-                section("正在进行", items: viewModel.sections.ongoing)
-                section("已经结束", items: viewModel.sections.ended)
+                section("Ongoing", items: viewModel.sections.ongoing)
+                section("Past", items: viewModel.sections.ended)
             }
             .padding()
         }
@@ -124,13 +129,21 @@ struct HomeView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
-                        Button(presentation.record.isPinned ? "取消置顶" : "置顶", systemImage: "pin") {
+                        Button {
                             try? viewModel.setPinned(
-                                id: presentation.id, isPinned: !presentation.record.isPinned)
+                                id: presentation.id,
+                                isPinned: !presentation.record.isPinned
+                            )
                             Task { await reconciliationCoordinator.reconcile() }
+                        } label: {
+                            if presentation.record.isPinned {
+                                Label("Unpin", systemImage: "pin")
+                            } else {
+                                Label("Pin", systemImage: "pin")
+                            }
                         }
-                        Button("编辑", systemImage: "pencil") { editingRecord = presentation.record }
-                        Button("删除", systemImage: "trash", role: .destructive) {
+                        Button("Edit", systemImage: "pencil") { editingRecord = presentation.record }
+                        Button("Delete", systemImage: "trash", role: .destructive) {
                             try? viewModel.delete(id: presentation.id)
                             Task { await reconciliationCoordinator.reconcile() }
                         }
@@ -150,15 +163,17 @@ private struct FilterView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("分类（单选）") {
-                    filterRow("全部分类", selected: viewModel.categoryID == nil) { viewModel.categoryID = nil }
+                Section("Category (single selection)") {
+                    filterRow("All Categories", selected: viewModel.categoryID == nil) {
+                        viewModel.categoryID = nil
+                    }
                     ForEach(repository.categories()) { category in
-                        filterRow(category.name, selected: viewModel.categoryID == category.id) {
+                        filterRow(category.displayName(), selected: viewModel.categoryID == category.id) {
                             viewModel.categoryID = category.id
                         }
                     }
                 }
-                Section("标签（可多选）") {
+                Section("Tags (multiple selection)") {
                     ForEach(repository.tags()) { tag in
                         filterRow(tag.name, selected: viewModel.requiredTagIDs.contains(tag.id)) {
                             if viewModel.requiredTagIDs.contains(tag.id) {
@@ -170,9 +185,9 @@ private struct FilterView: View {
                     }
                 }
             }
-            .navigationTitle("筛选")
+            .navigationTitle("Filter")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { Button("完成") { dismiss() } }
+            .toolbar { Button("Done") { dismiss() } }
         }
     }
 

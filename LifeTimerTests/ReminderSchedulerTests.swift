@@ -46,5 +46,22 @@ struct ReminderSchedulerTests {
         #expect(schedule.map(\.fireDate) == schedule.map(\.fireDate).sorted())
     }
 
+    @Test func notificationBodyUsesTheRequestedLocale() throws {
+        let record = AnniversaryRecord(
+            title: "Trip",
+            date: AnniversaryDate(year: 2026, month: 8, day: 10),
+            reminders: [ReminderSpec(offsetMinutes: -2_880)]
+        )
+
+        let schedule = try ReminderScheduler().makeSchedule(
+            records: [record],
+            relativeTo: date("2026-08-03T00:00:00Z"),
+            timeZone: TimeZone(secondsFromGMT: 0)!,
+            locale: Locale(identifier: "en_US")
+        )
+
+        #expect(schedule.first?.body == "in 2 days")
+    }
+
     private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }
 }

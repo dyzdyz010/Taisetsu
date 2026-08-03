@@ -50,68 +50,92 @@ enum DateWheelSelection {
     }
 }
 
+enum DateWheelComponent: Hashable {
+    case year
+    case month
+    case day
+
+    static func ordered(for locale: Locale) -> [DateWheelComponent] {
+        let format = DateFormatter.dateFormat(fromTemplate: "yMd", options: 0, locale: locale) ?? "yMd"
+        return [DateWheelComponent.year, .month, .day].sorted {
+            (format.firstIndex(of: $0.formatCharacter) ?? format.endIndex)
+                < (format.firstIndex(of: $1.formatCharacter) ?? format.endIndex)
+        }
+    }
+
+    private var formatCharacter: Character {
+        switch self {
+        case .year: "y"
+        case .month: "M"
+        case .day: "d"
+        }
+    }
+}
+
 struct DateRuleSection: View {
+    @Environment(\.locale) private var locale
     @Binding var draft: AnniversaryDraft
 
     var body: some View {
-        Section("日期") {
-            Picker("历法", selection: calendarKindBinding) {
-                Text("公历").tag(CalendarKind.gregorian)
-                Text("农历").tag(CalendarKind.chinese)
+        Section("Date") {
+            Picker("Calendar", selection: calendarKindBinding) {
+                Text("Gregorian").tag(CalendarKind.gregorian)
+                Text("Chinese Lunar").tag(CalendarKind.chinese)
             }
 
             HStack(spacing: 0) {
-                Picker("年份", selection: yearBinding) {
-                    ForEach(DateWheelSelection.yearRange(containing: draft.date.year), id: \.self) {
-                        Text("\($0) 年").tag($0)
-                    }
+                ForEach(DateWheelComponent.ordered(for: locale), id: \.self) { component in
+                    datePicker(for: component)
+                        .pickerStyle(.wheel)
+                        .labelsHidden()
+                        .frame(maxWidth: .infinity)
                 }
-                .pickerStyle(.wheel)
-                .labelsHidden()
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel("年份")
-                .accessibilityIdentifier("date-wheel-year")
-
-                Picker("月份", selection: monthBinding) {
-                    ForEach(1...12, id: \.self) {
-                        Text("\($0) 月").tag($0)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .labelsHidden()
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel("月份")
-                .accessibilityIdentifier("date-wheel-month")
-
-                Picker("日期", selection: $draft.date.day) {
-                    ForEach(
-                        DateWheelSelection.dayRange(for: draft.date, calendarKind: draft.calendarKind),
-                        id: \.self
-                    ) {
-                        Text("\($0) 日").tag($0)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .labelsHidden()
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel("日期")
-                .accessibilityIdentifier("date-wheel-day")
             }
             .frame(height: 170)
             .clipped()
 
             if draft.calendarKind == .chinese {
-                Toggle("闰月", isOn: leapMonthBinding)
+                Toggle("Leap Month", isOn: leapMonthBinding)
             }
-            Toggle("全天", isOn: $draft.isAllDay)
+            Toggle("All Day", isOn: $draft.isAllDay)
             if !draft.isAllDay {
                 HStack {
-                    Stepper("时：\(draft.date.hour)", value: $draft.date.hour, in: 0...23)
-                    Stepper("分：\(draft.date.minute)", value: $draft.date.minute, in: 0...59, step: 5)
+                    Stepper("Hour: \(draft.date.hour)", value: $draft.date.hour, in: 0...23)
+                    Stepper("Minute: \(draft.date.minute)", value: $draft.date.minute, in: 0...59, step: 5)
                 }
             }
         }
         .onAppear(perform: normalizeDate)
+    }
+
+    @ViewBuilder
+    private func datePicker(for component: DateWheelComponent) -> some View {
+        switch component {
+        case .year:
+            Picker("Year", selection: yearBinding) {
+                ForEach(DateWheelSelection.yearRange(containing: draft.date.year), id: \.self) {
+                    Text($0, format: .number.grouping(.never)).tag($0)
+                }
+            }
+            .accessibilityIdentifier("date-wheel-year")
+        case .month:
+            Picker("Month", selection: monthBinding) {
+                ForEach(1...12, id: \.self) {
+                    Text($0, format: .number.grouping(.never)).tag($0)
+                }
+            }
+            .accessibilityIdentifier("date-wheel-month")
+        case .day:
+            Picker("Day", selection: $draft.date.day) {
+                ForEach(
+                    DateWheelSelection.dayRange(for: draft.date, calendarKind: draft.calendarKind),
+                    id: \.self
+                ) {
+                    Text($0, format: .number.grouping(.never)).tag($0)
+                }
+            }
+            .accessibilityIdentifier("date-wheel-day")
+        }
     }
 
     private var calendarKindBinding: Binding<CalendarKind> {

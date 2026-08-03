@@ -40,9 +40,9 @@ struct LifeTimerApp: App {
                     .modelContainer(container)
             } else {
                 ContentUnavailableView(
-                    "无法打开数据",
+                    "Unable to Open Data",
                     systemImage: "externaldrive.badge.exclamationmark",
-                    description: Text(startupError ?? "请稍后重试")
+                    description: Text(startupError ?? AppLocalization.string("Try again later"))
                 )
             }
         }

@@ -10,44 +10,108 @@ enum AnniversaryFormatters {
         )
     }
 
-    static func relative(_ occurrence: Occurrence, mode: DisplayMode, now: Date = .now) -> String {
+    static func relative(
+        _ occurrence: Occurrence,
+        mode: DisplayMode,
+        now: Date = .now,
+        locale: Locale = .current,
+        calendar: Calendar = .current
+    ) -> String {
         switch mode {
         case .countUp:
-            return elapsedText(from: occurrence.original, to: now)
+            return relativeDayText(
+                days: -dayDistance(from: occurrence.original, to: now, calendar: calendar),
+                locale: locale
+            )
         case .countdown, .both:
-            guard let next = occurrence.next else { return elapsedText(from: occurrence.original, to: now) }
-            let days =
-                Calendar.current.dateComponents(
-                    [.day],
-                    from: Calendar.current.startOfDay(for: now),
-                    to: Calendar.current.startOfDay(for: next)
-                ).day ?? 0
-            if days == 0 { return "就是今天" }
-            return "还有 \(max(0, days)) 天"
+            guard let next = occurrence.next else {
+                return relativeDayText(
+                    days: -dayDistance(from: occurrence.original, to: now, calendar: calendar),
+                    locale: locale
+                )
+            }
+            return relativeDayText(
+                days: max(0, dayDistance(from: now, to: next, calendar: calendar)),
+                locale: locale
+            )
         }
     }
 
-    static func recurrence(_ rule: RecurrenceRule) -> String {
-        guard let unit = rule.unit else { return "不重复" }
-        let unitName: String
+    static func recurrence(_ rule: RecurrenceRule, locale: Locale = .current) -> String {
+        guard let unit = rule.unit else { return AppLocalization.string("Does not repeat", locale: locale) }
+        var components = DateComponents()
         switch unit {
-        case .day: unitName = "天"
-        case .week: unitName = "周"
-        case .month: unitName = "月"
-        case .year: unitName = "年"
+        case .day: components.day = rule.interval
+        case .week: components.weekOfYear = rule.interval
+        case .month: components.month = rule.interval
+        case .year: components.year = rule.interval
         }
-        return rule.interval == 1 ? "每\(unitName)" : "每 \(rule.interval) \(unitName)"
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = allowedUnit(for: unit)
+        formatter.unitsStyle = .full
+        formatter.maximumUnitCount = 1
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = locale
+        formatter.calendar = calendar
+        let interval = formatter.string(from: components) ?? String(rule.interval)
+        return AppLocalization.format("Every %@", interval, locale: locale)
     }
 
-    private static func elapsedText(from start: Date, to end: Date) -> String {
-        let days = max(
-            0,
-            Calendar.current.dateComponents(
-                [.day],
-                from: Calendar.current.startOfDay(for: start),
-                to: Calendar.current.startOfDay(for: end)
-            ).day ?? 0
-        )
-        return "已经 \(days) 天"
+    static func relativeDays(_ days: Int, locale: Locale = .current) -> String {
+        relativeDayText(days: days, locale: locale)
+    }
+
+    static func reminderOffset(_ minutes: Int, locale: Locale = .current) -> String {
+        guard minutes != 0 else { return AppLocalization.string("At Event Time", locale: locale) }
+        let magnitude = abs(minutes)
+        var components = DateComponents()
+        let unit: NSCalendar.Unit
+        if magnitude.isMultiple(of: 10_080) {
+            components.weekOfYear = magnitude / 10_080
+            unit = .weekOfYear
+        } else if magnitude.isMultiple(of: 1_440) {
+            components.day = magnitude / 1_440
+            unit = .day
+        } else if magnitude.isMultiple(of: 60) {
+            components.hour = magnitude / 60
+            unit = .hour
+        } else {
+            components.minute = magnitude
+            unit = .minute
+        }
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = unit
+        formatter.unitsStyle = .full
+        formatter.maximumUnitCount = 1
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = locale
+        formatter.calendar = calendar
+        let interval = formatter.string(from: components) ?? String(magnitude)
+        return AppLocalization.format("%@ before", interval, locale: locale)
+    }
+
+    private static func relativeDayText(days: Int, locale: Locale) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = locale
+        formatter.dateTimeStyle = .numeric
+        formatter.unitsStyle = .full
+        return formatter.localizedString(from: DateComponents(day: days))
+    }
+
+    private static func dayDistance(from start: Date, to end: Date, calendar: Calendar) -> Int {
+        calendar.dateComponents(
+            [.day],
+            from: calendar.startOfDay(for: start),
+            to: calendar.startOfDay(for: end)
+        ).day ?? 0
+    }
+
+    private static func allowedUnit(for unit: RecurrenceRule.Unit) -> NSCalendar.Unit {
+        switch unit {
+        case .day: .day
+        case .week: .weekOfYear
+        case .month: .month
+        case .year: .year
+        }
     }
 }

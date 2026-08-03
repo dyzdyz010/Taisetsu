@@ -2,6 +2,7 @@ import LifeTimerCore
 import SwiftUI
 
 struct AnniversaryDetailView: View {
+    @Environment(\.locale) private var locale
     let presentation: AnniversaryPresentation
     let onEdit: () -> Void
     let onExport: () async throws -> Void
@@ -16,7 +17,10 @@ struct AnniversaryDetailView: View {
                         .font(.title2.bold())
                     Text(
                         AnniversaryFormatters.relative(
-                            presentation.occurrence, mode: presentation.record.displayMode)
+                            presentation.occurrence,
+                            mode: presentation.record.displayMode,
+                            locale: locale
+                        )
                     )
                     .font(.largeTitle.bold().monospacedDigit())
                     if let next = presentation.occurrence.next {
@@ -26,40 +30,71 @@ struct AnniversaryDetailView: View {
                 }
                 .padding(.vertical, 8)
             }
-            Section("日期规则") {
-                LabeledContent("历法", value: presentation.record.calendarKind == .gregorian ? "公历" : "农历")
+            Section("Date Rule") {
+                LabeledContent("Calendar", value: calendarName)
                 LabeledContent(
-                    "原始日期",
+                    "Original Date",
                     value: AnniversaryFormatters.date(
                         presentation.occurrence.original, isAllDay: presentation.record.isAllDay))
-                LabeledContent("重复", value: AnniversaryFormatters.recurrence(presentation.record.recurrence))
-                LabeledContent("显示", value: displayModeName)
+                LabeledContent(
+                    "Repeat",
+                    value: AnniversaryFormatters.recurrence(
+                        presentation.record.recurrence,
+                        locale: locale
+                    )
+                )
+                LabeledContent("Display", value: displayModeName)
             }
             if !presentation.record.reminders.isEmpty {
-                Section("提醒") {
+                Section("Reminders") {
                     ForEach(presentation.record.reminders) { reminder in
                         Label(reminderText(reminder.offsetMinutes), systemImage: "bell")
                     }
                 }
             }
-            Section("整理") {
-                LabeledContent("分类", value: presentation.record.category?.name ?? "无分类")
+            Section("Organization") {
+                LabeledContent(
+                    "Category",
+                    value: presentation.record.category?.name
+                        ?? AppLocalization.string("No Category", locale: locale)
+                )
                 if !presentation.record.tags.isEmpty {
-                    LabeledContent("标签", value: presentation.record.tags.map(\.name).joined(separator: "、"))
+                    LabeledContent(
+                        "Tags",
+                        value: AppLocalization.list(
+                            presentation.record.tags.map(\.name),
+                            locale: locale
+                        )
+                    )
                 }
-                LabeledContent("置顶", value: presentation.record.isPinned ? "是" : "否")
-                LabeledContent("小组件", value: presentation.record.isVisibleInWidget ? "显示" : "隐藏")
+                LabeledContent(
+                    "Pinned",
+                    value: AppLocalization.string(
+                        presentation.record.isPinned ? "Yes" : "No",
+                        locale: locale
+                    )
+                )
+                LabeledContent(
+                    "Widgets",
+                    value: AppLocalization.string(
+                        presentation.record.isVisibleInWidget ? "Shown" : "Hidden",
+                        locale: locale
+                    )
+                )
             }
             if !presentation.record.notes.isEmpty {
-                Section("备注") { Text(presentation.record.notes) }
+                Section("Notes") { Text(presentation.record.notes) }
             }
-            Section("系统日历") {
-                Button("导出下一次到日历", systemImage: "calendar.badge.plus") {
+            Section("System Calendar") {
+                Button("Export Next Date to Calendar", systemImage: "calendar.badge.plus") {
                     isExporting = true
                     Task {
                         do {
                             try await onExport()
-                            exportMessage = "已导出；再次导出会更新同一事件"
+                            exportMessage = AppLocalization.string(
+                                "Exported. Exporting again will update the same event.",
+                                locale: locale
+                            )
                         } catch {
                             exportMessage = error.localizedDescription
                         }
@@ -74,23 +109,27 @@ struct AnniversaryDetailView: View {
                 }
             }
         }
-        .navigationTitle("纪念日详情")
+        .navigationTitle("Important Day Details")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { Button("编辑", action: onEdit) }
+        .toolbar { Button("Edit", action: onEdit) }
     }
 
     private var displayModeName: String {
         switch presentation.record.displayMode {
-        case .countdown: "倒计时"
-        case .countUp: "正计时"
-        case .both: "同时显示"
+        case .countdown: AppLocalization.string("Countdown", locale: locale)
+        case .countUp: AppLocalization.string("Count Up", locale: locale)
+        case .both: AppLocalization.string("Show Both", locale: locale)
         }
     }
 
+    private var calendarName: String {
+        AppLocalization.string(
+            presentation.record.calendarKind == .gregorian ? "Gregorian" : "Chinese Lunar",
+            locale: locale
+        )
+    }
+
     private func reminderText(_ minutes: Int) -> String {
-        if minutes == 0 { return "事件发生时" }
-        if minutes % 1_440 == 0 { return "提前 \(abs(minutes / 1_440)) 天" }
-        if minutes % 60 == 0 { return "提前 \(abs(minutes / 60)) 小时" }
-        return "提前 \(abs(minutes)) 分钟"
+        AnniversaryFormatters.reminderOffset(minutes, locale: locale)
     }
 }

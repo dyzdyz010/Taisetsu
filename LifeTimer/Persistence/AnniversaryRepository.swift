@@ -82,7 +82,7 @@ final class AnniversaryRepository {
     }
 
     func categories() -> [CategoryModel] {
-        allCategories().sorted { ($0.sortOrder, $0.name) < ($1.sortOrder, $1.name) }
+        allCategories().sorted { ($0.sortOrder, $0.displayName()) < ($1.sortOrder, $1.displayName()) }
     }
 
     func tags() -> [TagModel] {
@@ -178,7 +178,7 @@ final class AnniversaryRepository {
             category: model.category.map {
                 CategoryReference(
                     id: $0.id,
-                    name: $0.name,
+                    name: $0.displayName(),
                     symbolName: $0.symbolName,
                     colorToken: $0.colorToken
                 )

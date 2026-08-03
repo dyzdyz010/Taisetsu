@@ -1,8 +1,10 @@
+import Foundation
 import LifeTimerCore
 import SwiftUI
 import WidgetKit
 
 struct LifeTimerWidgetView: View {
+    @Environment(\.locale) private var locale
     @Environment(\.widgetFamily) private var family
     let entry: LifeTimerWidgetEntry
 
@@ -35,9 +37,9 @@ struct LifeTimerWidgetView: View {
             Image(systemName: "calendar.badge.plus")
                 .font(.title2)
                 .foregroundStyle(.tint)
-            Text("还没有纪念日")
+            Text("No important days yet")
                 .font(.headline)
-            Text("打开应用添加")
+            Text("Open Taisetsu to add one")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -68,7 +70,7 @@ struct LifeTimerWidgetView: View {
     private var listView: some View {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 10 : 5) {
             HStack {
-                Text("最近纪念日").font(.headline)
+                Text("Nearest Important Days").font(.headline)
                 Spacer()
                 Image(systemName: "hourglass")
                     .foregroundStyle(.tint)
@@ -102,7 +104,7 @@ struct LifeTimerWidgetView: View {
                     from: calendar.startOfDay(for: event.originalDate),
                     to: calendar.startOfDay(for: entry.date)
                 ).day ?? 0
-            return "已 \(max(0, days)) 天"
+            return relativeDayText(-max(0, days))
         case .countdown, .both:
             let days =
                 calendar.dateComponents(
@@ -110,8 +112,16 @@ struct LifeTimerWidgetView: View {
                     from: calendar.startOfDay(for: entry.date),
                     to: calendar.startOfDay(for: event.targetDate)
                 ).day ?? 0
-            return days == 0 ? "今天" : "\(max(0, days)) 天"
+            return relativeDayText(max(0, days))
         }
+    }
+
+    private func relativeDayText(_ days: Int) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = locale
+        formatter.dateTimeStyle = .numeric
+        formatter.unitsStyle = .full
+        return formatter.localizedString(from: DateComponents(day: days))
     }
 
     private func color(_ token: String) -> Color {

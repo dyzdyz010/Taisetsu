@@ -2,7 +2,7 @@ name: LifeTimer
 
 options:
   bundleIdPrefix: com.dyz
-  developmentLanguage: zh-Hans
+  developmentLanguage: en
   deploymentTarget:
     iOS: "18.0"
   groupSortPosition: top
@@ -40,7 +40,7 @@ targets:
     info:
       path: LifeTimer/Info.plist
       properties:
-        CFBundleDisplayName: 生命倒计时
+        CFBundleDisplayName: Taisetsu
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIApplicationSceneManifest:
@@ -48,7 +48,7 @@ targets:
         UILaunchScreen: {}
         UIBackgroundModes:
           - remote-notification
-        NSCalendarsFullAccessUsageDescription: 用于将你选择的纪念日下一次日期导出到系统日历。
+        NSCalendarsFullAccessUsageDescription: Allows you to export the next occurrence of an important day to Calendar.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft
@@ -71,6 +71,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimer
+        DEVELOPMENT_TEAM: 98GGXKMU33
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1,2"
@@ -85,7 +87,7 @@ targets:
     info:
       path: LifeTimerWidget/Info.plist
       properties:
-        CFBundleDisplayName: 生命倒计时小组件
+        CFBundleDisplayName: Taisetsu
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:

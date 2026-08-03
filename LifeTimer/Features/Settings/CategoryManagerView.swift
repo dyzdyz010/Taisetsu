@@ -7,9 +7,9 @@ struct CategoryManagerView: View {
 
     var body: some View {
         List {
-            Section("新分类") {
-                TextField("分类名称", text: $name)
-                Button("添加分类", systemImage: "plus") {
+            Section("New Category") {
+                TextField("Category Name", text: $name)
+                Button("Add Category", systemImage: "plus") {
                     _ = try? repository.saveCategory(
                         name: name,
                         symbolName: "folder",
@@ -20,9 +20,9 @@ struct CategoryManagerView: View {
                 }
                 .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
-            Section("已有分类") {
+            Section("Categories") {
                 ForEach(categories) { category in
-                    Label(category.name, systemImage: category.symbolName)
+                    Label(category.displayName(), systemImage: category.symbolName)
                 }
                 .onDelete { offsets in
                     for index in offsets { try? repository.deleteCategory(id: categories[index].id) }
@@ -30,7 +30,7 @@ struct CategoryManagerView: View {
                 }
             }
         }
-        .navigationTitle("分类管理")
+        .navigationTitle("Manage Categories")
         .onAppear(perform: reload)
     }
 

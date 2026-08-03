@@ -57,10 +57,25 @@ final class LifeTimerUITests: XCTestCase {
     }
 
     @MainActor
-    private func makeApplication() -> XCUIApplication {
+    func testLaunchesWithEnglishLocalization() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+
+        XCTAssertTrue(app.tabBars.buttons["Home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.tabBars.buttons["Calendar"].exists)
+        XCTAssertTrue(app.tabBars.buttons["Settings"].exists)
+        XCTAssertTrue(app.navigationBars["Taisetsu"].exists)
+    }
+
+    @MainActor
+    private func makeApplication(language: String = "zh-Hans") -> XCUIApplication {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
-        app.launchArguments = ["-ui-testing"]
+        app.launchArguments = [
+            "-ui-testing",
+            "-AppleLanguages", "(\(language))",
+            "-AppleLocale", language == "zh-Hans" ? "zh_CN" : "en_US",
+        ]
         return app
     }
 }

@@ -17,6 +17,7 @@ struct ReminderScheduler: Sendable {
         records: [AnniversaryRecord],
         relativeTo referenceDate: Date,
         timeZone: TimeZone,
+        locale: Locale = .current,
         horizonDays: Int = 400
     ) throws -> [ScheduledReminder] {
         let horizon =
@@ -46,7 +47,11 @@ struct ReminderScheduler: Sendable {
                             anniversaryID: record.id,
                             fireDate: fireDate,
                             title: record.title,
-                            body: notificationBody(eventDate: eventDate, referenceDate: fireDate)
+                            body: notificationBody(
+                                eventDate: eventDate,
+                                referenceDate: fireDate,
+                                locale: locale
+                            )
                         )
                     )
                 }
@@ -67,9 +72,15 @@ struct ReminderScheduler: Sendable {
         records: [AnniversaryRecord],
         client: NotificationCenterClientProtocol,
         relativeTo referenceDate: Date = .now,
-        timeZone: TimeZone = .current
+        timeZone: TimeZone = .current,
+        locale: Locale = .current
     ) async throws {
-        let requests = try makeSchedule(records: records, relativeTo: referenceDate, timeZone: timeZone)
+        let requests = try makeSchedule(
+            records: records,
+            relativeTo: referenceDate,
+            timeZone: timeZone,
+            locale: locale
+        )
         if requests.isEmpty {
             try await client.replaceLifeTimerRequests(with: [])
             return
@@ -91,8 +102,10 @@ struct ReminderScheduler: Sendable {
         "lifetimer.\(anniversaryID.uuidString).\(reminderID.uuidString).\(Int(fireDate.timeIntervalSince1970))"
     }
 
-    private func notificationBody(eventDate: Date, referenceDate: Date) -> String {
+    private func notificationBody(eventDate: Date, referenceDate: Date, locale: Locale) -> String {
         let days = Calendar.current.dateComponents([.day], from: referenceDate, to: eventDate).day ?? 0
-        return days > 0 ? "还有 \(days) 天" : "即将到来"
+        return days > 0
+            ? AnniversaryFormatters.relativeDays(days, locale: locale)
+            : AppLocalization.string("Coming up", locale: locale)
     }
 }
