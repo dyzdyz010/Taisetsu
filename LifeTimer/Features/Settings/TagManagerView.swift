@@ -10,7 +10,7 @@ struct TagManagerView: View {
             Section("新标签") {
                 TextField("标签名称", text: $name)
                 Button("添加标签", systemImage: "plus") {
-                    try? repository.saveTag(name: name)
+                    _ = try? repository.saveTag(name: name)
                     name = ""
                     reload()
                 }

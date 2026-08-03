@@ -10,7 +10,11 @@ struct CategoryManagerView: View {
             Section("新分类") {
                 TextField("分类名称", text: $name)
                 Button("添加分类", systemImage: "plus") {
-                    try? repository.saveCategory(name: name, symbolName: "folder", colorToken: "blue")
+                    _ = try? repository.saveCategory(
+                        name: name,
+                        symbolName: "folder",
+                        colorToken: "blue"
+                    )
                     name = ""
                     reload()
                 }
