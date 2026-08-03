@@ -2,12 +2,45 @@ import Foundation
 import TaisetsuCore
 
 enum AnniversaryFormatters {
-    static func date(_ value: Date, isAllDay: Bool) -> String {
-        value.formatted(
+    static func date(
+        _ value: Date,
+        isAllDay: Bool,
+        locale: Locale = .current,
+        timeZone: TimeZone = .current
+    ) -> String {
+        var style =
             isAllDay
-                ? Date.FormatStyle(date: .abbreviated, time: .omitted)
-                : Date.FormatStyle(date: .abbreviated, time: .shortened)
-        )
+            ? Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale)
+            : Date.FormatStyle(date: .abbreviated, time: .shortened).locale(locale)
+        style.timeZone = timeZone
+        return value.formatted(style)
+    }
+
+    static func lunarMonthDay(
+        _ value: Date,
+        locale: Locale = .current,
+        timeZone: TimeZone = .current
+    ) -> String {
+        var calendar = Calendar(identifier: .chinese)
+        calendar.timeZone = timeZone
+        let components = calendar.dateComponents([.month, .day], from: value)
+        guard let month = components.month, let day = components.day else { return "" }
+        let key =
+            components.isLeapMonth == true
+            ? "Leap lunar month %lld, day %lld"
+            : "Lunar month %lld, day %lld"
+        return AppLocalization.format(key, month, day, locale: locale)
+    }
+
+    static func dateWithLunar(
+        _ value: Date,
+        isAllDay: Bool,
+        locale: Locale = .current,
+        timeZone: TimeZone = .current
+    ) -> String {
+        let gregorian = date(value, isAllDay: isAllDay, locale: locale, timeZone: timeZone)
+        let lunar = lunarMonthDay(value, locale: locale, timeZone: timeZone)
+        return "\(gregorian) · \(lunar)"
     }
 
     static func relative(

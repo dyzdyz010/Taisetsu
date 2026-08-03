@@ -102,7 +102,35 @@ struct AnniversaryEditorViewModelTests {
         #expect(draft.recurrenceInterval == 1)
     }
 
+    @Test func lunarMonthRecurrencePreviewExposesTheShiftedLunarMonth() {
+        var draft = AnniversaryDraft()
+        draft.calendarKind = .chinese
+        draft.date = AnniversaryDate(year: 1992, month: 8, day: 4)
+        draft.recurrenceUnit = .month
+        draft.recurrenceInterval = 6
+
+        let next = RecurrencePreview.nextOccurrence(
+            for: draft,
+            relativeTo: date("2026-08-03T04:00:00Z"),
+            timeZone: TimeZone(identifier: "Asia/Shanghai")!
+        )
+
+        #expect(next == date("2026-08-15T16:00:00Z"))
+        #expect(RecurrencePreview.explainsLunarMonthInterval(for: draft))
+
+        draft.recurrenceUnit = .year
+        #expect(!RecurrencePreview.explainsLunarMonthInterval(for: draft))
+
+        draft.recurrenceUnit = .month
+        draft.calendarKind = .gregorian
+        #expect(!RecurrencePreview.explainsLunarMonthInterval(for: draft))
+    }
+
     private func makeRepository() throws -> AnniversaryRepository {
         AnniversaryRepository(context: ModelContext(try ModelContainerFactory.makeInMemory()))
+    }
+
+    private func date(_ value: String) -> Date {
+        ISO8601DateFormatter().date(from: value)!
     }
 }

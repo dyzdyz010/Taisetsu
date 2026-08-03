@@ -85,6 +85,24 @@ struct OccurrenceCalculatorTests {
         #expect(result.next == date("2027-02-05T16:00:00Z"))
     }
 
+    @Test func yearlyLunarAnniversaryKeepsTheSameLunarMonthAndDay() throws {
+        let record = fixture(
+            year: 1992,
+            month: 8,
+            day: 4,
+            calendarKind: .chinese,
+            recurrence: .init(unit: .year, interval: 1)
+        )
+
+        let result = try calculator.calculate(
+            for: record,
+            relativeTo: date("2026-08-03T04:00:00Z"),
+            timeZone: TimeZone(identifier: "Asia/Shanghai")!
+        )
+
+        #expect(result.next == date("2026-09-13T16:00:00Z"))
+    }
+
     @Test func chineseMonthAtGregorianYearBoundaryMatchesTheExactLunarDay() throws {
         let record = fixture(
             year: 2026,

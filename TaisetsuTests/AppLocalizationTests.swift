@@ -72,5 +72,41 @@ struct AppLocalizationTests {
         #expect(AppLocalization.string("Home", locale: Locale(identifier: "ar")) == "الرئيسية")
     }
 
+    @Test func lunarDatesExposeTheirCalendarMeaningInEnglishAndChinese() {
+        let shanghai = TimeZone(identifier: "Asia/Shanghai")!
+        let ordinary = date("2026-09-13T16:00:00Z")
+        let leap = date("2034-01-18T16:00:00Z")
+
+        #expect(
+            AnniversaryFormatters.lunarMonthDay(
+                ordinary,
+                locale: Locale(identifier: "en_US"),
+                timeZone: shanghai
+            ) == "Lunar month 8, day 4"
+        )
+        #expect(
+            AnniversaryFormatters.lunarMonthDay(
+                ordinary,
+                locale: Locale(identifier: "zh_Hans_CN"),
+                timeZone: shanghai
+            ) == "农历8月4日"
+        )
+        #expect(
+            AnniversaryFormatters.dateWithLunar(
+                ordinary,
+                isAllDay: true,
+                locale: Locale(identifier: "en_US"),
+                timeZone: shanghai
+            ) == "Sep 14, 2026 · Lunar month 8, day 4"
+        )
+        #expect(
+            AnniversaryFormatters.lunarMonthDay(
+                leap,
+                locale: Locale(identifier: "zh_Hans_CN"),
+                timeZone: shanghai
+            ) == "农历闰11月29日"
+        )
+    }
+
     private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }
 }

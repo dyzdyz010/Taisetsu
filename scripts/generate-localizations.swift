@@ -200,10 +200,32 @@ private let appEntries: [Entry] = [
         "Leap Month", "闰月", "閏月", "閏月", "윤달", "Mes bisiesto", "Mois intercalaire", "Schaltmonat",
         "Mês intercalar", "Mese intercalare", "شهر كبيس"),
     Entry(
+        "Leap lunar month %lld, day %lld", "农历闰%lld月%lld日", "農曆閏%lld月%lld日", "旧暦閏%lld月%lld日",
+        "음력 윤%lld월 %lld일", "Mes lunar intercalar %lld, día %lld", "Mois lunaire intercalaire %lld, jour %lld",
+        "Schaltmondmonat %lld, Tag %lld", "Mês lunar intercalar %lld, dia %lld",
+        "Mese lunare intercalare %lld, giorno %lld", "الشهر القمري الكبيس %lld، اليوم %lld"),
+    Entry(
         "Loading important days…", "正在读取重要日…", "正在載入重要日…", "大切な日を読み込み中…", "소중한 날을 불러오는 중…",
         "Cargando fechas importantes…", "Chargement des dates importantes…", "Wichtige Tage werden geladen…",
         "Carregando datas importantes…", "Caricamento dei giorni importanti…", "جارٍ تحميل الأيام المهمة…"),
     Entry("Love", "爱情", "愛情", "恋愛", "사랑", "Amor", "Amour", "Liebe", "Amor", "Amore", "الحب"),
+    Entry(
+        "Lunar month %lld, day %lld", "农历%lld月%lld日", "農曆%lld月%lld日", "旧暦%lld月%lld日",
+        "음력 %lld월 %lld일", "Mes lunar %lld, día %lld", "Mois lunaire %lld, jour %lld",
+        "Mondmonat %lld, Tag %lld", "Mês lunar %lld, dia %lld", "Mese lunare %lld, giorno %lld",
+        "الشهر القمري %lld، اليوم %lld"),
+    Entry(
+        "Lunar month intervals count leap months and may land in a different numbered month.",
+        "农历月间隔会计入闰月，因此未来可能落在不同编号的月份。",
+        "農曆月間隔會計入閏月，因此未來可能落在不同編號的月份。",
+        "旧暦の月間隔には閏月も含まれるため、将来は異なる月番号になることがあります。",
+        "음력 월 간격에는 윤달도 포함되므로 이후에는 다른 월 번호에 해당할 수 있습니다.",
+        "Los intervalos de meses lunares cuentan los meses intercalares y pueden caer en un mes con otro número.",
+        "Les intervalles en mois lunaires comptent les mois intercalaires et peuvent tomber sur un autre numéro de mois.",
+        "Mondmonat-Intervalle zählen Schaltmonate mit und können künftig in einem anders nummerierten Monat liegen.",
+        "Intervalos em meses lunares contam meses intercalares e podem cair em um mês de número diferente.",
+        "Gli intervalli in mesi lunari includono i mesi intercalari e possono cadere in un mese con numero diverso.",
+        "تحتسب فواصل الأشهر القمرية الأشهر الكبيسة، وقد تقع لاحقًا في شهر ذي رقم مختلف."),
     Entry(
         "Manage Categories", "分类管理", "管理分類", "カテゴリ管理", "카테고리 관리", "Gestionar categorías",
         "Gérer les catégories", "Kategorien verwalten", "Gerenciar categorias", "Gestisci categorie",
@@ -234,6 +256,9 @@ private let appEntries: [Entry] = [
     Entry(
         "Next Month", "下个月", "下個月", "次の月", "다음 달", "Mes siguiente", "Mois suivant", "Nächster Monat",
         "Próximo mês", "Mese successivo", "الشهر التالي"),
+    Entry(
+        "Next Occurrence", "下一次发生", "下一次發生", "次回", "다음 발생", "Próxima fecha", "Prochaine occurrence",
+        "Nächster Termin", "Próxima ocorrência", "Prossima ricorrenza", "التكرار التالي"),
     Entry("No", "否", "否", "いいえ", "아니요", "No", "Non", "Nein", "Não", "No", "لا"),
     Entry(
         "No Category", "无分类", "無分類", "カテゴリなし", "카테고리 없음", "Sin categoría", "Sans catégorie",

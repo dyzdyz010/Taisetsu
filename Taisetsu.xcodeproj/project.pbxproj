@@ -81,6 +81,7 @@
 		EE0D99F1D5FBAD10750E9C23 /* OccurrenceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E657D6B5409B0C726B7FA5 /* OccurrenceCalculator.swift */; };
 		F215DDF796DEAFABD37378F8 /* DefaultCategorySeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBEB42C3EF0A9CCE4E89319 /* DefaultCategorySeederTests.swift */; };
 		F2347CC913820D32B3B7B0DB /* TaisetsuCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 519ED232110A050B623F9CED /* TaisetsuCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F299545AE132BC1CC3C97745 /* RecurrencePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6FF00882DE4238B590B2E5 /* RecurrencePreview.swift */; };
 		F6964829154E3E564F13DBDE /* ModelContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C316891E6811EDA5D989D958 /* ModelContainerFactory.swift */; };
 		F6D88F8EFF76C7ADFEA21B0B /* AnniversaryEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98218E1749B66053E325769A /* AnniversaryEditorViewModelTests.swift */; };
 		F862B10036AC0A3770F8AC89 /* AppLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F97B83CE3F04FB313602 /* AppLocalizationTests.swift */; };
@@ -182,6 +183,7 @@
 		22459E7075D42374C5E29AF4 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		270CAE768696E1CB8124E386 /* ProjectFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFoundationTests.swift; sourceTree = "<group>"; };
 		2D15D45C6CD2E4E0DF58E6AD /* TaisetsuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuUITests.swift; sourceTree = "<group>"; };
+		2E6FF00882DE4238B590B2E5 /* RecurrencePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePreview.swift; sourceTree = "<group>"; };
 		2FB38373AE1E41459DA45883 /* AnniversaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryModel.swift; sourceTree = "<group>"; };
 		33DEFBE148035914CE7CF344 /* AnniversaryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryEditorViewModel.swift; sourceTree = "<group>"; };
 		3B6DA1DB90AF2AEF639C99A8 /* NotificationCenterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterClient.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				33DEFBE148035914CE7CF344 /* AnniversaryEditorViewModel.swift */,
 				C27BCBBF9D46EC1A75C50C37 /* CategoryTagSection.swift */,
 				1C6D8BE3CA82386B476D1A35 /* DateRuleSection.swift */,
+				2E6FF00882DE4238B590B2E5 /* RecurrencePreview.swift */,
 				634BDE1E74BE6838D844521B /* RecurrenceSection.swift */,
 				E1D1B3E3E6761FAABEDC2308 /* ReminderSection.swift */,
 			);
@@ -771,6 +774,7 @@
 				F6964829154E3E564F13DBDE /* ModelContainerFactory.swift in Sources */,
 				CE7CAE96D645596B761EAA8D /* NotificationCenterClient.swift in Sources */,
 				090520931B5F2C1F25BC6CF9 /* ReconciliationCoordinator.swift in Sources */,
+				F299545AE132BC1CC3C97745 /* RecurrencePreview.swift in Sources */,
 				BC79E0E63BED272F124BE489 /* RecurrenceSection.swift in Sources */,
 				2DCAD6C8EB7D821113BBBA68 /* ReminderRuleModel.swift in Sources */,
 				990000A1E8C8982218591032 /* ReminderScheduler.swift in Sources */,
