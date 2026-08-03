@@ -32,17 +32,18 @@ if [[ -e "${result_bundle}" ]]; then
     rm -rf "${result_bundle}"
 fi
 
-test_selection=(-only-testing:LifeTimerTests)
-if [[ "${LIFETIMER_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
-    test_selection=()
-fi
+common_arguments=(
+    test
+    -project LifeTimer.xcodeproj
+    -scheme LifeTimer
+    -destination "platform=iOS Simulator,id=${LIFETIMER_SIMULATOR_UDID}"
+    -parallel-testing-enabled NO
+    -enableCodeCoverage YES
+    -resultBundlePath "${result_bundle}"
+)
 
-xcodebuild test \
-    -project LifeTimer.xcodeproj \
-    -scheme LifeTimer \
-    -destination "platform=iOS Simulator,id=${LIFETIMER_SIMULATOR_UDID}" \
-    -parallel-testing-enabled NO \
-    -enableCodeCoverage YES \
-    -resultBundlePath "${result_bundle}" \
-    "${test_selection[@]}" \
-    "$@"
+if [[ "${LIFETIMER_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
+    xcodebuild "${common_arguments[@]}" "$@"
+else
+    xcodebuild "${common_arguments[@]}" -only-testing:LifeTimerTests "$@"
+fi

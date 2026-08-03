@@ -11,7 +11,9 @@ struct LifeTimerApp: App {
     init() {
         do {
             let appContainer: ModelContainer
-            if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+                || CommandLine.arguments.contains("-ui-testing")
+            {
                 appContainer = try ModelContainerFactory.makeInMemory()
             } else {
                 do {
