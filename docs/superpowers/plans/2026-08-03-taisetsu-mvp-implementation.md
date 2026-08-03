@@ -18,7 +18,7 @@
 - SwiftData relationships must remain CloudKit-compatible: optional relationships, stable UUIDs, no unique-constraint dependency, and no deny delete rules.
 - `OccurrenceCalculator` is the only source for original, previous, next, elapsed, and remaining date semantics.
 - `isPinned` affects both Home and Widget ordering; `isVisibleInWidget` only affects widgets.
-- Widgets support `.systemSmall`, `.systemMedium`, and `.systemLarge`, showing 1, 4, and 5 events respectively.
+- Widgets support `.systemSmall`, `.systemMedium`, and `.systemLarge`, showing 3, 4, and 5 events respectively.
 - Calendar export is one-way and user-triggered; each export updates one nonrecurring event representing the next occurrence.
 - Tests are part of every feature task and must pass before its commit.
 
@@ -300,7 +300,7 @@ Normalize text with case/diacritic/width-insensitive folding and trim whitespace
 
 - [ ] **Step 4: Write failing widget capacity and visibility tests**
 
-Verify hidden events are excluded, pinned visible events come first, and snapshot helpers return counts 1, 4, and 5 for small, medium, and large families.
+Verify hidden events are excluded, pinned visible events come first, and snapshot helpers return counts 3, 4, and 5 for small, medium, and large families.
 
 - [ ] **Step 5: Implement versioned widget snapshot values**
 
@@ -631,7 +631,7 @@ Write `widget-snapshot.json` with `Data.write(options: .atomic)` in the App Grou
 
 - [ ] **Step 4: Write failing timeline boundary and family-capacity tests**
 
-Verify timeline entries at local midnight, next occurrence, and display-unit boundaries; verify family capacities 1, 4, and 5; verify widget-gallery preview and stale-snapshot states.
+Verify timeline entries at local midnight, next occurrence, and display-unit boundaries; verify family capacities 3, 4, and 5; verify widget-gallery preview and stale-snapshot states.
 
 - [ ] **Step 5: Implement WidgetKit provider and adaptive views**
 
