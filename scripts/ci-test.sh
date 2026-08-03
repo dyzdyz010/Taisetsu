@@ -23,6 +23,10 @@ if [[ -z "${LIFETIMER_SIMULATOR_UDID}" || "${LIFETIMER_SIMULATOR_UDID}" == "null
     exit 1
 fi
 
+xcrun simctl boot "${LIFETIMER_SIMULATOR_UDID}" 2>/dev/null || true
+xcrun simctl bootstatus "${LIFETIMER_SIMULATOR_UDID}" -b
+xcrun simctl terminate "${LIFETIMER_SIMULATOR_UDID}" com.dyz.LifeTimer 2>/dev/null || true
+
 result_bundle=".build/TestResults.xcresult"
 if [[ -e "${result_bundle}" ]]; then
     rm -rf "${result_bundle}"
@@ -42,4 +46,3 @@ xcodebuild test \
     -resultBundlePath "${result_bundle}" \
     "${test_selection[@]}" \
     "$@"
-

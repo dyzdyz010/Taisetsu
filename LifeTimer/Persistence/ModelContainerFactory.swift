@@ -1,3 +1,4 @@
+import Foundation
 import LifeTimerCore
 import SwiftData
 
@@ -10,6 +11,14 @@ enum ModelContainerFactory {
     ])
 
     static func makePersistent(cloudSyncEnabled: Bool) throws -> ModelContainer {
+        if let groupURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: AppConfiguration.appGroupIdentifier
+        ) {
+            try FileManager.default.createDirectory(
+                at: groupURL.appending(path: "Library/Application Support", directoryHint: .isDirectory),
+                withIntermediateDirectories: true
+            )
+        }
         let configuration = ModelConfiguration(
             "LifeTimer",
             schema: schema,
