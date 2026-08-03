@@ -1,5 +1,99 @@
 import Foundation
 
+public enum ChineseCalendarDateResolver {
+    public static func monthLength(
+        gregorianAnchorYear: Int,
+        lunarMonth: Int,
+        prefersLeapMonth: Bool,
+        timeZone: TimeZone = .current
+    ) -> Int? {
+        logicalMonthDates(
+            gregorianAnchorYear: gregorianAnchorYear,
+            lunarMonth: lunarMonth,
+            prefersLeapMonth: prefersLeapMonth,
+            timeZone: timeZone
+        )?.count
+    }
+
+    public static func date(
+        gregorianAnchorYear: Int,
+        lunarMonth: Int,
+        day: Int,
+        prefersLeapMonth: Bool,
+        timeZone: TimeZone
+    ) -> Date? {
+        guard
+            let dates = logicalMonthDates(
+                gregorianAnchorYear: gregorianAnchorYear,
+                lunarMonth: lunarMonth,
+                prefersLeapMonth: prefersLeapMonth,
+                timeZone: timeZone
+            ),
+            !dates.isEmpty
+        else { return nil }
+
+        let clampedDay = min(max(day, 1), dates.count)
+        return dates[clampedDay - 1]
+    }
+
+    private static func logicalMonthDates(
+        gregorianAnchorYear: Int,
+        lunarMonth: Int,
+        prefersLeapMonth: Bool,
+        timeZone: TimeZone
+    ) -> [Date]? {
+        guard (1...12).contains(lunarMonth) else { return nil }
+
+        var gregorian = Calendar(identifier: .gregorian)
+        gregorian.timeZone = timeZone
+        var chinese = Calendar(identifier: .chinese)
+        chinese.timeZone = timeZone
+        guard
+            let yearStart = gregorian.date(
+                from: DateComponents(year: gregorianAnchorYear, month: 1, day: 1)
+            ),
+            let yearEnd = gregorian.date(
+                from: DateComponents(year: gregorianAnchorYear + 1, month: 1, day: 1)
+            )
+        else { return nil }
+
+        var ordinaryStart: Date?
+        var leapStart: Date?
+        var cursor = yearStart
+        while cursor < yearEnd {
+            let components = chinese.dateComponents([.month, .day, .isLeapMonth], from: cursor)
+            if components.month == lunarMonth, components.day == 1 {
+                if components.isLeapMonth == true, leapStart == nil {
+                    leapStart = cursor
+                } else if components.isLeapMonth != true, ordinaryStart == nil {
+                    ordinaryStart = cursor
+                }
+            }
+            guard let next = gregorian.date(byAdding: .day, value: 1, to: cursor) else { return nil }
+            cursor = next
+        }
+
+        let usesLeapMonth = prefersLeapMonth && leapStart != nil
+        guard let monthStart = usesLeapMonth ? leapStart : ordinaryStart else { return nil }
+
+        var dates: [Date] = []
+        cursor = monthStart
+        while dates.count < 30 {
+            let components = chinese.dateComponents([.month, .day, .isLeapMonth], from: cursor)
+            guard
+                components.month == lunarMonth,
+                components.isLeapMonth == usesLeapMonth,
+                components.day == dates.count + 1
+            else { break }
+            dates.append(cursor)
+            guard let next = gregorian.date(byAdding: .day, value: 1, to: cursor) else { return nil }
+            cursor = next
+        }
+
+        return dates.isEmpty ? nil : dates
+    }
+}
+
 public struct OccurrenceCalculator: Sendable {
     public init() {}
 
@@ -192,33 +286,20 @@ public struct OccurrenceCalculator: Sendable {
         gregorianYear: Int,
         timeZone: TimeZone
     ) throws -> Date {
+        guard
+            let dayStart = ChineseCalendarDateResolver.date(
+                gregorianAnchorYear: gregorianYear,
+                lunarMonth: anniversary.date.month,
+                day: anniversary.date.day,
+                prefersLeapMonth: anniversary.date.isLeapMonth,
+                timeZone: timeZone
+            )
+        else {
+            throw OccurrenceCalculationError.invalidDate
+        }
+        if anniversary.isAllDay { return dayStart }
         var gregorian = Calendar(identifier: .gregorian)
         gregorian.timeZone = timeZone
-        var chinese = Calendar(identifier: .chinese)
-        chinese.timeZone = timeZone
-        guard let start = gregorian.date(from: DateComponents(year: gregorianYear, month: 1, day: 1)),
-            let end = gregorian.date(from: DateComponents(year: gregorianYear + 1, month: 1, day: 1))
-        else { throw OccurrenceCalculationError.invalidDate }
-
-        var ordinaryDays: [Date] = []
-        var leapDays: [Date] = []
-        var cursor = start
-        while cursor < end {
-            let components = chinese.dateComponents([.month, .day], from: cursor)
-            if components.month == anniversary.date.month {
-                if components.isLeapMonth == true {
-                    leapDays.append(cursor)
-                } else {
-                    ordinaryDays.append(cursor)
-                }
-            }
-            cursor = gregorian.date(byAdding: .day, value: 1, to: cursor)!
-        }
-        let selectedMonth = anniversary.date.isLeapMonth && !leapDays.isEmpty ? leapDays : ordinaryDays
-        guard !selectedMonth.isEmpty else { throw OccurrenceCalculationError.invalidDate }
-        let requestedIndex = max(0, min(anniversary.date.day - 1, selectedMonth.count - 1))
-        let dayStart = selectedMonth[requestedIndex]
-        if anniversary.isAllDay { return dayStart }
         guard
             let result = gregorian.nextDate(
                 after: dayStart.addingTimeInterval(-1),

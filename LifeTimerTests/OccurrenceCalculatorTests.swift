@@ -85,12 +85,77 @@ struct OccurrenceCalculatorTests {
         #expect(result.next == date("2027-02-05T16:00:00Z"))
     }
 
+    @Test func chineseMonthAtGregorianYearBoundaryMatchesTheExactLunarDay() throws {
+        let record = fixture(
+            year: 2026,
+            month: 11,
+            day: 1,
+            calendarKind: .chinese
+        )
+        let result = try calculator.calculate(
+            for: record,
+            relativeTo: date("2026-08-03T00:00:00Z"),
+            timeZone: utc
+        )
+
+        #expect(result.original == date("2026-12-09T00:00:00Z"))
+        #expect(result.next == date("2026-12-09T00:00:00Z"))
+    }
+
+    @Test func chineseLeapMonthAtYearBoundaryUsesTheCompleteLogicalMonth() throws {
+        let leapMonth = fixture(
+            year: 2033,
+            month: 11,
+            day: 29,
+            isLeapMonth: true,
+            calendarKind: .chinese
+        )
+        let missingLeapMonthFallsBackToOrdinary = fixture(
+            year: 2034,
+            month: 11,
+            day: 1,
+            isLeapMonth: true,
+            calendarKind: .chinese
+        )
+
+        let leapResult = try calculator.calculate(
+            for: leapMonth,
+            relativeTo: date("2033-01-01T00:00:00Z"),
+            timeZone: utc
+        )
+        let fallbackResult = try calculator.calculate(
+            for: missingLeapMonthFallsBackToOrdinary,
+            relativeTo: date("2034-01-01T00:00:00Z"),
+            timeZone: utc
+        )
+
+        #expect(leapResult.original == date("2034-01-19T00:00:00Z"))
+        #expect(fallbackResult.original == date("2034-12-11T00:00:00Z"))
+    }
+
+    @Test func chineseDuplicateMonthStartKeepsTheFirstOccurrenceInTheAnchorYear() throws {
+        let record = fixture(
+            year: 2024,
+            month: 12,
+            day: 30,
+            calendarKind: .chinese
+        )
+        let result = try calculator.calculate(
+            for: record,
+            relativeTo: date("2024-01-01T00:00:00Z"),
+            timeZone: utc
+        )
+
+        #expect(result.original == date("2024-02-09T00:00:00Z"))
+    }
+
     private func fixture(
         year: Int,
         month: Int,
         day: Int,
         hour: Int = 0,
         minute: Int = 0,
+        isLeapMonth: Bool = false,
         isAllDay: Bool = true,
         calendarKind: CalendarKind = .gregorian,
         recurrence: RecurrenceRule = .none
@@ -105,7 +170,8 @@ struct OccurrenceCalculatorTests {
                 month: month,
                 day: day,
                 hour: hour,
-                minute: minute
+                minute: minute,
+                isLeapMonth: isLeapMonth
             ),
             isAllDay: isAllDay,
             recurrence: recurrence

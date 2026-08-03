@@ -1,3 +1,4 @@
+import Foundation
 import SwiftData
 import Testing
 
@@ -52,6 +53,41 @@ struct AnniversaryEditorViewModelTests {
         date.year = 2023
         DateWheelSelection.normalize(&date, calendarKind: .gregorian)
         #expect(date.day == 28)
+    }
+
+    @Test func newDraftAndDateWheelUseGregorianAnchorYears() throws {
+        let referenceDate = try #require(
+            ISO8601DateFormatter().date(from: "2026-08-03T12:00:00Z")
+        )
+        let utc = try #require(TimeZone(secondsFromGMT: 0))
+
+        let draft = AnniversaryDraft(referenceDate: referenceDate, timeZone: utc)
+        let range = DateWheelSelection.yearRange(
+            containing: draft.date.year,
+            referenceDate: referenceDate,
+            timeZone: utc
+        )
+
+        #expect(draft.date == AnniversaryDate(year: 2026, month: 8, day: 3))
+        #expect(range.upperBound == 2126)
+    }
+
+    @Test func lunarWheelUsesTheCompleteMonthThatStartsInTheAnchorYear() {
+        let leapMonth = AnniversaryDate(
+            year: 2033,
+            month: 11,
+            day: 1,
+            isLeapMonth: true
+        )
+        let fallbackMonth = AnniversaryDate(
+            year: 2034,
+            month: 11,
+            day: 1,
+            isLeapMonth: true
+        )
+
+        #expect(DateWheelSelection.dayRange(for: leapMonth, calendarKind: .chinese) == 1...29)
+        #expect(DateWheelSelection.dayRange(for: fallbackMonth, calendarKind: .chinese) == 1...29)
     }
 
     @Test func recurrenceToggleUsesYearlyDefaultAndCanonicalNoneState() {

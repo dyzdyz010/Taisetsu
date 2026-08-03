@@ -13,7 +13,7 @@
 - Preserve Gregorian and Chinese-lunar semantics, including optional leap months.
 - Keep recurrence intervals in the existing 1 through 999 UI range.
 - Use only native SwiftUI controls and existing project dependencies.
-- Do not modify the persistence schema, reminder scheduling, occurrence calculation, or widget schema.
+- Do not modify the persistence schema, reminder scheduling, recurrence semantics, or widget schema. Correct exact lunar date resolution if the wheel exposes an existing boundary mismatch.
 
 ---
 
@@ -147,7 +147,38 @@ Expected: all unit and UI tests pass.
 
 ---
 
-### Task 4: Verify and publish
+### Task 4: Harden Gregorian anchors and lunar boundary resolution
+
+**Files:**
+- Modify: `LifeTimer/Domain/AnniversaryDraft.swift`
+- Modify: `LifeTimer/Features/Editor/DateRuleSection.swift`
+- Modify: `LifeTimerCore/Domain/OccurrenceCalculator.swift`
+- Test: `LifeTimerTests/AnniversaryEditorViewModelTests.swift`
+- Test: `LifeTimerTests/OccurrenceCalculatorTests.swift`
+
+**Interfaces:**
+- Consumes: the Gregorian anchor-year contract and Chinese-calendar month/day components.
+- Produces: system-calendar-independent year defaults and exact lunar day resolution at Gregorian-year boundaries.
+
+- [ ] **Step 1: Add regression tests**
+
+Verify that a new draft and wheel range use Gregorian year 2026 for a known 2026 instant, and that lunar `2026/11/1` resolves to the exact lunar day on 2026-12-09 rather than indexing from 2026-01-01.
+
+- [ ] **Step 2: Use explicit Gregorian calendars for anchor years**
+
+Construct Gregorian calendars with the requested local time zone in both `AnniversaryDraft` and `DateWheelSelection`.
+
+- [ ] **Step 3: Match lunar day components exactly**
+
+Resolve the selected ordinary or leap month as the complete logical month whose first day is in the Gregorian anchor year. If the same numbered month starts twice in one anchor year, retain the first start for backward compatibility. Share that metadata with the wheel, fall back to the ordinary month when the requested leap month does not begin in the anchor year, and retain month-end clamping for legacy invalid dates.
+
+- [ ] **Step 4: Verify RED/GREEN**
+
+Run the boundary test against the previous resolver to confirm the failure, restore the exact-match implementation, then run the full unit suite.
+
+---
+
+### Task 5: Verify and publish
 
 **Files:**
 - Verify all modified Swift, test, and documentation files.
@@ -171,7 +202,7 @@ Expected: no whitespace errors and only planned files changed.
 - [ ] **Step 3: Commit and push the feature branch**
 
 ```bash
-git add docs/superpowers LifeTimer/Features/Editor LifeTimerTests LifeTimerUITests
+git add docs/superpowers LifeTimer/Domain LifeTimer/Features/Editor LifeTimerCore/Domain LifeTimerTests LifeTimerUITests
 git commit -m "feat: clarify date and recurrence controls"
 git push -u origin feat/wheel-date-recurrence
 ```

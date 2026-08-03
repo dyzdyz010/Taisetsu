@@ -3,8 +3,14 @@ import LifeTimerCore
 import SwiftUI
 
 enum DateWheelSelection {
-    static func yearRange(containing selectedYear: Int, referenceDate: Date = .now) -> ClosedRange<Int> {
-        let currentYear = Calendar.current.component(.year, from: referenceDate)
+    static func yearRange(
+        containing selectedYear: Int,
+        referenceDate: Date = .now,
+        timeZone: TimeZone = .current
+    ) -> ClosedRange<Int> {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let currentYear = calendar.component(.year, from: referenceDate)
         return min(1900, selectedYear)...max(currentYear + 100, selectedYear)
     }
 
@@ -36,33 +42,11 @@ enum DateWheelSelection {
     }
 
     private static func chineseMonthLength(for date: AnniversaryDate) -> Int {
-        var gregorian = Calendar(identifier: .gregorian)
-        gregorian.timeZone = .current
-        var chinese = Calendar(identifier: .chinese)
-        chinese.timeZone = .current
-        guard
-            let start = gregorian.date(from: DateComponents(year: date.year, month: 1, day: 1)),
-            let end = gregorian.date(from: DateComponents(year: date.year + 1, month: 1, day: 1))
-        else { return 30 }
-
-        var ordinaryMaximum = 0
-        var leapMaximum = 0
-        var cursor = start
-        while cursor < end {
-            let components = chinese.dateComponents([.month, .day, .isLeapMonth], from: cursor)
-            if components.month == date.month, let day = components.day {
-                if components.isLeapMonth == true {
-                    leapMaximum = max(leapMaximum, day)
-                } else {
-                    ordinaryMaximum = max(ordinaryMaximum, day)
-                }
-            }
-            guard let next = gregorian.date(byAdding: .day, value: 1, to: cursor) else { break }
-            cursor = next
-        }
-
-        if date.isLeapMonth, leapMaximum > 0 { return leapMaximum }
-        return ordinaryMaximum > 0 ? ordinaryMaximum : 30
+        ChineseCalendarDateResolver.monthLength(
+            gregorianAnchorYear: date.year,
+            lunarMonth: date.month,
+            prefersLeapMonth: date.isLeapMonth
+        ) ?? 30
     }
 }
 

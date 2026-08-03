@@ -45,7 +45,9 @@ struct RecurrenceSection: View {
                     Stepper("重复数量", value: $draft.recurrenceInterval, in: 1...999)
                         .labelsHidden()
                         .accessibilityLabel("重复数量")
-                        .accessibilityValue("\(draft.recurrenceInterval)")
+                        .accessibilityValue(
+                            "每 \(draft.recurrenceInterval) \(unitTitle(draft.recurrenceUnit ?? .year))"
+                        )
                         .accessibilityIdentifier("recurrence-interval")
                 }
             }
