@@ -6,358 +6,492 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		06044EA5DD0A85A7FABC60A5 /* LifeTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */; };
+		2D4A244971EFE68CF16C408C /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6710EF0910289BE513635C6C /* LifeTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */; };
+		777908DA2A403EA2F475C108 /* LifeTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */; };
+		7E6872F0F9588FFC78C51FCB /* ProjectFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */; };
+		845BACF3EC866F049CE39BA3 /* LifeTimerWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9EA93AAC088E62D5CAF02D2C /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		A43CC278ABB4E4C357AD9C87 /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		B612D355556CAB455D11D697 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */; };
+		BCBB1B27B80EB34CA03B7058 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769944EE495727AF82537F2E /* AppConfiguration.swift */; };
+		CFE656D5E7EC655AA4620305 /* LifeTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */; };
+		D50B7004600FE8013C4AC468 /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECA14EFDB0942DC2E547733B /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		F3EB39C3B977EC862FB6FBAA /* LifeTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		641F724430202ADE00FFFEF9 /* PBXContainerItemProxy */ = {
+		035BE7FB0EB62AA2D9D47DD1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 641F722A30202ADD00FFFEF9 /* Project object */;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 641F723130202ADD00FFFEF9;
+			remoteGlobalIDString = A73E3BAA561886C49D66BEEA;
 			remoteInfo = LifeTimer;
 		};
-		641F724E30202ADE00FFFEF9 /* PBXContainerItemProxy */ = {
+		26D29DDD6DDE24B08C1B14AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 641F722A30202ADD00FFFEF9 /* Project object */;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 641F723130202ADD00FFFEF9;
+			remoteGlobalIDString = D6A99AED01003E8A40D672B1;
+			remoteInfo = LifeTimerCore;
+		};
+		440F1C8EDB29E8B6C88B9220 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A73E3BAA561886C49D66BEEA;
 			remoteInfo = LifeTimer;
+		};
+		B48CE2DB0FD5045ECA61F6CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6A99AED01003E8A40D672B1;
+			remoteInfo = LifeTimerCore;
+		};
+		C1F1B3D128EBFF6FF8C4F504 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6A99AED01003E8A40D672B1;
+			remoteInfo = LifeTimerCore;
+		};
+		DABCB0A246D2D5B334360D3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 845785F280A274D9F7B57FA6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C3E3D79BCDD266C6055EA8F;
+			remoteInfo = LifeTimerWidget;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		75546CEF7852966E25705BBA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				845BACF3EC866F049CE39BA3 /* LifeTimerWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830532B9844FFE956949BC11 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D50B7004600FE8013C4AC468 /* LifeTimerCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F4F33FA5FC662E3FBD49CB4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2D4A244971EFE68CF16C408C /* LifeTimerCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		641F723230202ADD00FFFEF9 /* LifeTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		641F724330202ADE00FFFEF9 /* LifeTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		641F724D30202ADE00FFFEF9 /* LifeTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2D6A41F59175F9035F663664 /* LifeTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LifeTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITests.swift; sourceTree = "<group>"; };
+		3FBFF3C8A44DB767BBD9E4C8 /* LifeTimerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimerWidget.entitlements; sourceTree = "<group>"; };
+		41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeTimerCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LifeTimerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		717F1EDB561A104D781D3242 /* LifeTimerUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		769944EE495727AF82537F2E /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		773256362E630F2CD7D97BBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidget.swift; sourceTree = "<group>"; };
+		D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFoundationTests.swift; sourceTree = "<group>"; };
+		D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerApp.swift; sourceTree = "<group>"; };
+		D7BD3E9B55EB0176D044EA1C /* LifeTimerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimer.entitlements; sourceTree = "<group>"; };
+		FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidgetBundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		641F725530202ADE00FFFEF9 /* Exceptions for "LifeTimer" folder in "LifeTimer" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 641F723130202ADD00FFFEF9 /* LifeTimer */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		641F723430202ADD00FFFEF9 /* LifeTimer */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				641F725530202ADE00FFFEF9 /* Exceptions for "LifeTimer" folder in "LifeTimer" target */,
-			);
-			path = LifeTimer;
-			sourceTree = "<group>";
-		};
-		641F724630202ADE00FFFEF9 /* LifeTimerTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LifeTimerTests;
-			sourceTree = "<group>";
-		};
-		641F725030202ADE00FFFEF9 /* LifeTimerUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LifeTimerUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		641F722F30202ADD00FFFEF9 /* Frameworks */ = {
+		09233FDF5E21FE1C99EE5744 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A43CC278ABB4E4C357AD9C87 /* LifeTimerCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		641F724030202ADE00FFFEF9 /* Frameworks */ = {
+		516A2399A2393062C5C246D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA14EFDB0942DC2E547733B /* LifeTimerCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		641F724A30202ADE00FFFEF9 /* Frameworks */ = {
+		C931715D2435AD7DDC78358D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA93AAC088E62D5CAF02D2C /* LifeTimerCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		641F722930202ADD00FFFEF9 = {
+		16AF16E197FE3EF297232D6F /* LifeTimerTests */ = {
 			isa = PBXGroup;
 			children = (
-				641F723430202ADD00FFFEF9 /* LifeTimer */,
-				641F724630202ADE00FFFEF9 /* LifeTimerTests */,
-				641F725030202ADE00FFFEF9 /* LifeTimerUITests */,
-				641F723330202ADD00FFFEF9 /* Products */,
+				D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */,
+			);
+			path = LifeTimerTests;
+			sourceTree = "<group>";
+		};
+		1FAB018C0B24A8DE121D2021 /* LifeTimerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */,
+				18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */,
+			);
+			path = LifeTimerUITests;
+			sourceTree = "<group>";
+		};
+		5DCAD3D7A5B601887FC0A4F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2D6A41F59175F9035F663664 /* LifeTimer.app */,
+				41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */,
+				D7BD3E9B55EB0176D044EA1C /* LifeTimerTests.xctest */,
+				717F1EDB561A104D781D3242 /* LifeTimerUITests.xctest */,
+				6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		96D0922BA4DD9B271D63A2A6 = {
+			isa = PBXGroup;
+			children = (
+				D0DB802516B0EE2125AB8E0F /* LifeTimer */,
+				D785323976769D89D4F61A88 /* LifeTimerCore */,
+				16AF16E197FE3EF297232D6F /* LifeTimerTests */,
+				1FAB018C0B24A8DE121D2021 /* LifeTimerUITests */,
+				EB1132705ED83C9DB92E4409 /* LifeTimerWidget */,
+				5DCAD3D7A5B601887FC0A4F9 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		641F723330202ADD00FFFEF9 /* Products */ = {
+		99C302BE0A647244BF32083C /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				641F723230202ADD00FFFEF9 /* LifeTimer.app */,
-				641F724330202ADE00FFFEF9 /* LifeTimerTests.xctest */,
-				641F724D30202ADE00FFFEF9 /* LifeTimerUITests.xctest */,
+				769944EE495727AF82537F2E /* AppConfiguration.swift */,
 			);
-			name = Products;
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		BDB6D95B3A556206A1AD12A8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D0DB802516B0EE2125AB8E0F /* LifeTimer */ = {
+			isa = PBXGroup;
+			children = (
+				BDB6D95B3A556206A1AD12A8 /* App */,
+				4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */,
+				EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */,
+				EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */,
+			);
+			path = LifeTimer;
+			sourceTree = "<group>";
+		};
+		D785323976769D89D4F61A88 /* LifeTimerCore */ = {
+			isa = PBXGroup;
+			children = (
+				99C302BE0A647244BF32083C /* Configuration */,
+			);
+			path = LifeTimerCore;
+			sourceTree = "<group>";
+		};
+		EB1132705ED83C9DB92E4409 /* LifeTimerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				773256362E630F2CD7D97BBF /* Info.plist */,
+				3FBFF3C8A44DB767BBD9E4C8 /* LifeTimerWidget.entitlements */,
+				A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */,
+				FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */,
+			);
+			path = LifeTimerWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		641F723130202ADD00FFFEF9 /* LifeTimer */ = {
+		5AEA0DDC82295E62098CC1D0 /* LifeTimerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 641F725630202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimer" */;
+			buildConfigurationList = A9572B47384ECCCF0954E3D4 /* Build configuration list for PBXNativeTarget "LifeTimerTests" */;
 			buildPhases = (
-				641F722E30202ADD00FFFEF9 /* Sources */,
-				641F722F30202ADD00FFFEF9 /* Frameworks */,
-				641F723030202ADD00FFFEF9 /* Resources */,
+				5346C648FC6D03DD891A81CF /* Sources */,
+				516A2399A2393062C5C246D3 /* Frameworks */,
+				830532B9844FFE956949BC11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				641F723430202ADD00FFFEF9 /* LifeTimer */,
-			);
-			name = LifeTimer;
-			packageProductDependencies = (
-			);
-			productName = LifeTimer;
-			productReference = 641F723230202ADD00FFFEF9 /* LifeTimer.app */;
-			productType = "com.apple.product-type.application";
-		};
-		641F724230202ADE00FFFEF9 /* LifeTimerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 641F725B30202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimerTests" */;
-			buildPhases = (
-				641F723F30202ADE00FFFEF9 /* Sources */,
-				641F724030202ADE00FFFEF9 /* Frameworks */,
-				641F724130202ADE00FFFEF9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				641F724530202ADE00FFFEF9 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				641F724630202ADE00FFFEF9 /* LifeTimerTests */,
+				DE635F29797EEFBB4EF36114 /* PBXTargetDependency */,
+				06B11E42432A5BDAB1664BD4 /* PBXTargetDependency */,
 			);
 			name = LifeTimerTests;
 			packageProductDependencies = (
 			);
 			productName = LifeTimerTests;
-			productReference = 641F724330202ADE00FFFEF9 /* LifeTimerTests.xctest */;
+			productReference = D7BD3E9B55EB0176D044EA1C /* LifeTimerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		641F724C30202ADE00FFFEF9 /* LifeTimerUITests */ = {
+		5C3E3D79BCDD266C6055EA8F /* LifeTimerWidget */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 641F725E30202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimerUITests" */;
+			buildConfigurationList = 2232EDE21FB7DE6A5F663B51 /* Build configuration list for PBXNativeTarget "LifeTimerWidget" */;
 			buildPhases = (
-				641F724930202ADE00FFFEF9 /* Sources */,
-				641F724A30202ADE00FFFEF9 /* Frameworks */,
-				641F724B30202ADE00FFFEF9 /* Resources */,
+				0D954E38C224DDA23F4C0166 /* Sources */,
+				C931715D2435AD7DDC78358D /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				641F724F30202ADE00FFFEF9 /* PBXTargetDependency */,
+				EE657D41B79E4CC5B3A92905 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				641F725030202ADE00FFFEF9 /* LifeTimerUITests */,
+			name = LifeTimerWidget;
+			packageProductDependencies = (
+			);
+			productName = LifeTimerWidget;
+			productReference = 6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		9EB66313BDE179A56CFAEE18 /* LifeTimerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFCED574828C382970AFDDC0 /* Build configuration list for PBXNativeTarget "LifeTimerUITests" */;
+			buildPhases = (
+				5520DDB2E523F8C86DCA9D41 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7D78125F238858676049BC9 /* PBXTargetDependency */,
 			);
 			name = LifeTimerUITests;
 			packageProductDependencies = (
 			);
 			productName = LifeTimerUITests;
-			productReference = 641F724D30202ADE00FFFEF9 /* LifeTimerUITests.xctest */;
+			productReference = 717F1EDB561A104D781D3242 /* LifeTimerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		A73E3BAA561886C49D66BEEA /* LifeTimer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6743B69572537746F0C86A72 /* Build configuration list for PBXNativeTarget "LifeTimer" */;
+			buildPhases = (
+				08021886CE1468E17AF150CF /* Sources */,
+				0E055F6DE50C2D560CBF2690 /* Resources */,
+				09233FDF5E21FE1C99EE5744 /* Frameworks */,
+				75546CEF7852966E25705BBA /* Embed Foundation Extensions */,
+				8F4F33FA5FC662E3FBD49CB4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2DD1FF642783D81275EEE57 /* PBXTargetDependency */,
+				03391789EE3B32A5644C9494 /* PBXTargetDependency */,
+			);
+			name = LifeTimer;
+			packageProductDependencies = (
+			);
+			productName = LifeTimer;
+			productReference = 2D6A41F59175F9035F663664 /* LifeTimer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D6A99AED01003E8A40D672B1 /* LifeTimerCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9BBF377534B053F3A86F5F08 /* Build configuration list for PBXNativeTarget "LifeTimerCore" */;
+			buildPhases = (
+				3CEA836AEAC4E4BC8EB72241 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LifeTimerCore;
+			packageProductDependencies = (
+			);
+			productName = LifeTimerCore;
+			productReference = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		641F722A30202ADD00FFFEF9 /* Project object */ = {
+		845785F280A274D9F7B57FA6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2660;
-				LastUpgradeCheck = 2660;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					641F723130202ADD00FFFEF9 = {
-						CreatedOnToolsVersion = 26.6;
-					};
-					641F724230202ADE00FFFEF9 = {
-						CreatedOnToolsVersion = 26.6;
-						TestTargetID = 641F723130202ADD00FFFEF9;
-					};
-					641F724C30202ADE00FFFEF9 = {
-						CreatedOnToolsVersion = 26.6;
-						TestTargetID = 641F723130202ADD00FFFEF9;
+					9EB66313BDE179A56CFAEE18 = {
+						TestTargetID = A73E3BAA561886C49D66BEEA;
 					};
 				};
 			};
-			buildConfigurationList = 641F722D30202ADD00FFFEF9 /* Build configuration list for PBXProject "LifeTimer" */;
+			buildConfigurationList = DAA76078E646DCA73841CD8C /* Build configuration list for PBXProject "LifeTimer" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = 641F722930202ADD00FFFEF9;
+			mainGroup = 96D0922BA4DD9B271D63A2A6;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 641F723330202ADD00FFFEF9 /* Products */;
+			productRefGroup = 5DCAD3D7A5B601887FC0A4F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				641F723130202ADD00FFFEF9 /* LifeTimer */,
-				641F724230202ADE00FFFEF9 /* LifeTimerTests */,
-				641F724C30202ADE00FFFEF9 /* LifeTimerUITests */,
+				D6A99AED01003E8A40D672B1 /* LifeTimerCore */,
+				A73E3BAA561886C49D66BEEA /* LifeTimer */,
+				5C3E3D79BCDD266C6055EA8F /* LifeTimerWidget */,
+				5AEA0DDC82295E62098CC1D0 /* LifeTimerTests */,
+				9EB66313BDE179A56CFAEE18 /* LifeTimerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		641F723030202ADD00FFFEF9 /* Resources */ = {
+		0E055F6DE50C2D560CBF2690 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		641F724130202ADE00FFFEF9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		641F724B30202ADE00FFFEF9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				B612D355556CAB455D11D697 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		641F722E30202ADD00FFFEF9 /* Sources */ = {
+		08021886CE1468E17AF150CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3EB39C3B977EC862FB6FBAA /* LifeTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		641F723F30202ADE00FFFEF9 /* Sources */ = {
+		0D954E38C224DDA23F4C0166 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06044EA5DD0A85A7FABC60A5 /* LifeTimerWidget.swift in Sources */,
+				CFE656D5E7EC655AA4620305 /* LifeTimerWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		641F724930202ADE00FFFEF9 /* Sources */ = {
+		3CEA836AEAC4E4BC8EB72241 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCBB1B27B80EB34CA03B7058 /* AppConfiguration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5346C648FC6D03DD891A81CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E6872F0F9588FFC78C51FCB /* ProjectFoundationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5520DDB2E523F8C86DCA9D41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6710EF0910289BE513635C6C /* LifeTimerUITests.swift in Sources */,
+				777908DA2A403EA2F475C108 /* LifeTimerUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		641F724530202ADE00FFFEF9 /* PBXTargetDependency */ = {
+		03391789EE3B32A5644C9494 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 641F723130202ADD00FFFEF9 /* LifeTimer */;
-			targetProxy = 641F724430202ADE00FFFEF9 /* PBXContainerItemProxy */;
+			target = 5C3E3D79BCDD266C6055EA8F /* LifeTimerWidget */;
+			targetProxy = DABCB0A246D2D5B334360D3A /* PBXContainerItemProxy */;
 		};
-		641F724F30202ADE00FFFEF9 /* PBXTargetDependency */ = {
+		06B11E42432A5BDAB1664BD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 641F723130202ADD00FFFEF9 /* LifeTimer */;
-			targetProxy = 641F724E30202ADE00FFFEF9 /* PBXContainerItemProxy */;
+			target = A73E3BAA561886C49D66BEEA /* LifeTimer */;
+			targetProxy = 440F1C8EDB29E8B6C88B9220 /* PBXContainerItemProxy */;
+		};
+		B7D78125F238858676049BC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A73E3BAA561886C49D66BEEA /* LifeTimer */;
+			targetProxy = 035BE7FB0EB62AA2D9D47DD1 /* PBXContainerItemProxy */;
+		};
+		D2DD1FF642783D81275EEE57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6A99AED01003E8A40D672B1 /* LifeTimerCore */;
+			targetProxy = 26D29DDD6DDE24B08C1B14AE /* PBXContainerItemProxy */;
+		};
+		DE635F29797EEFBB4EF36114 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6A99AED01003E8A40D672B1 /* LifeTimerCore */;
+			targetProxy = C1F1B3D128EBFF6FF8C4F504 /* PBXContainerItemProxy */;
+		};
+		EE657D41B79E4CC5B3A92905 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6A99AED01003E8A40D672B1 /* LifeTimerCore */;
+			targetProxy = B48CE2DB0FD5045ECA61F6CD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		641F725730202ADE00FFFEF9 /* Debug */ = {
+		2DC39384B0CA189FA4EBAF1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LifeTimer/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				CODE_SIGN_ENTITLEMENTS = LifeTimerWidget/LifeTimerWidget.entitlements;
+				INFOPLIST_FILE = LifeTimerWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer.Widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		641F725830202ADE00FFFEF9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LifeTimer/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		641F725930202ADE00FFFEF9 /* Debug */ = {
+		364DFF43CC6534885DD91A66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -384,18 +518,18 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -403,25 +537,115 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		641F725A30202ADE00FFFEF9 /* Release */ = {
+		4A2BD6BAC8CEC19B9A2FA076 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = LifeTimer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6BA2677935A489F936760FCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerUITests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LifeTimer;
+			};
+			name = Debug;
+		};
+		93E3888D298265D0641834DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeTimer/LifeTimer.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = LifeTimer/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A511ED20B420529374AB087A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerUITests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LifeTimer;
+			};
+			name = Release;
+		};
+		A5190FB89F354260C74674DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LifeTimerWidget/LifeTimerWidget.entitlements;
+				INFOPLIST_FILE = LifeTimerWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimer.Widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C93A0AAA9B941C5A2F5D8A9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -448,12 +672,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 98GGXKMU33;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -461,140 +685,159 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
-		641F725C30202ADE00FFFEF9 /* Debug */ = {
+		DA402F85E405B82AA272B879 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerCore;
+				PRODUCT_NAME = LifeTimerCore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LifeTimer";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		641F725D30202ADE00FFFEF9 /* Release */ = {
+		E456324BADC1A9E1C304BC8D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerCore;
+				PRODUCT_NAME = LifeTimerCore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LifeTimer";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		641F725F30202ADE00FFFEF9 /* Debug */ = {
+		E5CC984E7944FEC05930F65D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerTests;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LifeTimer;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeTimer.app/LifeTimer";
 			};
 			name = Debug;
 		};
-		641F726030202ADE00FFFEF9 /* Release */ = {
+		F1BED485FBBC370C9982B0DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98GGXKMU33;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dyz.LifeTimerTests;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LifeTimer;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeTimer.app/LifeTimer";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		641F722D30202ADD00FFFEF9 /* Build configuration list for PBXProject "LifeTimer" */ = {
+		2232EDE21FB7DE6A5F663B51 /* Build configuration list for PBXNativeTarget "LifeTimerWidget" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				641F725930202ADE00FFFEF9 /* Debug */,
-				641F725A30202ADE00FFFEF9 /* Release */,
+				2DC39384B0CA189FA4EBAF1B /* Debug */,
+				A5190FB89F354260C74674DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		641F725630202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimer" */ = {
+		6743B69572537746F0C86A72 /* Build configuration list for PBXNativeTarget "LifeTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				641F725730202ADE00FFFEF9 /* Debug */,
-				641F725830202ADE00FFFEF9 /* Release */,
+				93E3888D298265D0641834DF /* Debug */,
+				4A2BD6BAC8CEC19B9A2FA076 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		641F725B30202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimerTests" */ = {
+		9BBF377534B053F3A86F5F08 /* Build configuration list for PBXNativeTarget "LifeTimerCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				641F725C30202ADE00FFFEF9 /* Debug */,
-				641F725D30202ADE00FFFEF9 /* Release */,
+				DA402F85E405B82AA272B879 /* Debug */,
+				E456324BADC1A9E1C304BC8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		641F725E30202ADE00FFFEF9 /* Build configuration list for PBXNativeTarget "LifeTimerUITests" */ = {
+		A9572B47384ECCCF0954E3D4 /* Build configuration list for PBXNativeTarget "LifeTimerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				641F725F30202ADE00FFFEF9 /* Debug */,
-				641F726030202ADE00FFFEF9 /* Release */,
+				E5CC984E7944FEC05930F65D /* Debug */,
+				F1BED485FBBC370C9982B0DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
+		};
+		AFCED574828C382970AFDDC0 /* Build configuration list for PBXNativeTarget "LifeTimerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BA2677935A489F936760FCD /* Debug */,
+				A511ED20B420529374AB087A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DAA76078E646DCA73841CD8C /* Build configuration list for PBXProject "LifeTimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				364DFF43CC6534885DD91A66 /* Debug */,
+				C93A0AAA9B941C5A2F5D8A9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 641F722A30202ADD00FFFEF9 /* Project object */;
+	rootObject = 845785F280A274D9F7B57FA6 /* Project object */;
 }
