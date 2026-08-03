@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		06044EA5DD0A85A7FABC60A5 /* LifeTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */; };
+		11212FA533BE97526C5F5756 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F15B4C1D6FC24EBB2B4DAA /* TagModel.swift */; };
+		16E08321FA662CDCD6960F4D /* AnniversaryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D4DDD035497E9D147EA1E7 /* AnniversaryRepositoryTests.swift */; };
+		20B6D4F6B2F8370B79C8410D /* DefaultCategorySeederTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F553BB7AADD0F7AD06D6F095 /* DefaultCategorySeederTests.swift */; };
 		214BF56FA2FEDF8761604CA3 /* WidgetSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F2785CB6307EA6B66AE41 /* WidgetSelectionTests.swift */; };
 		2D4A244971EFE68CF16C408C /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5367B607F59CDBA80459365C /* CalendarKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CC2A862B7CC9FB080A6A22 /* CalendarKind.swift */; };
 		6710EF0910289BE513635C6C /* LifeTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */; };
+		67E939F0583C6DF9E6A84F61 /* ReminderRuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3A985802D8318A89F3DF19 /* ReminderRuleModel.swift */; };
 		6AA1E8D03E537482A0FAD0BE /* Occurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */; };
+		6C0AA4E78737031E5DF68ED0 /* DefaultCategorySeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DE7BA4DABEEAF3139483A2 /* DefaultCategorySeeder.swift */; };
 		6E097D9940354646A4A20E43 /* AnniversaryOrdering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCCA04AB47E6FF0B72E09B1 /* AnniversaryOrdering.swift */; };
+		6E2F0C3374826264C24BF11E /* AnniversaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B5A7100CA19E4C6C0E296F /* AnniversaryRepository.swift */; };
 		70AA9E4AAF216386931F6025 /* AnniversaryOrderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D240EF1BC8985FDFABB7A72 /* AnniversaryOrderingTests.swift */; };
 		730B72E931D07A10DC3BC406 /* RecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C298F749A2524FEECC12A716 /* RecurrenceRule.swift */; };
 		777908DA2A403EA2F475C108 /* LifeTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */; };
@@ -22,13 +28,17 @@
 		9EA93AAC088E62D5CAF02D2C /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
 		A06C0BE7999C1E6CF836AFC3 /* AnniversaryFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787C7F1171FB2BDE84F3860D /* AnniversaryFilterTests.swift */; };
 		A43CC278ABB4E4C357AD9C87 /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		ADEA4835F4AB19E42C758916 /* ModelContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F9E12FD71E580EEA49CCA /* ModelContainerFactory.swift */; };
+		B3BECDBBFC0E87B84726D176 /* AnniversaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D26F997E10A8EDAE1BFEDC /* AnniversaryModel.swift */; };
 		B612D355556CAB455D11D697 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */; };
 		BCBB1B27B80EB34CA03B7058 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769944EE495727AF82537F2E /* AppConfiguration.swift */; };
 		CBF5BD57B3AF668ED85C0C47 /* OccurrenceCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */; };
+		CD7C3B221E09A13FC53871B8 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982B1E27E57CCD9825FC6D8E /* CategoryModel.swift */; };
 		CFE656D5E7EC655AA4620305 /* LifeTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */; };
 		D46EBEA051BFA6B520076536 /* AnniversaryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982811843A3A7557FFA0DC4 /* AnniversaryRecord.swift */; };
 		D50B7004600FE8013C4AC468 /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E01495A3B0CA55E5FE2E0D95 /* ReminderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */; };
+		EB8DF33018D3AB39A7341D8C /* AnniversaryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D4DA72788BDFDFA28A43D /* AnniversaryDraft.swift */; };
 		ECA14EFDB0942DC2E547733B /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
 		F1930C01DD298AFB44B703AE /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */; };
 		F3573540A2CA780778D6A572 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB2A5F994F153B3D63561 /* WidgetSnapshot.swift */; };
@@ -119,7 +129,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00F15B4C1D6FC24EBB2B4DAA /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		20B5A7100CA19E4C6C0E296F /* AnniversaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRepository.swift; sourceTree = "<group>"; };
 		2D6A41F59175F9035F663664 /* LifeTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LifeTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITests.swift; sourceTree = "<group>"; };
 		3FBFF3C8A44DB767BBD9E4C8 /* LifeTimerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimerWidget.entitlements; sourceTree = "<group>"; };
@@ -136,8 +148,12 @@
 		773256362E630F2CD7D97BBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Occurrence.swift; sourceTree = "<group>"; };
 		787C7F1171FB2BDE84F3860D /* AnniversaryFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilterTests.swift; sourceTree = "<group>"; };
+		94D26F997E10A8EDAE1BFEDC /* AnniversaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryModel.swift; sourceTree = "<group>"; };
+		982B1E27E57CCD9825FC6D8E /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		9C6F9E12FD71E580EEA49CCA /* ModelContainerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContainerFactory.swift; sourceTree = "<group>"; };
 		A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidget.swift; sourceTree = "<group>"; };
 		A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceCalculatorTests.swift; sourceTree = "<group>"; };
+		A50D4DA72788BDFDFA28A43D /* AnniversaryDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryDraft.swift; sourceTree = "<group>"; };
 		AA08DDE63FDDA05503A7AD55 /* AnniversaryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilter.swift; sourceTree = "<group>"; };
 		BFDEB2A5F994F153B3D63561 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
 		C298F749A2524FEECC12A716 /* RecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceRule.swift; sourceTree = "<group>"; };
@@ -145,9 +161,13 @@
 		D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFoundationTests.swift; sourceTree = "<group>"; };
 		D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerApp.swift; sourceTree = "<group>"; };
 		D7BD3E9B55EB0176D044EA1C /* LifeTimerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DE7BA4DABEEAF3139483A2 /* DefaultCategorySeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeeder.swift; sourceTree = "<group>"; };
 		E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
 		EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EC3A985802D8318A89F3DF19 /* ReminderRuleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderRuleModel.swift; sourceTree = "<group>"; };
 		EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimer.entitlements; sourceTree = "<group>"; };
+		F4D4DDD035497E9D147EA1E7 /* AnniversaryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRepositoryTests.swift; sourceTree = "<group>"; };
+		F553BB7AADD0F7AD06D6F095 /* DefaultCategorySeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeederTests.swift; sourceTree = "<group>"; };
 		FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSpec.swift; sourceTree = "<group>"; };
 		FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidgetBundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +205,8 @@
 			children = (
 				787C7F1171FB2BDE84F3860D /* AnniversaryFilterTests.swift */,
 				4D240EF1BC8985FDFABB7A72 /* AnniversaryOrderingTests.swift */,
+				F4D4DDD035497E9D147EA1E7 /* AnniversaryRepositoryTests.swift */,
+				F553BB7AADD0F7AD06D6F095 /* DefaultCategorySeederTests.swift */,
 				A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */,
 				D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */,
 				4C9F2785CB6307EA6B66AE41 /* WidgetSelectionTests.swift */,
@@ -219,6 +241,20 @@
 				6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		78D74A719B599F6B00E280DF /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				94D26F997E10A8EDAE1BFEDC /* AnniversaryModel.swift */,
+				20B5A7100CA19E4C6C0E296F /* AnniversaryRepository.swift */,
+				982B1E27E57CCD9825FC6D8E /* CategoryModel.swift */,
+				D7DE7BA4DABEEAF3139483A2 /* DefaultCategorySeeder.swift */,
+				9C6F9E12FD71E580EEA49CCA /* ModelContainerFactory.swift */,
+				EC3A985802D8318A89F3DF19 /* ReminderRuleModel.swift */,
+				00F15B4C1D6FC24EBB2B4DAA /* TagModel.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		96D0922BA4DD9B271D63A2A6 = {
@@ -269,6 +305,8 @@
 			isa = PBXGroup;
 			children = (
 				BDB6D95B3A556206A1AD12A8 /* App */,
+				E3F2FF88D499880A80812A19 /* Domain */,
+				78D74A719B599F6B00E280DF /* Persistence */,
 				4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */,
 				EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */,
 				EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */,
@@ -284,6 +322,14 @@
 				58D3DF7318AE545B78274314 /* Widget */,
 			);
 			path = LifeTimerCore;
+			sourceTree = "<group>";
+		};
+		E3F2FF88D499880A80812A19 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				A50D4DA72788BDFDFA28A43D /* AnniversaryDraft.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		EB1132705ED83C9DB92E4409 /* LifeTimerWidget */ = {
@@ -451,7 +497,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB8DF33018D3AB39A7341D8C /* AnniversaryDraft.swift in Sources */,
+				B3BECDBBFC0E87B84726D176 /* AnniversaryModel.swift in Sources */,
+				6E2F0C3374826264C24BF11E /* AnniversaryRepository.swift in Sources */,
+				CD7C3B221E09A13FC53871B8 /* CategoryModel.swift in Sources */,
+				6C0AA4E78737031E5DF68ED0 /* DefaultCategorySeeder.swift in Sources */,
 				F3EB39C3B977EC862FB6FBAA /* LifeTimerApp.swift in Sources */,
+				ADEA4835F4AB19E42C758916 /* ModelContainerFactory.swift in Sources */,
+				67E939F0583C6DF9E6A84F61 /* ReminderRuleModel.swift in Sources */,
+				11212FA533BE97526C5F5756 /* TagModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +542,8 @@
 			files = (
 				A06C0BE7999C1E6CF836AFC3 /* AnniversaryFilterTests.swift in Sources */,
 				70AA9E4AAF216386931F6025 /* AnniversaryOrderingTests.swift in Sources */,
+				16E08321FA662CDCD6960F4D /* AnniversaryRepositoryTests.swift in Sources */,
+				20B6D4F6B2F8370B79C8410D /* DefaultCategorySeederTests.swift in Sources */,
 				CBF5BD57B3AF668ED85C0C47 /* OccurrenceCalculatorTests.swift in Sources */,
 				7E6872F0F9588FFC78C51FCB /* ProjectFoundationTests.swift in Sources */,
 				214BF56FA2FEDF8761604CA3 /* WidgetSelectionTests.swift in Sources */,
