@@ -3,9 +3,9 @@ set -euo pipefail
 
 required_locales=(zh-Hans zh-Hant ja ko es fr de pt-BR it ar)
 default_catalogs=(
-    LifeTimer/Resources/Localizable.xcstrings
-    LifeTimer/Resources/InfoPlist.xcstrings
-    LifeTimerWidget/Resources/Localizable.xcstrings
+    Taisetsu/Resources/Localizable.xcstrings
+    Taisetsu/Resources/InfoPlist.xcstrings
+    TaisetsuWidget/Resources/Localizable.xcstrings
 )
 
 if ! command -v jq >/dev/null 2>&1; then

@@ -466,9 +466,9 @@ private func catalogData(entries: [Entry]) throws -> Data {
 
 private let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
 private let outputs: [(String, [Entry])] = [
-    ("LifeTimer/Resources/Localizable.xcstrings", appEntries),
-    ("LifeTimer/Resources/InfoPlist.xcstrings", infoPlistEntries),
-    ("LifeTimerWidget/Resources/Localizable.xcstrings", widgetEntries),
+    ("Taisetsu/Resources/Localizable.xcstrings", appEntries),
+    ("Taisetsu/Resources/InfoPlist.xcstrings", infoPlistEntries),
+    ("TaisetsuWidget/Resources/Localizable.xcstrings", widgetEntries),
 ]
 private let checkOnly = CommandLine.arguments.contains("--check")
 

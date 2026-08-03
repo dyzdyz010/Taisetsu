@@ -1,4 +1,4 @@
-name: LifeTimer
+name: Taisetsu
 
 options:
   bundleIdPrefix: com.dyz
@@ -17,28 +17,28 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
 
 targets:
-  LifeTimerCore:
+  TaisetsuCore:
     type: framework
     platform: iOS
     sources:
-      - path: LifeTimerCore
+      - path: TaisetsuCore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimerCore
-        PRODUCT_NAME: LifeTimerCore
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.TaisetsuCore
+        PRODUCT_NAME: TaisetsuCore
         DEFINES_MODULE: YES
         GENERATE_INFOPLIST_FILE: YES
 
-  LifeTimer:
+  Taisetsu:
     type: application
     platform: iOS
     sources:
-      - path: LifeTimer
+      - path: Taisetsu
     dependencies:
-      - target: LifeTimerCore
-      - target: LifeTimerWidget
+      - target: TaisetsuCore
+      - target: TaisetsuWidget
     info:
-      path: LifeTimer/Info.plist
+      path: Taisetsu/Info.plist
       properties:
         CFBundleDisplayName: Taisetsu
         CFBundleShortVersionString: $(MARKETING_VERSION)
@@ -59,33 +59,33 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
     entitlements:
-      path: LifeTimer/LifeTimer.entitlements
+      path: Taisetsu/Taisetsu.entitlements
       properties:
         aps-environment: development
         com.apple.developer.icloud-container-identifiers:
-          - iCloud.com.dyz.LifeTimer
+          - iCloud.com.dyz.Taisetsu
         com.apple.developer.icloud-services:
           - CloudKit
         com.apple.security.application-groups:
-          - group.com.dyz.LifeTimer
+          - group.com.dyz.Taisetsu
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimer
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.Taisetsu
         DEVELOPMENT_TEAM: 98GGXKMU33
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1,2"
 
-  LifeTimerWidget:
+  TaisetsuWidget:
     type: app-extension
     platform: iOS
     sources:
-      - path: LifeTimerWidget
+      - path: TaisetsuWidget
     dependencies:
-      - target: LifeTimerCore
+      - target: TaisetsuCore
     info:
-      path: LifeTimerWidget/Info.plist
+      path: TaisetsuWidget/Info.plist
       properties:
         CFBundleDisplayName: Taisetsu
         CFBundleShortVersionString: $(MARKETING_VERSION)
@@ -93,62 +93,62 @@ targets:
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: LifeTimerWidget/LifeTimerWidget.entitlements
+      path: TaisetsuWidget/TaisetsuWidget.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.com.dyz.LifeTimer
+          - group.com.dyz.Taisetsu
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimer.Widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.Taisetsu.Widget
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "1,2"
 
-  LifeTimerTests:
+  TaisetsuTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: LifeTimerTests
+      - path: TaisetsuTests
     dependencies:
-      - target: LifeTimerCore
-      - target: LifeTimer
+      - target: TaisetsuCore
+      - target: Taisetsu
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimerTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.TaisetsuTests
         GENERATE_INFOPLIST_FILE: YES
 
-  LifeTimerUITests:
+  TaisetsuUITests:
     type: bundle.ui-testing
     platform: iOS
     sources:
-      - path: LifeTimerUITests
+      - path: TaisetsuUITests
     dependencies:
-      - target: LifeTimer
+      - target: Taisetsu
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.LifeTimerUITests
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.TaisetsuUITests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:
-  LifeTimer:
+  Taisetsu:
     build:
       targets:
-        LifeTimer: all
-        LifeTimerWidget: all
-        LifeTimerCore: all
+        Taisetsu: all
+        TaisetsuWidget: all
+        TaisetsuCore: all
     test:
       gatherCoverageData: true
       targets:
-        - LifeTimerTests
-        - LifeTimerUITests
-  LifeTimerCore:
+        - TaisetsuTests
+        - TaisetsuUITests
+  TaisetsuCore:
     build:
       targets:
-        LifeTimerCore: all
+        TaisetsuCore: all
     test:
       gatherCoverageData: true
       targets:
-        - LifeTimerTests
-  LifeTimerWidget:
+        - TaisetsuTests
+  TaisetsuWidget:
     build:
       targets:
-        LifeTimerWidget: all
+        TaisetsuWidget: all

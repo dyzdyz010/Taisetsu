@@ -4,14 +4,14 @@
 
 **Goal:** Rebrand the shipped product as Taisetsu and make every user-visible app, widget, notification, permission, and date presentation path locale-aware in eleven launch locales.
 
-**Architecture:** Preserve all `LifeTimer` technical identifiers for data compatibility while changing only public branding. Keep static copy in per-bundle Xcode String Catalogs, centralize dynamic localized text in small formatter types, and derive date/calendar layout from the active locale. Resolve stable built-in category IDs to localized display names at read time so language changes do not mutate persistence.
+**Architecture:** Keep localization changes isolated from technical naming within this phase. Static copy lives in per-bundle Xcode String Catalogs, dynamic localized text is centralized in small formatter types, and date/calendar layout derives from the active locale. Stable built-in category IDs resolve to localized display names at read time so language changes do not mutate persistence. The repository's final identifiers are governed by the later total technical rename design.
 
 **Tech Stack:** Swift 6, SwiftUI, SwiftData, WidgetKit, Foundation localization APIs, Xcode String Catalogs, Swift Testing, XCTest, XcodeGen, Bash/JQ, GitHub Actions
 
 ## Global Constraints
 
 - Public product name is exactly `Taisetsu` in every locale.
-- Keep existing bundle IDs, App Group, CloudKit container, widget kind, URL scheme, persistence schema names, and Swift target/module names unchanged.
+- Keep the phase-local technical identifiers stable while implementing localization; the later total technical rename replaces this constraint for the final repository state.
 - Support `en`, `zh-Hans`, `zh-Hant`, `ja`, `ko`, `es`, `fr`, `de`, `pt-BR`, `it`, and `ar`.
 - English is the development language and global fallback.
 - Keep all three widget families: small square, medium rectangle, and large square.
@@ -24,11 +24,11 @@
 ### Task 1: Locale-aware formatting primitives
 
 **Files:**
-- Create: `LifeTimer/Shared/AppLocalization.swift`
-- Modify: `LifeTimer/Shared/AnniversaryFormatters.swift`
-- Modify: `LifeTimer/Features/Editor/DateRuleSection.swift`
-- Modify: `LifeTimer/Features/Calendar/CalendarView.swift`
-- Create: `LifeTimerTests/AppLocalizationTests.swift`
+- Create: `Taisetsu/Shared/AppLocalization.swift`
+- Modify: `Taisetsu/Shared/AnniversaryFormatters.swift`
+- Modify: `Taisetsu/Features/Editor/DateRuleSection.swift`
+- Modify: `Taisetsu/Features/Calendar/CalendarView.swift`
+- Create: `TaisetsuTests/AppLocalizationTests.swift`
 
 **Interfaces:**
 - Produces: `AppLocalization.string(_:locale:)`, `AnniversaryFormatters.relative(_:mode:now:locale:calendar:)`, `AnniversaryFormatters.recurrence(_:locale:)`, `DateWheelComponent.ordered(for:)`, and `LocalizedCalendarLayout.weekdaySymbols(for:)`.
@@ -40,7 +40,7 @@ Add tests asserting that English and Simplified Chinese relative/recurrence outp
 
 - [ ] **Step 2: Run the focused tests and verify RED**
 
-Run: `bash scripts/ci-test.sh -only-testing:LifeTimerTests/AppLocalizationTests`
+Run: `bash scripts/ci-test.sh -only-testing:TaisetsuTests/AppLocalizationTests`
 
 Expected: compilation fails because the formatter/layout interfaces do not exist.
 
@@ -54,22 +54,22 @@ Render each wheel through `ForEach(DateWheelComponent.ordered(for: Locale.curren
 
 - [ ] **Step 5: Run the focused tests and verify GREEN**
 
-Run: `bash scripts/ci-test.sh -only-testing:LifeTimerTests/AppLocalizationTests`
+Run: `bash scripts/ci-test.sh -only-testing:TaisetsuTests/AppLocalizationTests`
 
 Expected: all `AppLocalizationTests` pass.
 
 ### Task 2: Localized domain-adjacent copy
 
 **Files:**
-- Modify: `LifeTimer/Persistence/DefaultCategorySeeder.swift`
-- Modify: `LifeTimer/Persistence/CategoryModel.swift`
-- Modify: `LifeTimer/Persistence/AnniversaryRepository.swift`
-- Modify: `LifeTimer/Integrations/ReminderScheduler.swift`
-- Modify: `LifeTimer/Integrations/CalendarExportService.swift`
-- Modify: `LifeTimer/Domain/AnniversaryDraft.swift`
-- Modify: `LifeTimerTests/DefaultCategorySeederTests.swift`
-- Modify: `LifeTimerTests/ReminderSchedulerTests.swift`
-- Modify: `LifeTimerTests/CalendarExportServiceTests.swift`
+- Modify: `Taisetsu/Persistence/DefaultCategorySeeder.swift`
+- Modify: `Taisetsu/Persistence/CategoryModel.swift`
+- Modify: `Taisetsu/Persistence/AnniversaryRepository.swift`
+- Modify: `Taisetsu/Integrations/ReminderScheduler.swift`
+- Modify: `Taisetsu/Integrations/CalendarExportService.swift`
+- Modify: `Taisetsu/Domain/AnniversaryDraft.swift`
+- Modify: `TaisetsuTests/DefaultCategorySeederTests.swift`
+- Modify: `TaisetsuTests/ReminderSchedulerTests.swift`
+- Modify: `TaisetsuTests/CalendarExportServiceTests.swift`
 
 **Interfaces:**
 - Consumes: `AppLocalization.string(_:locale:)` and stable built-in category UUIDs.
@@ -81,7 +81,7 @@ Assert that the same built-in category UUID resolves to `Family` in English and 
 
 - [ ] **Step 2: Run focused tests and verify RED**
 
-Run: `bash scripts/ci-test.sh -only-testing:LifeTimerTests/DefaultCategorySeederTests -only-testing:LifeTimerTests/ReminderSchedulerTests -only-testing:LifeTimerTests/CalendarExportServiceTests`
+Run: `bash scripts/ci-test.sh -only-testing:TaisetsuTests/DefaultCategorySeederTests -only-testing:TaisetsuTests/ReminderSchedulerTests -only-testing:TaisetsuTests/CalendarExportServiceTests`
 
 Expected: tests fail because locale injection/display-name resolution is absent.
 
@@ -101,15 +101,15 @@ Run the Task 2 focused test command again and require zero failures.
 
 **Files:**
 - Modify: `project.yml`
-- Modify: `LifeTimer/Resources/Localizable.xcstrings`
-- Create: `LifeTimer/Resources/InfoPlist.xcstrings`
-- Create: `LifeTimerWidget/Resources/Localizable.xcstrings`
-- Modify: `LifeTimer/App/LifeTimerApp.swift`
-- Modify: `LifeTimer/App/AppRootView.swift`
-- Modify: `LifeTimer/Features/**/*.swift`
-- Modify: `LifeTimerWidget/LifeTimerWidget.swift`
-- Modify: `LifeTimerWidget/LifeTimerWidgetView.swift`
-- Modify: `LifeTimerUITests/LifeTimerUITests.swift`
+- Modify: `Taisetsu/Resources/Localizable.xcstrings`
+- Create: `Taisetsu/Resources/InfoPlist.xcstrings`
+- Create: `TaisetsuWidget/Resources/Localizable.xcstrings`
+- Modify: `Taisetsu/App/TaisetsuApp.swift`
+- Modify: `Taisetsu/App/AppRootView.swift`
+- Modify: `Taisetsu/Features/**/*.swift`
+- Modify: `TaisetsuWidget/TaisetsuWidget.swift`
+- Modify: `TaisetsuWidget/TaisetsuWidgetView.swift`
+- Modify: `TaisetsuUITests/TaisetsuUITests.swift`
 
 **Interfaces:**
 - Consumes: all formatter/category interfaces from Tasks 1 and 2.
@@ -121,11 +121,11 @@ Launch with `-AppleLanguages (en)` and assert that the tab bar exposes `Home`, `
 
 - [ ] **Step 2: Run the English UI smoke test and verify RED**
 
-Run: `LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:LifeTimerUITests/LifeTimerUITests/testLaunchesWithEnglishLocalization`
+Run: `TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization`
 
 Expected: the English labels are absent before catalogs and source copy are updated.
 
-- [ ] **Step 3: Apply public branding without changing technical identifiers**
+- [ ] **Step 3: Apply public branding while keeping this phase's technical identifiers stable**
 
 Set both public display names to `Taisetsu`, change the home title to `Taisetsu`, set the application category to Lifestyle, and retain the existing development team settings from the dirty generated project by expressing them in `project.yml`.
 
@@ -171,17 +171,17 @@ Call the script before formatting/build steps in `scripts/verify.sh` and add a n
 **Files:**
 - Modify: `README.md`
 - Create: `docs/brand-localization.md`
-- Regenerate: `LifeTimer.xcodeproj/project.pbxproj`
-- Regenerate: `LifeTimer/Info.plist`
-- Regenerate: `LifeTimerWidget/Info.plist`
+- Regenerate: `Taisetsu.xcodeproj/project.pbxproj`
+- Regenerate: `Taisetsu/Info.plist`
+- Regenerate: `TaisetsuWidget/Info.plist`
 
 **Interfaces:**
 - Consumes: approved Taisetsu naming system and all implementation outputs.
 - Produces: contributor-facing localization instructions and reproducible generated Xcode files.
 
-- [ ] **Step 1: Document the public brand and technical-name compatibility boundary**
+- [ ] **Step 1: Document the public brand and technical identity contract**
 
-Update the README title and product description to Taisetsu. Document the eleven locales, invariant brand name, localized descriptor/tagline examples, and the rule that internal `LifeTimer` identifiers must not be renamed.
+Update the README title and product description to Taisetsu. Document the eleven locales, invariant brand name, localized descriptor/tagline examples, and the exact `Taisetsu` identity values in effect for this phase.
 
 - [ ] **Step 2: Regenerate the Xcode project and check generated-file drift**
 
@@ -197,7 +197,7 @@ Expected: localization gate, formatter lint, build,  all unit tests, and coverag
 
 - [ ] **Step 4: Run UI smoke verification**
 
-Run: `LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls -only-testing:LifeTimerUITests/LifeTimerUITests/testLaunchesWithEnglishLocalization`
+Run: `TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:TaisetsuUITests/TaisetsuUITests/testCreatesAnAnniversaryFromTheEmptyState -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization`
 
 Expected: all three UI flows pass.
 

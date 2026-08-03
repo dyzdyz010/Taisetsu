@@ -20,8 +20,8 @@
 ### Task 1: Lock the new interaction contract with failing tests
 
 **Files:**
-- Modify: `LifeTimerTests/AnniversaryEditorViewModelTests.swift`
-- Modify: `LifeTimerUITests/LifeTimerUITests.swift`
+- Modify: `TaisetsuTests/AnniversaryEditorViewModelTests.swift`
+- Modify: `TaisetsuUITests/TaisetsuUITests.swift`
 
 **Interfaces:**
 - Consumes: `AnniversaryDate`, `CalendarKind`, the real anniversary editor UI.
@@ -89,8 +89,8 @@ Expected: compilation fails because `DateWheelSelection` and `RecurrenceEditorSe
 ### Task 2: Implement the three-column date wheel
 
 **Files:**
-- Modify: `LifeTimer/Features/Editor/DateRuleSection.swift`
-- Test: `LifeTimerTests/AnniversaryEditorViewModelTests.swift`
+- Modify: `Taisetsu/Features/Editor/DateRuleSection.swift`
+- Test: `TaisetsuTests/AnniversaryEditorViewModelTests.swift`
 
 **Interfaces:**
 - Consumes: `Binding<AnniversaryDraft>` and `AnniversaryDate`.
@@ -119,9 +119,9 @@ Expected: all unit tests pass.
 ### Task 3: Implement structured recurrence controls
 
 **Files:**
-- Modify: `LifeTimer/Features/Editor/RecurrenceSection.swift`
-- Test: `LifeTimerTests/AnniversaryEditorViewModelTests.swift`
-- Test: `LifeTimerUITests/LifeTimerUITests.swift`
+- Modify: `Taisetsu/Features/Editor/RecurrenceSection.swift`
+- Test: `TaisetsuTests/AnniversaryEditorViewModelTests.swift`
+- Test: `TaisetsuUITests/TaisetsuUITests.swift`
 
 **Interfaces:**
 - Consumes: `Binding<AnniversaryDraft>`.
@@ -141,7 +141,7 @@ Set identifiers `recurrence-interval` and `recurrence-unit`, and expose the comp
 
 - [ ] **Step 4: Run unit and UI tests and verify GREEN**
 
-Run: `LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh`
+Run: `TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh`
 
 Expected: all unit and UI tests pass.
 
@@ -150,11 +150,11 @@ Expected: all unit and UI tests pass.
 ### Task 4: Harden Gregorian anchors and lunar boundary resolution
 
 **Files:**
-- Modify: `LifeTimer/Domain/AnniversaryDraft.swift`
-- Modify: `LifeTimer/Features/Editor/DateRuleSection.swift`
-- Modify: `LifeTimerCore/Domain/OccurrenceCalculator.swift`
-- Test: `LifeTimerTests/AnniversaryEditorViewModelTests.swift`
-- Test: `LifeTimerTests/OccurrenceCalculatorTests.swift`
+- Modify: `Taisetsu/Domain/AnniversaryDraft.swift`
+- Modify: `Taisetsu/Features/Editor/DateRuleSection.swift`
+- Modify: `TaisetsuCore/Domain/OccurrenceCalculator.swift`
+- Test: `TaisetsuTests/AnniversaryEditorViewModelTests.swift`
+- Test: `TaisetsuTests/OccurrenceCalculatorTests.swift`
 
 **Interfaces:**
 - Consumes: the Gregorian anchor-year contract and Chinese-calendar month/day components.
@@ -189,9 +189,9 @@ Run the boundary test against the previous resolver to confirm the failure, rest
 
 - [ ] **Step 1: Run the complete local quality gate**
 
-Run: `LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/verify.sh`
+Run: `TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/verify.sh`
 
-Expected: generation has no drift, formatting passes, all targets build, all tests pass, and LifeTimerCore coverage remains at or above 80%.
+Expected: generation has no drift, formatting passes, all targets build, all tests pass, and TaisetsuCore coverage remains at or above 80%.
 
 - [ ] **Step 2: Review the diff**
 
@@ -202,7 +202,7 @@ Expected: no whitespace errors and only planned files changed.
 - [ ] **Step 3: Commit and push the feature branch**
 
 ```bash
-git add docs/superpowers LifeTimer/Domain LifeTimer/Features/Editor LifeTimerCore/Domain LifeTimerTests LifeTimerUITests
+git add docs/superpowers Taisetsu/Domain Taisetsu/Features/Editor TaisetsuCore/Domain TaisetsuTests TaisetsuUITests
 git commit -m "feat: clarify date and recurrence controls"
 git push -u origin feat/wheel-date-recurrence
 ```

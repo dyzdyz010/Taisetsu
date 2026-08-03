@@ -20,7 +20,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: LifeTimer 版本
+      label: Taisetsu 版本
     validations:
       required: true
   - type: textarea

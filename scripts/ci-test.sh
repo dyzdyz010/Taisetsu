@@ -3,8 +3,8 @@ set -euo pipefail
 
 mkdir -p .build
 
-if [[ -z "${LIFETIMER_SIMULATOR_UDID:-}" ]]; then
-    LIFETIMER_SIMULATOR_UDID=$(xcrun simctl list devices available --json | jq -r '
+if [[ -z "${TAISETSU_SIMULATOR_UDID:-}" ]]; then
+    TAISETSU_SIMULATOR_UDID=$(xcrun simctl list devices available --json | jq -r '
         [.devices | to_entries[]
             | select(.key | contains("iOS"))
             | . as $runtime
@@ -18,14 +18,14 @@ if [[ -z "${LIFETIMER_SIMULATOR_UDID:-}" ]]; then
     ')
 fi
 
-if [[ -z "${LIFETIMER_SIMULATOR_UDID}" || "${LIFETIMER_SIMULATOR_UDID}" == "null" ]]; then
+if [[ -z "${TAISETSU_SIMULATOR_UDID}" || "${TAISETSU_SIMULATOR_UDID}" == "null" ]]; then
     echo "No available iPhone simulator was found." >&2
     exit 1
 fi
 
-xcrun simctl boot "${LIFETIMER_SIMULATOR_UDID}" 2>/dev/null || true
-xcrun simctl bootstatus "${LIFETIMER_SIMULATOR_UDID}" -b
-xcrun simctl terminate "${LIFETIMER_SIMULATOR_UDID}" com.dyz.LifeTimer 2>/dev/null || true
+xcrun simctl boot "${TAISETSU_SIMULATOR_UDID}" 2>/dev/null || true
+xcrun simctl bootstatus "${TAISETSU_SIMULATOR_UDID}" -b
+xcrun simctl terminate "${TAISETSU_SIMULATOR_UDID}" com.dyz.Taisetsu 2>/dev/null || true
 
 result_bundle=".build/TestResults.xcresult"
 if [[ -e "${result_bundle}" ]]; then
@@ -34,16 +34,16 @@ fi
 
 common_arguments=(
     test
-    -project LifeTimer.xcodeproj
-    -scheme LifeTimer
-    -destination "platform=iOS Simulator,id=${LIFETIMER_SIMULATOR_UDID}"
+    -project Taisetsu.xcodeproj
+    -scheme Taisetsu
+    -destination "platform=iOS Simulator,id=${TAISETSU_SIMULATOR_UDID}"
     -parallel-testing-enabled NO
     -enableCodeCoverage YES
     -resultBundlePath "${result_bundle}"
 )
 
-if [[ "${LIFETIMER_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
+if [[ "${TAISETSU_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
     xcodebuild "${common_arguments[@]}" "$@"
 else
-    xcodebuild "${common_arguments[@]}" -only-testing:LifeTimerTests "$@"
+    xcodebuild "${common_arguments[@]}" -only-testing:TaisetsuTests "$@"
 fi

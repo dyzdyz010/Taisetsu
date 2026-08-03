@@ -2,13 +2,13 @@
 
 **Date:** 2026-08-03
 
-**Status:** Approved
+**Status:** Localization direction approved; technical identity superseded by the total rename design
 
 **Brand direction:** Warm, restrained, calm
 
 ## Brand decision
 
-The public product name is **Taisetsu**. The name is invariant across locales and is never translated. Internal target names, bundle identifiers, App Group identifiers, CloudKit containers, notification identifiers, URL schemes, and persisted data identifiers remain `LifeTimer` to preserve installed-user data and compatibility.
+The public product name is **Taisetsu**. The name is invariant across locales and is never translated. The later [total technical rename design](2026-08-03-taisetsu-total-rename-design.md) made `Taisetsu` the repository's public and technical identity and intentionally created a new application identity without migrating earlier development data.
 
 The global English descriptor is **Important Days** and the English brand line is **Keep the days that matter close.** Chinese-facing metadata uses **重要日** and **把重要的日子，放在心上。** These descriptors are localized copy, not alternate product names.
 
@@ -47,7 +47,7 @@ English is the development language. All user-visible app, widget, notification,
 - Home navigation title and app display name: `Taisetsu`
 - Widget display name: localized equivalent of `Taisetsu — Important Days`
 - Calendar export source note: localized equivalent of `Created with Taisetsu`
-- Existing bundle IDs and storage identifiers remain unchanged.
+- Technical identifiers follow the exact values in the total technical rename design.
 
 ## Quality gates
 

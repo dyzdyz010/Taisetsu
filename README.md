@@ -24,12 +24,12 @@ Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或�
 ## 技术结构
 
 ```text
-LifeTimerCore   日期/周期、排序筛选、小组件快照（无 UI、可独立测试）
-LifeTimer       SwiftUI、SwiftData、通知、EventKit、应用协调
-LifeTimerWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
+TaisetsuCore   日期/周期、排序筛选、小组件快照（无 UI、可独立测试）
+Taisetsu       SwiftUI、SwiftData、通知、EventKit、应用协调
+TaisetsuWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
 ```
 
-`Taisetsu` 是所有语言地区统一使用的公开品牌名。现有的 `LifeTimer` target、bundle identifier、App Group、CloudKit 容器及持久化标识属于兼容性边界，不随品牌名改动。
+`Taisetsu` 是所有语言地区统一使用的品牌名，也是仓库、Xcode 工程、target、scheme、模块与运行时标识的唯一技术身份。2026 年 8 月的身份重置没有迁移更早开发版本的本地数据、CloudKit 记录、小组件、通知或深链。
 
 `OccurrenceCalculator` 是原始日期、上一/下一次、已过/剩余时间的唯一来源。通知、系统日历、首页、月历和小组件不会各自实现一套日期规则。
 
@@ -44,24 +44,24 @@ LifeTimerWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftDa
 ```bash
 brew install xcodegen jq
 xcodegen generate
-open LifeTimer.xcodeproj
+open Taisetsu.xcodeproj
 ```
 
-默认标识位于 `LifeTimerCore/Configuration/AppConfiguration.swift`：
+默认标识位于 `TaisetsuCore/Configuration/AppConfiguration.swift`：
 
-- App Group：`group.com.dyz.LifeTimer`
-- CloudKit：`iCloud.com.dyz.LifeTimer`
+- App Group：`group.com.dyz.Taisetsu`
+- CloudKit：`iCloud.com.dyz.Taisetsu`
 
 在真机签名前，请在自己的 Apple Developer Team 中创建相应容器，或同时修改配置、entitlements 与 `project.yml` 后重新生成工程。模拟器构建和测试不需要个人签名。
 
 ## 验证
 
 ```bash
-# 本地化、工程漂移、格式、无签名构建、单元测试和 Core 覆盖率门槛
+# 命名、本地化、工程漂移、格式、无签名构建、单元测试和 Core 覆盖率门槛
 bash scripts/verify.sh
 
 # 额外执行新增纪念日 UI 流程
-LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/verify.sh
+TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/verify.sh
 ```
 
 CI 使用 GitHub `macos-26` + Xcode 26.6，包含：
@@ -71,7 +71,7 @@ CI 使用 GitHub `macos-26` + Xcode 26.6，包含：
 - `swift-format` lint
 - App + Core + Widget 无签名构建
 - 单元测试与 `xcresult` 证据
-- `LifeTimerCore` 行覆盖率至少 80%
+- `TaisetsuCore` 行覆盖率至少 80%
 - 新增纪念日 UI 冒烟测试
 - Swift CodeQL 扫描、PR 依赖审查与 Dependabot
 - 最小权限、并发取消、超时和失败产物上传

@@ -8,23 +8,24 @@ for tool in xcodegen jq; do
     fi
 done
 
+bash scripts/naming-check.sh
 xcodegen generate
-git diff --exit-code -- LifeTimer.xcodeproj LifeTimer/Info.plist LifeTimer/LifeTimer.entitlements \
-    LifeTimerWidget/Info.plist LifeTimerWidget/LifeTimerWidget.entitlements
+git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements \
+    TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
 swift scripts/generate-localizations.swift --check
 bash scripts/localization-check.sh
-xcrun swift-format lint --recursive LifeTimer LifeTimerCore LifeTimerWidget LifeTimerTests LifeTimerUITests
+xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuTests TaisetsuUITests
 xcodebuild build \
-    -project LifeTimer.xcodeproj \
-    -scheme LifeTimer \
+    -project Taisetsu.xcodeproj \
+    -scheme Taisetsu \
     -destination 'generic/platform=iOS Simulator' \
     CODE_SIGNING_ALLOWED=NO
 bash scripts/ci-test.sh
 bash scripts/coverage-check.sh
 
-if [[ "${LIFETIMER_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
-    LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
-        -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState \
-        -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
-        -only-testing:LifeTimerUITests/LifeTimerUITests/testLaunchesWithEnglishLocalization
+if [[ "${TAISETSU_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
+    TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
+        -only-testing:TaisetsuUITests/TaisetsuUITests/testCreatesAnAnniversaryFromTheEmptyState \
+        -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
+        -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization
 fi

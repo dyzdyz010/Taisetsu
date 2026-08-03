@@ -11,17 +11,17 @@ The public product name is **Taisetsu** in every language. It is a brand word, n
 
 Descriptors and brand lines may be localized. `Taisetsu` must remain unchanged in the app name, navigation title, widget name, exported-calendar attribution, screenshots, and store metadata.
 
-## Compatibility contract
+## Technical identity contract
 
-Public branding is deliberately separate from technical identity. Do not rename these without a dedicated data-migration release:
+Public branding and technical identity are unified under `Taisetsu`:
 
-- Xcode targets and schemes beginning with `LifeTimer`
-- bundle identifiers under `com.dyz.LifeTimer`
-- App Group `group.com.dyz.LifeTimer`
-- CloudKit container `iCloud.com.dyz.LifeTimer`
-- widget kind, notification identifiers, URL routes, and persisted model identifiers
+- GitHub repository, Xcode project, targets, schemes, and Swift modules beginning with `Taisetsu`
+- bundle identifiers `com.dyz.Taisetsu`, `com.dyz.TaisetsuCore`, and `com.dyz.Taisetsu.Widget`
+- App Group `group.com.dyz.Taisetsu`
+- CloudKit container `iCloud.com.dyz.Taisetsu`
+- widget kind `TaisetsuUpcoming`, notification prefix `taisetsu.`, and URL scheme `taisetsu://`
 
-Keeping these values stable preserves installed data, widgets, scheduled notifications, calendar-export links, and private iCloud records.
+These values define a new application identity. The identity reset did not migrate data from earlier development builds. Any future identifier change requires an explicit migration design covering installed data, widgets, notifications, calendar-export links, deep links, and private iCloud records.
 
 ## Launch locales
 
@@ -45,9 +45,9 @@ Arabic must remain usable with the system's right-to-left layout. Date-wheel ord
 
 ## Catalog ownership
 
-- `LifeTimer/Resources/Localizable.xcstrings`: app, validation, notification, accessibility, and calendar-export copy
-- `LifeTimer/Resources/InfoPlist.xcstrings`: permission copy
-- `LifeTimerWidget/Resources/Localizable.xcstrings`: widget UI and configuration copy
+- `Taisetsu/Resources/Localizable.xcstrings`: app, validation, notification, accessibility, and calendar-export copy
+- `Taisetsu/Resources/InfoPlist.xcstrings`: permission copy
+- `TaisetsuWidget/Resources/Localizable.xcstrings`: widget UI and configuration copy
 - `scripts/generate-localizations.swift`: authoritative catalog content and deterministic generator
 
 User-created names, notes, categories, and tags are data and are never translated. The five built-in categories have stable IDs and resolve to localized display names without changing their stored records.
