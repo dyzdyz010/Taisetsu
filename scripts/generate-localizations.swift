@@ -418,6 +418,12 @@ private let appEntries: [Entry] = [
 
 private let widgetEntries: [Entry] = [
     Entry(
+        "Anniversary", "纪念日", "紀念日", "記念日", "기념일", "Aniversario", "Anniversaire", "Jahrestag",
+        "Aniversário", "Anniversario", "ذكرى سنوية"),
+    Entry(
+        "Birthday", "生日", "生日", "誕生日", "생일", "Cumpleaños", "Anniversaire", "Geburtstag", "Aniversário",
+        "Compleanno", "عيد ميلاد"),
+    Entry(
         "Nearest Important Days", "最近重要日", "最近重要日", "いちばん近い大切な日", "가장 가까운 소중한 날",
         "Fechas importantes más próximas", "Dates importantes les plus proches", "Nächste wichtige Tage",
         "Datas importantes mais próximas", "Giorni importanti più vicini", "أقرب الأيام المهمة"),
@@ -430,6 +436,9 @@ private let widgetEntries: [Entry] = [
         "Taisetsu를 열어 추가하세요", "Abre Taisetsu para añadir una", "Ouvrez Taisetsu pour en ajouter une",
         "Taisetsu öffnen und hinzufügen", "Abra o Taisetsu para adicionar",
         "Apri Taisetsu per aggiungerne uno", "افتح Taisetsu لإضافة يوم"),
+    Entry(
+        "Pinned", "已置顶", "已置頂", "固定済み", "고정됨", "Fijadas", "Épinglées", "Angeheftet", "Fixadas",
+        "Fissati", "مثبتة"),
     Entry(
         "Shows pinned and nearest important days automatically.", "自动显示置顶和离现在最近的重要日。", "自動顯示置頂及最近的重要日。",
         "固定した日と直近の大切な日を自動表示します。", "고정된 날과 가장 가까운 소중한 날을 자동으로 표시합니다.",
@@ -444,6 +453,8 @@ private let widgetEntries: [Entry] = [
         "Taisetsu — 소중한 날", "Taisetsu — Fechas importantes", "Taisetsu — Dates importantes",
         "Taisetsu — Wichtige Tage", "Taisetsu — Datas importantes", "Taisetsu — Giorni importanti",
         "Taisetsu — الأيام المهمة"),
+    Entry(
+        "Trip", "旅行", "旅行", "旅行", "여행", "Viaje", "Voyage", "Reise", "Viagem", "Viaggio", "رحلة"),
 ]
 
 private let infoPlistEntries: [Entry] = [

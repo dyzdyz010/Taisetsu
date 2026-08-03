@@ -59,7 +59,7 @@ struct TaisetsuProvider: TimelineProvider {
         events: [
             WidgetEventSnapshot(
                 id: UUID(),
-                title: "Birthday",
+                title: String(localized: "Birthday"),
                 targetDate: Calendar.current.date(byAdding: .day, value: 12, to: .now)!,
                 originalDate: Calendar.current.date(byAdding: .year, value: -20, to: .now)!,
                 isAllDay: true,
@@ -67,7 +67,29 @@ struct TaisetsuProvider: TimelineProvider {
                 categorySymbolName: "birthday.cake",
                 categoryColorToken: "purple",
                 isPinned: true
-            )
+            ),
+            WidgetEventSnapshot(
+                id: UUID(),
+                title: String(localized: "Anniversary"),
+                targetDate: Calendar.current.date(byAdding: .day, value: 35, to: .now)!,
+                originalDate: Calendar.current.date(byAdding: .year, value: -5, to: .now)!,
+                isAllDay: true,
+                displayMode: .countdown,
+                categorySymbolName: "heart.fill",
+                categoryColorToken: "pink",
+                isPinned: false
+            ),
+            WidgetEventSnapshot(
+                id: UUID(),
+                title: String(localized: "Trip"),
+                targetDate: Calendar.current.date(byAdding: .day, value: 58, to: .now)!,
+                originalDate: Calendar.current.date(byAdding: .year, value: -1, to: .now)!,
+                isAllDay: true,
+                displayMode: .countdown,
+                categorySymbolName: "airplane",
+                categoryColorToken: "blue",
+                isPinned: false
+            ),
         ]
     )
 }

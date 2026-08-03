@@ -13,13 +13,13 @@ struct TaisetsuWidgetView: View {
             if events.isEmpty {
                 emptyView
             } else if family == .systemSmall {
-                smallView(events[0])
+                smallListView
             } else {
                 listView
             }
         }
         .containerBackground(.background, for: .widget)
-        .widgetURL(events.first?.deepLink)
+        .widgetURL(family == .systemSmall ? nil : events.first?.deepLink)
     }
 
     private var events: [WidgetEventSnapshot] {
@@ -46,25 +46,54 @@ struct TaisetsuWidgetView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private func smallView(_ event: WidgetEventSnapshot) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: event.categorySymbolName)
-                    .foregroundStyle(color(event.categoryColorToken))
-                Spacer()
-                if event.isPinned { Image(systemName: "pin.fill").font(.caption) }
+    private var smallListView: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(events.enumerated()), id: \.element.id) { index, event in
+                if let deepLink = event.deepLink {
+                    Link(destination: deepLink) {
+                        smallEventRow(event)
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    smallEventRow(event)
+                }
+                if index < events.count - 1 {
+                    Divider()
+                }
             }
-            Spacer()
-            Text(event.title)
-                .font(.headline)
-                .lineLimit(2)
-            Text(relativeText(event))
-                .font(.system(.title2, design: .rounded, weight: .bold))
-                .minimumScaleFactor(0.7)
-            Text(event.targetDate, format: .dateTime.month().day())
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            Spacer(minLength: 0)
         }
+    }
+
+    private func smallEventRow(_ event: WidgetEventSnapshot) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: event.categorySymbolName)
+                .font(.caption)
+                .foregroundStyle(color(event.categoryColorToken))
+                .frame(width: 18)
+                .accessibilityHidden(true)
+            Text(event.title)
+                .font(.caption.weight(.medium))
+                .lineLimit(1)
+                .truncationMode(.tail)
+            if event.isPinned {
+                Image(systemName: "pin.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .accessibilityLabel("Pinned")
+            }
+            Spacer(minLength: 4)
+            Text(relativeText(event))
+                .font(.caption2.monospacedDigit().weight(.semibold))
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .layoutPriority(1)
+        }
+        .foregroundStyle(.primary)
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
     }
 
     private var listView: some View {
