@@ -2,6 +2,7 @@ name: LifeTimer
 
 options:
   bundleIdPrefix: com.dyz
+  developmentLanguage: zh-Hans
   deploymentTarget:
     iOS: "18.0"
   groupSortPosition: top

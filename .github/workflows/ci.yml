@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+
+jobs:
+  build-and-test:
+    name: Format, build, unit tests, coverage
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install XcodeGen
+        run: brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
+
+      - name: Report toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+          xcodegen --version
+
+      - name: Check generated project for drift
+        run: |
+          xcodegen generate
+          git diff --exit-code -- LifeTimer.xcodeproj LifeTimer/Info.plist LifeTimer/LifeTimer.entitlements LifeTimerWidget/Info.plist LifeTimerWidget/LifeTimerWidget.entitlements
+
+      - name: Lint Swift formatting
+        run: xcrun swift-format lint --recursive LifeTimer LifeTimerCore LifeTimerWidget LifeTimerTests LifeTimerUITests
+
+      - name: Build app and all embedded targets
+        run: xcodebuild build -project LifeTimer.xcodeproj -scheme LifeTimer -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+
+      - name: Run unit tests with coverage
+        run: bash scripts/ci-test.sh
+
+      - name: Enforce core coverage
+        run: bash scripts/coverage-check.sh
+
+      - name: Export coverage report
+        if: always()
+        run: |
+          if [[ -d .build/TestResults.xcresult ]]; then
+            xcrun xccov view --report --json .build/TestResults.xcresult > .build/coverage.json
+          fi
+
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: unit-test-evidence
+          path: |
+            .build/TestResults.xcresult
+            .build/coverage.json
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7
+
+  ui-smoke-test:
+    name: UI smoke test
+    runs-on: macos-26
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install XcodeGen
+        run: brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Run create-anniversary flow
+        run: LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState
+
+      - name: Upload UI failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ui-test-failure
+          path: .build/TestResults.xcresult
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		023B9CD8F22C997B82581344 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B8B3D747030BD17C4E394E8A /* PrivacyInfo.xcprivacy */; };
 		06044EA5DD0A85A7FABC60A5 /* LifeTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */; };
 		098C2963157C6C3019937269 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EAD32C5E9E5F308301C644 /* CalendarView.swift */; };
 		11212FA533BE97526C5F5756 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F15B4C1D6FC24EBB2B4DAA /* TagModel.swift */; };
@@ -76,6 +77,7 @@
 		F3573540A2CA780778D6A572 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB2A5F994F153B3D63561 /* WidgetSnapshot.swift */; };
 		F3EB39C3B977EC862FB6FBAA /* LifeTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */; };
 		FA5C10B7BCD7AFA8DDDC9E42 /* CalendarExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADC35A0855F3539BF95692D /* CalendarExportService.swift */; };
+		FB9970261EB37C38F2CF5D4A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 59CFCB5EBBE172E560AA7454 /* Localizable.xcstrings */; };
 		FF1D58F1D59F58C1D06AD6B3 /* OccurrenceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF51088643E1CEEFAD44464 /* OccurrenceCalculator.swift */; };
 		FF98EA5782C01B96B9E9C093 /* AnniversaryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA08DDE63FDDA05503A7AD55 /* AnniversaryFilter.swift */; };
 /* End PBXBuildFile section */
@@ -189,6 +191,7 @@
 		4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51B20F2FCF91AE7969582001 /* AnniversaryEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryEditorViewModelTests.swift; sourceTree = "<group>"; };
 		5701E964B0699685D4EC8CAF /* EventStoreClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStoreClient.swift; sourceTree = "<group>"; };
+		59CFCB5EBBE172E560AA7454 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5A467C7CFD4D1A2A5E35E835 /* LifeTimerWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidgetView.swift; sourceTree = "<group>"; };
 		5EF51088643E1CEEFAD44464 /* OccurrenceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceCalculator.swift; sourceTree = "<group>"; };
 		65A50848DD6D0A2CCBB64F92 /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
@@ -213,6 +216,7 @@
 		AA08DDE63FDDA05503A7AD55 /* AnniversaryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilter.swift; sourceTree = "<group>"; };
 		B5C86BD8856484DCBADC87D0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B6640860668D8BF24E9121DF /* AnniversaryFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFormatters.swift; sourceTree = "<group>"; };
+		B8B3D747030BD17C4E394E8A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BFDEB2A5F994F153B3D63561 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
 		C298F749A2524FEECC12A716 /* RecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceRule.swift; sourceTree = "<group>"; };
 		C4807AD87F55C2D1BE1532AE /* AnniversaryEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryEditorViewModel.swift; sourceTree = "<group>"; };
@@ -414,6 +418,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		B1E385876FCCD39CF925CD0D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59CFCB5EBBE172E560AA7454 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		BD290D4D16C9035810F5408E /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,10 +474,12 @@
 				6494C75CC072BF4706100291 /* Features */,
 				BD290D4D16C9035810F5408E /* Integrations */,
 				78D74A719B599F6B00E280DF /* Persistence */,
+				B1E385876FCCD39CF925CD0D /* Resources */,
 				C1FFD7A94A700491A08F0A7D /* Shared */,
 				4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */,
 				EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */,
 				EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */,
+				B8B3D747030BD17C4E394E8A /* PrivacyInfo.xcprivacy */,
 			);
 			path = LifeTimer;
 			sourceTree = "<group>";
@@ -630,11 +644,11 @@
 				};
 			};
 			buildConfigurationList = DAA76078E646DCA73841CD8C /* Build configuration list for PBXProject "LifeTimer" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				en,
+				"zh-Hans",
 			);
 			mainGroup = 96D0922BA4DD9B271D63A2A6;
 			minimizedProjectReferenceProxies = 1;
@@ -658,6 +672,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B612D355556CAB455D11D697 /* Assets.xcassets in Resources */,
+				FB9970261EB37C38F2CF5D4A /* Localizable.xcstrings in Resources */,
+				023B9CD8F22C997B82581344 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
