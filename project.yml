@@ -47,6 +47,7 @@ targets:
         UILaunchScreen: {}
         UIBackgroundModes:
           - remote-notification
+        NSCalendarsFullAccessUsageDescription: 用于将你选择的纪念日下一次日期导出到系统日历。
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft

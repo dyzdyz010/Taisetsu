@@ -4,6 +4,9 @@ import SwiftUI
 struct AnniversaryDetailView: View {
     let presentation: AnniversaryPresentation
     let onEdit: () -> Void
+    let onExport: () async throws -> Void
+    @State private var exportMessage: String?
+    @State private var isExporting = false
 
     var body: some View {
         List {
@@ -49,6 +52,26 @@ struct AnniversaryDetailView: View {
             }
             if !presentation.record.notes.isEmpty {
                 Section("备注") { Text(presentation.record.notes) }
+            }
+            Section("系统日历") {
+                Button("导出下一次到日历", systemImage: "calendar.badge.plus") {
+                    isExporting = true
+                    Task {
+                        do {
+                            try await onExport()
+                            exportMessage = "已导出；再次导出会更新同一事件"
+                        } catch {
+                            exportMessage = error.localizedDescription
+                        }
+                        isExporting = false
+                    }
+                }
+                .disabled(isExporting)
+                if let exportMessage {
+                    Text(exportMessage)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         .navigationTitle("纪念日详情")

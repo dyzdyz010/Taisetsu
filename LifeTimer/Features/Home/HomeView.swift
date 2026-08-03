@@ -3,13 +3,18 @@ import SwiftUI
 
 struct HomeView: View {
     let repository: AnniversaryRepository
+    let reconciliationCoordinator: ReconciliationCoordinator
     @State private var viewModel: HomeViewModel
     @State private var showingNew = false
     @State private var editingRecord: AnniversaryRecord?
     @State private var showingFilters = false
 
-    init(repository: AnniversaryRepository) {
+    init(
+        repository: AnniversaryRepository,
+        reconciliationCoordinator: ReconciliationCoordinator
+    ) {
         self.repository = repository
+        self.reconciliationCoordinator = reconciliationCoordinator
         _viewModel = State(initialValue: HomeViewModel(repository: repository))
     }
 
@@ -48,10 +53,16 @@ struct HomeView: View {
             }
             .onAppear(perform: viewModel.load)
             .sheet(isPresented: $showingNew) {
-                AnniversaryEditorView(repository: repository) { viewModel.load() }
+                AnniversaryEditorView(repository: repository) {
+                    viewModel.load()
+                    Task { await reconciliationCoordinator.reconcile() }
+                }
             }
             .sheet(item: $editingRecord) { record in
-                AnniversaryEditorView(repository: repository, record: record) { viewModel.load() }
+                AnniversaryEditorView(repository: repository, record: record) {
+                    viewModel.load()
+                    Task { await reconciliationCoordinator.reconcile() }
+                }
             }
             .sheet(isPresented: $showingFilters) {
                 FilterView(repository: repository, viewModel: viewModel)
@@ -64,7 +75,11 @@ struct HomeView: View {
             LazyVStack(alignment: .leading, spacing: 20) {
                 if let hero = viewModel.hero {
                     NavigationLink {
-                        AnniversaryDetailView(presentation: hero) { editingRecord = hero.record }
+                        AnniversaryDetailView(
+                            presentation: hero,
+                            onEdit: { editingRecord = hero.record },
+                            onExport: { try await reconciliationCoordinator.exportToCalendar(hero.record) }
+                        )
                     } label: {
                         AnniversaryHeroCard(presentation: hero)
                     }
@@ -96,9 +111,13 @@ struct HomeView: View {
                     .font(.headline)
                 ForEach(Array(items)) { presentation in
                     NavigationLink {
-                        AnniversaryDetailView(presentation: presentation) {
-                            editingRecord = presentation.record
-                        }
+                        AnniversaryDetailView(
+                            presentation: presentation,
+                            onEdit: { editingRecord = presentation.record },
+                            onExport: {
+                                try await reconciliationCoordinator.exportToCalendar(presentation.record)
+                            }
+                        )
                     } label: {
                         AnniversaryRow(presentation: presentation)
                             .padding(.vertical, 8)
@@ -108,10 +127,12 @@ struct HomeView: View {
                         Button(presentation.record.isPinned ? "取消置顶" : "置顶", systemImage: "pin") {
                             try? viewModel.setPinned(
                                 id: presentation.id, isPinned: !presentation.record.isPinned)
+                            Task { await reconciliationCoordinator.reconcile() }
                         }
                         Button("编辑", systemImage: "pencil") { editingRecord = presentation.record }
                         Button("删除", systemImage: "trash", role: .destructive) {
                             try? viewModel.delete(id: presentation.id)
+                            Task { await reconciliationCoordinator.reconcile() }
                         }
                     }
                     Divider()
