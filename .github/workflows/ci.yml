@@ -84,8 +84,11 @@ jobs:
       - name: Generate project
         run: xcodegen generate
 
-      - name: Run create-anniversary flow
-        run: LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState
+      - name: Run editor smoke flows
+        run: |
+          LIFETIMER_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
+            -only-testing:LifeTimerUITests/LifeTimerUITests/testCreatesAnAnniversaryFromTheEmptyState \
+            -only-testing:LifeTimerUITests/LifeTimerUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls
 
       - name: Upload UI failure evidence
         if: failure()

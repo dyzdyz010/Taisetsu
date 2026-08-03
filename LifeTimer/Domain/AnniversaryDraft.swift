@@ -18,8 +18,10 @@ struct AnniversaryDraft: Equatable {
     var isVisibleInWidget = true
     var calendarEventIdentifier: String?
 
-    init() {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+    init(referenceDate: Date = .now, timeZone: TimeZone = .current) {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let components = calendar.dateComponents([.year, .month, .day], from: referenceDate)
         date = AnniversaryDate(
             year: components.year ?? 2026,
             month: components.month ?? 1,
