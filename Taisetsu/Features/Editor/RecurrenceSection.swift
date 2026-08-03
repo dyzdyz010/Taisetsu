@@ -57,6 +57,24 @@ struct RecurrenceSection: View {
                         )
                         .accessibilityIdentifier("recurrence-interval")
                 }
+
+                if let nextOccurrence {
+                    LabeledContent(
+                        "Next Occurrence",
+                        value: displayDate(nextOccurrence)
+                    )
+                    .font(.footnote)
+                    .accessibilityIdentifier("next-occurrence-preview")
+                }
+
+                if RecurrencePreview.explainsLunarMonthInterval(for: draft) {
+                    Text(
+                        "Lunar month intervals count leap months and may land in a different numbered month."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("lunar-month-recurrence-hint")
+                }
             }
 
             Picker("Count Style", selection: $draft.displayMode) {
@@ -82,6 +100,25 @@ struct RecurrenceSection: View {
         Binding(
             get: { draft.recurrenceUnit ?? .year },
             set: { draft.recurrenceUnit = $0 }
+        )
+    }
+
+    private var nextOccurrence: Date? {
+        RecurrencePreview.nextOccurrence(for: draft)
+    }
+
+    private func displayDate(_ value: Date) -> String {
+        if draft.calendarKind == .chinese {
+            return AnniversaryFormatters.dateWithLunar(
+                value,
+                isAllDay: draft.isAllDay,
+                locale: locale
+            )
+        }
+        return AnniversaryFormatters.date(
+            value,
+            isAllDay: draft.isAllDay,
+            locale: locale
         )
     }
 

@@ -47,6 +47,9 @@ final class TaisetsuUITests: XCTestCase {
         app.swipeUp()
         XCTAssertTrue(app.steppers["recurrence-interval"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["recurrence-unit"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            app.descendants(matching: .any)["next-occurrence-preview"].waitForExistence(timeout: 3)
+        )
     }
 
     @MainActor

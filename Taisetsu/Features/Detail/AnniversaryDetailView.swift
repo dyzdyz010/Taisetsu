@@ -24,7 +24,7 @@ struct AnniversaryDetailView: View {
                     )
                     .font(.largeTitle.bold().monospacedDigit())
                     if let next = presentation.occurrence.next {
-                        Text(AnniversaryFormatters.date(next, isAllDay: presentation.record.isAllDay))
+                        Text(displayDate(next))
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -34,8 +34,8 @@ struct AnniversaryDetailView: View {
                 LabeledContent("Calendar", value: calendarName)
                 LabeledContent(
                     "Original Date",
-                    value: AnniversaryFormatters.date(
-                        presentation.occurrence.original, isAllDay: presentation.record.isAllDay))
+                    value: displayDate(presentation.occurrence.original)
+                )
                 LabeledContent(
                     "Repeat",
                     value: AnniversaryFormatters.recurrence(
@@ -131,5 +131,20 @@ struct AnniversaryDetailView: View {
 
     private func reminderText(_ minutes: Int) -> String {
         AnniversaryFormatters.reminderOffset(minutes, locale: locale)
+    }
+
+    private func displayDate(_ value: Date) -> String {
+        if presentation.record.calendarKind == .chinese {
+            return AnniversaryFormatters.dateWithLunar(
+                value,
+                isAllDay: presentation.record.isAllDay,
+                locale: locale
+            )
+        }
+        return AnniversaryFormatters.date(
+            value,
+            isAllDay: presentation.record.isAllDay,
+            locale: locale
+        )
     }
 }
