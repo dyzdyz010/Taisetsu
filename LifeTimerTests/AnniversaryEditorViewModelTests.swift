@@ -44,6 +44,28 @@ struct AnniversaryEditorViewModelTests {
         #expect(viewModel.draft.title == "旧名称")
     }
 
+    @Test func dateWheelClampsGregorianDayWhenMonthOrYearChanges() {
+        var date = AnniversaryDate(year: 2024, month: 2, day: 31)
+        DateWheelSelection.normalize(&date, calendarKind: .gregorian)
+        #expect(date.day == 29)
+
+        date.year = 2023
+        DateWheelSelection.normalize(&date, calendarKind: .gregorian)
+        #expect(date.day == 28)
+    }
+
+    @Test func recurrenceToggleUsesYearlyDefaultAndCanonicalNoneState() {
+        var draft = AnniversaryDraft()
+        RecurrenceEditorSelection.setEnabled(true, draft: &draft)
+        #expect(draft.recurrenceUnit == .year)
+        #expect(draft.recurrenceInterval == 1)
+
+        draft.recurrenceInterval = 3
+        RecurrenceEditorSelection.setEnabled(false, draft: &draft)
+        #expect(draft.recurrenceUnit == nil)
+        #expect(draft.recurrenceInterval == 1)
+    }
+
     private func makeRepository() throws -> AnniversaryRepository {
         AnniversaryRepository(context: ModelContext(try ModelContainerFactory.makeInMemory()))
     }

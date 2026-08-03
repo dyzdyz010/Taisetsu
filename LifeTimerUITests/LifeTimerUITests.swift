@@ -28,6 +28,28 @@ final class LifeTimerUITests: XCTestCase {
     }
 
     @MainActor
+    func testEditorUsesDateWheelsAndStructuredRecurrenceControls() throws {
+        let app = makeApplication()
+        app.launch()
+
+        let addButton = app.buttons["add-anniversary"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+
+        XCTAssertTrue(app.pickers["date-wheel-year"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.pickers["date-wheel-month"].exists)
+        XCTAssertTrue(app.pickers["date-wheel-day"].exists)
+
+        app.swipeUp()
+        let recurrenceToggle = app.switches["recurrence-enabled"]
+        XCTAssertTrue(recurrenceToggle.waitForExistence(timeout: 3))
+        recurrenceToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        app.swipeUp()
+        XCTAssertTrue(app.steppers["recurrence-interval"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["recurrence-unit"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             makeApplication().launch()
@@ -36,6 +58,7 @@ final class LifeTimerUITests: XCTestCase {
 
     @MainActor
     private func makeApplication() -> XCUIApplication {
+        XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing"]
         return app
