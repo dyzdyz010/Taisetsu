@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		06044EA5DD0A85A7FABC60A5 /* LifeTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */; };
 		2D4A244971EFE68CF16C408C /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5367B607F59CDBA80459365C /* CalendarKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CC2A862B7CC9FB080A6A22 /* CalendarKind.swift */; };
 		6710EF0910289BE513635C6C /* LifeTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */; };
+		6AA1E8D03E537482A0FAD0BE /* Occurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */; };
+		730B72E931D07A10DC3BC406 /* RecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C298F749A2524FEECC12A716 /* RecurrenceRule.swift */; };
 		777908DA2A403EA2F475C108 /* LifeTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18334B6E28C8D496D82B383F /* LifeTimerUITestsLaunchTests.swift */; };
 		7E6872F0F9588FFC78C51FCB /* ProjectFoundationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */; };
 		845BACF3EC866F049CE39BA3 /* LifeTimerWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -17,10 +20,15 @@
 		A43CC278ABB4E4C357AD9C87 /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
 		B612D355556CAB455D11D697 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */; };
 		BCBB1B27B80EB34CA03B7058 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769944EE495727AF82537F2E /* AppConfiguration.swift */; };
+		CBF5BD57B3AF668ED85C0C47 /* OccurrenceCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */; };
 		CFE656D5E7EC655AA4620305 /* LifeTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */; };
+		D46EBEA051BFA6B520076536 /* AnniversaryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C982811843A3A7557FFA0DC4 /* AnniversaryRecord.swift */; };
 		D50B7004600FE8013C4AC468 /* LifeTimerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E01495A3B0CA55E5FE2E0D95 /* ReminderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */; };
 		ECA14EFDB0942DC2E547733B /* LifeTimerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */; };
+		F1930C01DD298AFB44B703AE /* DisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */; };
 		F3EB39C3B977EC862FB6FBAA /* LifeTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */; };
+		FF1D58F1D59F58C1D06AD6B3 /* OccurrenceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF51088643E1CEEFAD44464 /* OccurrenceCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,17 +118,25 @@
 		3A576AE0CA8519EFB6B4A19B /* LifeTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerUITests.swift; sourceTree = "<group>"; };
 		3FBFF3C8A44DB767BBD9E4C8 /* LifeTimerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimerWidget.entitlements; sourceTree = "<group>"; };
 		41C4F3AB2C98345D1ABBED76 /* LifeTimerCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeTimerCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46CC2A862B7CC9FB080A6A22 /* CalendarKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarKind.swift; sourceTree = "<group>"; };
 		4FE464BA0685EA30BDF2B9CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5EF51088643E1CEEFAD44464 /* OccurrenceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceCalculator.swift; sourceTree = "<group>"; };
 		6FC019FC0C2B99067DA04FEE /* LifeTimerWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LifeTimerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		717F1EDB561A104D781D3242 /* LifeTimerUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		769944EE495727AF82537F2E /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		773256362E630F2CD7D97BBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Occurrence.swift; sourceTree = "<group>"; };
 		A2B68B4D8C03ABFC81819C21 /* LifeTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidget.swift; sourceTree = "<group>"; };
+		A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceCalculatorTests.swift; sourceTree = "<group>"; };
+		C298F749A2524FEECC12A716 /* RecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceRule.swift; sourceTree = "<group>"; };
+		C982811843A3A7557FFA0DC4 /* AnniversaryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRecord.swift; sourceTree = "<group>"; };
 		D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFoundationTests.swift; sourceTree = "<group>"; };
 		D2DA8AEA49F9EDDE333C9B37 /* LifeTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerApp.swift; sourceTree = "<group>"; };
 		D7BD3E9B55EB0176D044EA1C /* LifeTimerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LifeTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMode.swift; sourceTree = "<group>"; };
 		EC0F9BA21253DB6B9DAEDBC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EFF9600986570D0EA8A92A53 /* LifeTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeTimer.entitlements; sourceTree = "<group>"; };
+		FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSpec.swift; sourceTree = "<group>"; };
 		FF1B69AE9AF7615EF4BF3620 /* LifeTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeTimerWidgetBundle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +171,7 @@
 		16AF16E197FE3EF297232D6F /* LifeTimerTests */ = {
 			isa = PBXGroup;
 			children = (
+				A2BF7B18225ABF1BB972E3AF /* OccurrenceCalculatorTests.swift */,
 				D209E87B7DB7080E04513915 /* ProjectFoundationTests.swift */,
 			);
 			path = LifeTimerTests;
@@ -201,6 +218,20 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		9D8C1AF9A6DA33EEFACE0FE0 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C982811843A3A7557FFA0DC4 /* AnniversaryRecord.swift */,
+				46CC2A862B7CC9FB080A6A22 /* CalendarKind.swift */,
+				E4FC31A3B8FC7BB78D6E31D5 /* DisplayMode.swift */,
+				77405BC7BDDC9E6BB89E1034 /* Occurrence.swift */,
+				5EF51088643E1CEEFAD44464 /* OccurrenceCalculator.swift */,
+				C298F749A2524FEECC12A716 /* RecurrenceRule.swift */,
+				FBC45F1C90456635E1ECF058 /* ReminderSpec.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		BDB6D95B3A556206A1AD12A8 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				99C302BE0A647244BF32083C /* Configuration */,
+				9D8C1AF9A6DA33EEFACE0FE0 /* Domain */,
 			);
 			path = LifeTimerCore;
 			sourceTree = "<group>";
@@ -410,7 +442,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D46EBEA051BFA6B520076536 /* AnniversaryRecord.swift in Sources */,
 				BCBB1B27B80EB34CA03B7058 /* AppConfiguration.swift in Sources */,
+				5367B607F59CDBA80459365C /* CalendarKind.swift in Sources */,
+				F1930C01DD298AFB44B703AE /* DisplayMode.swift in Sources */,
+				6AA1E8D03E537482A0FAD0BE /* Occurrence.swift in Sources */,
+				FF1D58F1D59F58C1D06AD6B3 /* OccurrenceCalculator.swift in Sources */,
+				730B72E931D07A10DC3BC406 /* RecurrenceRule.swift in Sources */,
+				E01495A3B0CA55E5FE2E0D95 /* ReminderSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBF5BD57B3AF668ED85C0C47 /* OccurrenceCalculatorTests.swift in Sources */,
 				7E6872F0F9588FFC78C51FCB /* ProjectFoundationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
