@@ -8,7 +8,7 @@
 
 ## Brand decision
 
-The public product name is **Taisetsu**. The name is invariant across locales and is never translated. The later [total technical rename design](2026-08-03-taisetsu-total-rename-design.md) made `Taisetsu` the repository's public and technical identity and intentionally created a new application identity without migrating earlier development data.
+The public product name is **Taisetsu**. The brand and technical identity are invariant across locales. The main application icon has one localized display-label exception: Simplified and Traditional Chinese show **重要日**, while English and all other locales show **Taisetsu**. The later [total technical rename design](2026-08-03-taisetsu-total-rename-design.md) made `Taisetsu` the repository's public and technical identity and intentionally created a new application identity without migrating earlier development data.
 
 The global English descriptor is **Important Days** and the English brand line is **Keep the days that matter close.** Chinese-facing metadata uses **重要日** and **把重要的日子，放在心上。** These descriptors are localized copy, not alternate product names.
 
@@ -44,7 +44,8 @@ English is the development language. All user-visible app, widget, notification,
 
 ## Branding in the product
 
-- Home navigation title and app display name: `Taisetsu`
+- Home navigation title: `Taisetsu`
+- App icon display name: `重要日` for `zh-Hans` and `zh-Hant`; `Taisetsu` for every other locale
 - Widget display name: localized equivalent of `Taisetsu — Important Days`
 - Calendar export source note: localized equivalent of `Created with Taisetsu`
 - Technical identifiers follow the exact values in the total technical rename design.

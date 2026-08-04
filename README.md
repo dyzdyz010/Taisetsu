@@ -29,7 +29,7 @@ Taisetsu       SwiftUI、SwiftData、通知、EventKit、应用协调
 TaisetsuWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
 ```
 
-`Taisetsu` 是所有语言地区统一使用的品牌名，也是仓库、Xcode 工程、target、scheme、模块与运行时标识的唯一技术身份。2026 年 8 月的身份重置没有迁移更早开发版本的本地数据、CloudKit 记录、小组件、通知或深链。
+`Taisetsu` 是所有语言地区统一使用的品牌名，也是仓库、Xcode 工程、target、scheme、模块与运行时标识的唯一技术身份。中文系统下的 App 图标名称本地化为“重要日”，其他语言显示 `Taisetsu`；这不会改变技术身份。2026 年 8 月的身份重置没有迁移更早开发版本的本地数据、CloudKit 记录、小组件、通知或深链。
 
 `OccurrenceCalculator` 是原始日期、上一/下一次、已过/剩余时间的唯一来源。通知、系统日历、首页、月历和小组件不会各自实现一套日期规则。
 

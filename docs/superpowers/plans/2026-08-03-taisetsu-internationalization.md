@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- Public product name is exactly `Taisetsu` in every locale.
+- Public brand name is exactly `Taisetsu` in every locale. The later app-display-name decision localizes only the Chinese application icon label to `重要日`.
 - Keep the phase-local technical identifiers stable while implementing localization; the later total technical rename replaces this constraint for the final repository state.
 - Support `en`, `zh-Hans`, `zh-Hant`, `ja`, `ko`, `es`, `fr`, `de`, `pt-BR`, `it`, and `ar`.
 - English is the development language and global fallback.
