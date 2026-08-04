@@ -47,6 +47,9 @@ jobs:
           swift scripts/generate-localizations.swift --check
           bash scripts/localization-check.sh
 
+      - name: Check application icon assets
+        run: bash scripts/app-icon-check.sh
+
       - name: Lint Swift formatting
         run: xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuTests TaisetsuUITests
 
@@ -99,6 +102,9 @@ jobs:
         run: |
           swift scripts/generate-localizations.swift --check
           bash scripts/localization-check.sh
+
+      - name: Check application icon assets
+        run: bash scripts/app-icon-check.sh
 
       - name: Run editor smoke flows
         run: |

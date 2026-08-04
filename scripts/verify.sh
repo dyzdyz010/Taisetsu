@@ -14,6 +14,7 @@ git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu
     TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
 swift scripts/generate-localizations.swift --check
 bash scripts/localization-check.sh
+bash scripts/app-icon-check.sh
 xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuTests TaisetsuUITests
 xcodebuild build \
     -project Taisetsu.xcodeproj \
