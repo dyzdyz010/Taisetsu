@@ -459,6 +459,9 @@ private let widgetEntries: [Entry] = [
 
 private let infoPlistEntries: [Entry] = [
     Entry(
+        "CFBundleDisplayName", "重要日", "重要日", "Taisetsu", "Taisetsu", "Taisetsu", "Taisetsu",
+        "Taisetsu", "Taisetsu", "Taisetsu", "Taisetsu"),
+    Entry(
         "NSCalendarsFullAccessUsageDescription",
         "用于将重要日的下一次日期导出到系统日历。",
         "用於將重要日的下一次日期匯出至系統行事曆。",

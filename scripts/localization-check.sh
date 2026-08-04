@@ -80,4 +80,21 @@ for catalog in "${catalogs[@]}"; do
     fi
 done
 
+if [[ "$(plutil -extract CFBundleDisplayName raw Taisetsu/Info.plist)" != "Taisetsu" ]]; then
+    echo "Base app display name must remain Taisetsu" >&2
+    exit 1
+fi
+
+if ! jq -e '
+    .strings.CFBundleDisplayName.localizations as $names
+    | $names["zh-Hans"].stringUnit.value == "重要日"
+      and $names["zh-Hant"].stringUnit.value == "重要日"
+      and (["ja", "ko", "es", "fr", "de", "pt-BR", "it", "ar"]
+        | map($names[.].stringUnit.value == "Taisetsu")
+        | all)
+' Taisetsu/Resources/InfoPlist.xcstrings >/dev/null; then
+    echo "App display-name localization contract is invalid" >&2
+    exit 1
+fi
+
 echo "Localization catalogs are complete for ${#required_locales[@]} translated locales."
