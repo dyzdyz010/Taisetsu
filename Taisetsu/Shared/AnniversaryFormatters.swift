@@ -97,6 +97,9 @@ enum AnniversaryFormatters {
     static func reminderOffset(_ minutes: Int, locale: Locale = .current) -> String {
         guard minutes != 0 else { return AppLocalization.string("At Event Time", locale: locale) }
         let magnitude = abs(minutes)
+        if magnitude == 10_080 {
+            return AppLocalization.string("1 Week Before", locale: locale)
+        }
         var components = DateComponents()
         let unit: NSCalendar.Unit
         if magnitude.isMultiple(of: 10_080) {
