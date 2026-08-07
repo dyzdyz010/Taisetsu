@@ -35,7 +35,11 @@ struct ReminderScheduler: Sendable {
                 )
                 guard let eventDate = occurrence.next, eventDate <= horizon else { break }
                 for reminder in record.reminders where reminder.isEnabled {
-                    let fireDate = eventDate.addingTimeInterval(TimeInterval(reminder.offsetMinutes * 60))
+                    let fireDate = reminderFireDate(
+                        eventDate: eventDate,
+                        reminder: reminder,
+                        timeZone: timeZone
+                    )
                     guard fireDate > referenceDate else { continue }
                     scheduled.append(
                         ScheduledReminder(
@@ -96,6 +100,27 @@ struct ReminderScheduler: Sendable {
             authorized = false
         }
         if authorized { try await client.replaceTaisetsuRequests(with: requests) }
+    }
+
+    private func reminderFireDate(
+        eventDate: Date,
+        reminder: ReminderSpec,
+        timeZone: TimeZone
+    ) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let baseDate: Date
+        if let minutes = reminder.timeOfDayMinutes {
+            baseDate = calendar.date(
+                bySettingHour: minutes / 60,
+                minute: minutes % 60,
+                second: 0,
+                of: eventDate
+            ) ?? eventDate
+        } else {
+            baseDate = eventDate
+        }
+        return baseDate.addingTimeInterval(TimeInterval(reminder.offsetMinutes * 60))
     }
 
     private func identifier(anniversaryID: UUID, reminderID: UUID, fireDate: Date) -> String {
