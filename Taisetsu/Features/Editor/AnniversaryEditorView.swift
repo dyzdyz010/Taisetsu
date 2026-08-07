@@ -4,12 +4,12 @@ import TaisetsuCore
 struct AnniversaryEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: AnniversaryEditorViewModel
-    let onSaved: () -> Void
+    let onSaved: (AnniversaryRecord, Bool) -> Void
 
     init(
         repository: AnniversaryRepository,
         record: AnniversaryRecord? = nil,
-        onSaved: @escaping () -> Void
+        onSaved: @escaping (AnniversaryRecord, Bool) -> Void
     ) {
         _viewModel = State(initialValue: AnniversaryEditorViewModel(repository: repository, record: record))
         self.onSaved = onSaved
@@ -50,8 +50,11 @@ struct AnniversaryEditorView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
+                        let isNew = viewModel.draft.id == nil
                         if viewModel.save() {
-                            onSaved()
+                            if let savedRecord = viewModel.savedRecord {
+                                onSaved(savedRecord, isNew)
+                            }
                             dismiss()
                         }
                     }

@@ -21,7 +21,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Allows you to export the next occurrence of an important day to Calendar.</string>
+	<string>Taisetsu automatically keeps your important days in a dedicated Calendar.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

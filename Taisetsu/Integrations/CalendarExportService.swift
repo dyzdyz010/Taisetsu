@@ -5,12 +5,14 @@ enum CalendarExportError: Error, LocalizedError {
     case accessDenied
     case noFutureOccurrence
     case missingIdentifier
+    case noWritableCalendar
 
     var errorDescription: String? {
         switch self {
         case .accessDenied: AppLocalization.string("Calendar access is not available")
         case .noFutureOccurrence: AppLocalization.string("This important day has no upcoming date to export")
         case .missingIdentifier: AppLocalization.string("Calendar did not return an event identifier")
+        case .noWritableCalendar: AppLocalization.string("No writable calendar is available")
         }
     }
 }

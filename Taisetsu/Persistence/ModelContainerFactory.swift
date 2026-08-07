@@ -8,6 +8,8 @@ enum ModelContainerFactory {
         CategoryModel.self,
         TagModel.self,
         ReminderRuleModel.self,
+        CalendarSyncEntryModel.self,
+        CalendarSyncSettingsModel.self,
     ])
 
     static func makePersistent(cloudSyncEnabled: Bool) throws -> ModelContainer {

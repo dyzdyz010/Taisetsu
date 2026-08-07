@@ -54,7 +54,7 @@ The rename is atomic at the source level:
 4. Regenerate the Xcode project from `project.yml`; do not hand-maintain stale generated references.
 5. Run the forbidden-name scan across both tracked paths and tracked file content.
 
-Because this is a new application identity, no code reads the former App Group, cloud container, database, widget snapshot, notification identifiers, or URL scheme. Simulator and unsigned CI builds remain self-contained. Signed device builds require the new identifiers and containers to exist for Apple Developer Team `98GGXKMU33`.
+Because this is a new application identity, no code reads the former App Group, cloud container, database, widget snapshot, notification identifiers, or URL scheme. Simulator and unsigned CI builds remain self-contained. Signed device builds require the new identifiers and containers to exist for Apple Developer Team `2FBFFBNMS3`.
 
 ## Repository migration
 

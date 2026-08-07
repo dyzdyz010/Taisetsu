@@ -97,6 +97,50 @@ public enum ChineseCalendarDateResolver {
 public struct OccurrenceCalculator: Sendable {
     public init() {}
 
+    public func occurrences(
+        for anniversary: AnniversaryRecord,
+        from start: Date,
+        through end: Date,
+        maxCount: Int,
+        timeZone: TimeZone
+    ) throws -> [ScheduledOccurrence] {
+        guard maxCount > 0, start <= end else { return [] }
+        var calendar = Calendar(identifier: anniversary.calendarKind == .gregorian ? .gregorian : .chinese)
+        calendar.timeZone = timeZone
+        let lowerBound = anniversary.isAllDay ? calendar.startOfDay(for: start) : start
+        let upperBound = anniversary.isAllDay ? calendar.startOfDay(for: end) : end
+        let original = try occurrenceDate(for: anniversary, sequence: 0, calendar: calendar)
+
+        guard anniversary.recurrence.unit != nil else {
+            let candidate = anniversary.isAllDay ? calendar.startOfDay(for: original) : original
+            guard candidate >= lowerBound, candidate <= upperBound else { return [] }
+            return [ScheduledOccurrence(sequence: 0, date: original)]
+        }
+
+        var sequence = max(
+            0,
+            sequenceEstimate(
+                for: anniversary,
+                original: original,
+                reference: lowerBound,
+                calendar: calendar
+            ) - 2
+        )
+        var result: [ScheduledOccurrence] = []
+        var guardIterations = 0
+        while result.count < maxCount && guardIterations < 1_000_000 {
+            let candidate = try occurrenceDate(for: anniversary, sequence: sequence, calendar: calendar)
+            let comparable = anniversary.isAllDay ? calendar.startOfDay(for: candidate) : candidate
+            if comparable >= lowerBound, comparable <= upperBound {
+                result.append(ScheduledOccurrence(sequence: sequence, date: candidate))
+            }
+            if comparable > upperBound { break }
+            sequence += 1
+            guardIterations += 1
+        }
+        return result
+    }
+
     public func calculate(
         for anniversary: AnniversaryRecord,
         relativeTo referenceDate: Date,

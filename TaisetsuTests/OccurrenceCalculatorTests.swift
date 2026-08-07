@@ -167,6 +167,44 @@ struct OccurrenceCalculatorTests {
         #expect(result.original == date("2024-02-09T00:00:00Z"))
     }
 
+    @Test func rollingWindowReturnsOnlyBoundedOccurrencesAndHonorsCap() throws {
+        let record = fixture(
+            year: 2026,
+            month: 8,
+            day: 1,
+            recurrence: .init(unit: .day, interval: 1)
+        )
+        let result = try calculator.occurrences(
+            for: record,
+            from: date("2026-08-03T00:00:00Z"),
+            through: date("2026-08-10T00:00:00Z"),
+            maxCount: 3,
+            timeZone: utc
+        )
+
+        #expect(result.map(\.sequence) == [2, 3, 4])
+        #expect(
+            result.map(\.date) == [
+                date("2026-08-03T00:00:00Z"),
+                date("2026-08-04T00:00:00Z"),
+                date("2026-08-05T00:00:00Z"),
+            ])
+    }
+
+    @Test func rollingWindowIncludesOneTimeDateOnlyWhenItFallsInsideWindow() throws {
+        let record = fixture(year: 2026, month: 8, day: 10)
+        let result = try calculator.occurrences(
+            for: record,
+            from: date("2026-08-03T00:00:00Z"),
+            through: date("2026-08-10T00:00:00Z"),
+            maxCount: 128,
+            timeZone: utc
+        )
+
+        #expect(result.count == 1)
+        #expect(result[0].sequence == 0)
+    }
+
     private func fixture(
         year: Int,
         month: Int,

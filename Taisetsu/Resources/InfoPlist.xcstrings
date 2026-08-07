@@ -70,61 +70,61 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتيح تصدير التاريخ التالي ليوم مهم إلى التقويم."
+            "value" : "يتيح مزامنة الأيام المهمة تلقائيًا مع تقويم مخصص."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ermöglicht den Export des nächsten wichtigen Datums in den Kalender."
+            "value" : "Ermöglicht die automatische Synchronisierung wichtiger Tage mit einem eigenen Kalender."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite exportar la próxima fecha de un día importante al Calendario."
+            "value" : "Permite sincronizar automáticamente las fechas importantes con un calendario dedicado."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permet d’exporter la prochaine date importante vers Calendrier."
+            "value" : "Permet de synchroniser automatiquement les dates importantes avec un calendrier dédié."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consente di esportare la prossima data importante nel Calendario."
+            "value" : "Consente di sincronizzare automaticamente i giorni importanti con un Calendario dedicato."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "大切な日の次の日付をカレンダーに書き出すために使用します。"
+            "value" : "大切な日を専用のシステムカレンダーに自動同期するために使用します。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "소중한 날의 다음 날짜를 시스템 캘린더로 내보내는 데 사용합니다."
+            "value" : "소중한 날을 전용 시스템 캘린더에 자동으로 동기화하는 데 사용합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite exportar a próxima ocorrência de uma data importante para o Calendário."
+            "value" : "Permite sincronizar automaticamente datas importantes com um Calendário dedicado."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于将重要日的下一次日期导出到系统日历。"
+            "value" : "用于自动将重要日同步到专用系统日历。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用於將重要日的下一次日期匯出至系統行事曆。"
+            "value" : "用於自動將重要日同步至專用系統行事曆。"
           }
         }
       }

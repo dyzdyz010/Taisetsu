@@ -5,9 +5,9 @@ struct AnniversaryDetailView: View {
     @Environment(\.locale) private var locale
     let presentation: AnniversaryPresentation
     let onEdit: () -> Void
-    let onExport: () async throws -> Void
-    @State private var exportMessage: String?
-    @State private var isExporting = false
+    let onSync: () async -> Void
+    @State private var syncMessage: String?
+    @State private var isSyncing = false
 
     var body: some View {
         List {
@@ -85,25 +85,23 @@ struct AnniversaryDetailView: View {
             if !presentation.record.notes.isEmpty {
                 Section("Notes") { Text(presentation.record.notes) }
             }
-            Section("System Calendar") {
-                Button("Export Next Date to Calendar", systemImage: "calendar.badge.plus") {
-                    isExporting = true
+            Section("Automatic Calendar Sync") {
+                Label(
+                    "This important day is managed automatically in the Taisetsu calendar.",
+                    systemImage: "calendar.badge.clock"
+                )
+                .foregroundStyle(.secondary)
+                Button("Sync Now", systemImage: "arrow.triangle.2.circlepath") {
+                    isSyncing = true
                     Task {
-                        do {
-                            try await onExport()
-                            exportMessage = AppLocalization.string(
-                                "Exported. Exporting again will update the same event.",
-                                locale: locale
-                            )
-                        } catch {
-                            exportMessage = error.localizedDescription
-                        }
-                        isExporting = false
+                        await onSync()
+                        syncMessage = "Sync requested"
+                        isSyncing = false
                     }
                 }
-                .disabled(isExporting)
-                if let exportMessage {
-                    Text(exportMessage)
+                .disabled(isSyncing)
+                if let syncMessage {
+                    Text(syncMessage)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }

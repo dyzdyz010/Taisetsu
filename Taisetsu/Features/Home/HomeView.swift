@@ -4,6 +4,7 @@ import TaisetsuCore
 struct HomeView: View {
     let repository: AnniversaryRepository
     let reconciliationCoordinator: ReconciliationCoordinator
+    let calendarPromptCoordinator: CalendarSyncPromptCoordinator
     @State private var viewModel: HomeViewModel
     @State private var showingNew = false
     @State private var editingRecord: AnniversaryRecord?
@@ -11,10 +12,12 @@ struct HomeView: View {
 
     init(
         repository: AnniversaryRepository,
-        reconciliationCoordinator: ReconciliationCoordinator
+        reconciliationCoordinator: ReconciliationCoordinator,
+        calendarPromptCoordinator: CalendarSyncPromptCoordinator
     ) {
         self.repository = repository
         self.reconciliationCoordinator = reconciliationCoordinator
+        self.calendarPromptCoordinator = calendarPromptCoordinator
         _viewModel = State(initialValue: HomeViewModel(repository: repository))
     }
 
@@ -58,15 +61,17 @@ struct HomeView: View {
             }
             .onAppear(perform: viewModel.load)
             .sheet(isPresented: $showingNew) {
-                AnniversaryEditorView(repository: repository) {
+                AnniversaryEditorView(repository: repository) { record, isNew in
                     viewModel.load()
                     Task { await reconciliationCoordinator.reconcile() }
+                    calendarPromptCoordinator.consider(afterSaving: record, isNew: isNew)
                 }
             }
             .sheet(item: $editingRecord) { record in
-                AnniversaryEditorView(repository: repository, record: record) {
+                AnniversaryEditorView(repository: repository, record: record) { savedRecord, isNew in
                     viewModel.load()
                     Task { await reconciliationCoordinator.reconcile() }
+                    calendarPromptCoordinator.consider(afterSaving: savedRecord, isNew: isNew)
                 }
             }
             .sheet(isPresented: $showingFilters) {
@@ -83,7 +88,7 @@ struct HomeView: View {
                         AnniversaryDetailView(
                             presentation: hero,
                             onEdit: { editingRecord = hero.record },
-                            onExport: { try await reconciliationCoordinator.exportToCalendar(hero.record) }
+                            onSync: { await reconciliationCoordinator.reconcile() }
                         )
                     } label: {
                         AnniversaryHeroCard(presentation: hero)
@@ -119,9 +124,7 @@ struct HomeView: View {
                         AnniversaryDetailView(
                             presentation: presentation,
                             onEdit: { editingRecord = presentation.record },
-                            onExport: {
-                                try await reconciliationCoordinator.exportToCalendar(presentation.record)
-                            }
+                            onSync: { await reconciliationCoordinator.reconcile() }
                         )
                     } label: {
                         AnniversaryRow(presentation: presentation)
