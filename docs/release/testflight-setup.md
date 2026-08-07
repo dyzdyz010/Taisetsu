@@ -11,7 +11,7 @@
 
 ## 一次性配置
 
-在 App Store Connect 中创建 API Key，角色建议使用 `Developer`。保存下载的 `.p8` 文件；私钥只会显示一次。记录：
+在 App Store Connect 中创建 Team API Key，角色使用 `Admin`。CI 需要该密钥访问云管理发布证书并创建/更新发布 provisioning profiles。保存下载的 `.p8` 文件；私钥只会显示一次。记录：
 
 - Issuer ID
 - Key ID
@@ -30,7 +30,9 @@
 - 创建 iOS App，Bundle ID 为 `com.dyz.Taisetsu`
 - 确认 Team ID 为 `2FBFFBNMS3`
 - 同意最新协议并完成税务/银行信息（发布商店时需要）
-- 在 Certificates, Identifiers & Profiles 中启用 iCloud、Push Notifications 和 App Groups
+- 在 Certificates, Identifiers & Profiles 中为 `com.dyz.Taisetsu` 和 `com.dyz.Taisetsu.Widget` 启用 App Groups
+- 为两个 App ID 关联 `group.com.dyz.Taisetsu`
+- 启用 iCloud、Push Notifications 和 App Groups
 
 ## 第一次发布后
 
