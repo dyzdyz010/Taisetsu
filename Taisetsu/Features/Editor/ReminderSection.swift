@@ -40,6 +40,7 @@ struct ReminderSection: View {
                         selection: $sameDayTime,
                         displayedComponents: [.hourAndMinute]
                     )
+                    .datePickerStyle(.wheel)
                 }
                 .navigationTitle("Same Day")
                 .navigationBarTitleDisplayMode(.inline)
