@@ -63,5 +63,22 @@ struct ReminderSchedulerTests {
         #expect(schedule.first?.body == "in 2 days")
     }
 
+    @Test func sameDayReminderUsesConfiguredTime() throws {
+        let record = AnniversaryRecord(
+            title: "Trip",
+            date: AnniversaryDate(year: 2026, month: 8, day: 10),
+            isAllDay: true,
+            reminders: [ReminderSpec(offsetMinutes: 0, timeOfDayMinutes: 9 * 60 + 30)]
+        )
+
+        let schedule = try ReminderScheduler().makeSchedule(
+            records: [record],
+            relativeTo: date("2026-08-03T00:00:00Z"),
+            timeZone: TimeZone(secondsFromGMT: 0)!
+        )
+
+        #expect(schedule.first?.fireDate == date("2026-08-10T09:30:00Z"))
+    }
+
     private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }
 }
