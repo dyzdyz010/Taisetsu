@@ -66,32 +66,32 @@ struct TaisetsuWidgetView: View {
     }
 
     private func smallEventRow(_ event: WidgetEventSnapshot) -> some View {
-        HStack(spacing: 6) {
-            Image(systemName: event.categorySymbolName)
-                .font(.caption)
-                .foregroundStyle(color(event.categoryColorToken))
-                .frame(width: 18)
-                .accessibilityHidden(true)
-            Text(event.title)
-                .font(.caption.weight(.medium))
-                .lineLimit(1)
-                .truncationMode(.tail)
-            if event.isPinned {
-                Image(systemName: "pin.fill")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .accessibilityLabel("Pinned")
+        HStack(spacing: 4) {
+            ZStack(alignment: .topLeading) {
+                Text(event.title)
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(color(event.categoryColorToken))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.7)
+                    .layoutPriority(1)
+                if event.isPinned {
+                    Image(systemName: "pin.fill")
+                        .font(.system(size: 6, weight: .bold))
+                        .foregroundStyle(.secondary)
+                        .offset(x: -2, y: -3)
+                        .accessibilityLabel("Pinned")
+                }
             }
-            Spacer(minLength: 4)
+            Spacer(minLength: 2)
             Text(relativeText(event))
                 .font(.caption2.monospacedDigit().weight(.semibold))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
-                .minimumScaleFactor(0.75)
+                .minimumScaleFactor(0.7)
                 .layoutPriority(1)
         }
-        .foregroundStyle(.primary)
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
