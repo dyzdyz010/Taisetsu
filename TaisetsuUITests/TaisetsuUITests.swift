@@ -53,6 +53,28 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testRepeatUnitMenuRespondsToTap() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+
+        let addButton = app.buttons["add-anniversary"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+
+        app.swipeUp()
+        let recurrenceToggle = app.switches["recurrence-enabled"]
+        XCTAssertTrue(recurrenceToggle.waitForExistence(timeout: 3))
+        recurrenceToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        app.swipeUp()
+
+        let recurrenceUnit = app.buttons["recurrence-unit"]
+        XCTAssertTrue(recurrenceUnit.waitForExistence(timeout: 3))
+        recurrenceUnit.tap()
+
+        XCTAssertTrue(app.buttons["Week"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             makeApplication().launch()
@@ -76,7 +98,7 @@ final class TaisetsuUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = [
             "-ui-testing",
-            "-AppleLanguages", "(\(language))",
+            "-AppleLanguages", "(\\(language))",
             "-AppleLocale", language == "zh-Hans" ? "zh_CN" : "en_US",
         ]
         return app
