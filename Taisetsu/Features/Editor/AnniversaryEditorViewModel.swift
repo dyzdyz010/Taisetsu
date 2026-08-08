@@ -5,25 +5,18 @@ import TaisetsuCore
 @MainActor
 @Observable
 final class AnniversaryEditorViewModel {
-    private let repository: AnniversaryRepository
-
+    let repository: AnniversaryRepository
     var draft: AnniversaryDraft
     var errorMessage: String?
-    private(set) var savedRecord: AnniversaryRecord?
 
-    var categories: [CategoryModel] { repository.categories() }
-    var tags: [TagModel] { repository.tags() }
-
-    init(repository: AnniversaryRepository, record: AnniversaryRecord? = nil) {
+    init(repository: AnniversaryRepository, draft: AnniversaryDraft = .new()) {
         self.repository = repository
-        draft = record.map(AnniversaryDraft.init(record:)) ?? AnniversaryDraft()
+        self.draft = draft
     }
 
-    @discardableResult
     func save() -> Bool {
         do {
-            savedRecord = try repository.save(draft: draft)
-            errorMessage = nil
+            try repository.save(draft: draft)
             return true
         } catch {
             errorMessage = error.localizedDescription
@@ -32,7 +25,11 @@ final class AnniversaryEditorViewModel {
     }
 
     func addReminder(offsetMinutes: Int, timeOfDayMinutes: Int? = nil) {
-        guard !draft.reminders.contains(where: { $0.offsetMinutes == offsetMinutes && $0.timeOfDayMinutes == timeOfDayMinutes }) else { return }
+        guard
+            !draft.reminders.contains {
+                $0.offsetMinutes == offsetMinutes && $0.timeOfDayMinutes == timeOfDayMinutes
+            }
+        else { return }
         draft.reminders.append(
             ReminderSpec(offsetMinutes: offsetMinutes, timeOfDayMinutes: timeOfDayMinutes)
         )
