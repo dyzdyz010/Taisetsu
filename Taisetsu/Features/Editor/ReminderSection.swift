@@ -24,7 +24,6 @@ struct ReminderSection: View {
                 Button("At Event Time") {
                     viewModel.addReminder(offsetMinutes: 0)
                 }
-                .accessibilityIdentifier("event-time-reminder")
                 .disabled(
                     viewModel.draft.reminders.contains {
                         $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
