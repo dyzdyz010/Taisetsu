@@ -111,12 +111,13 @@ struct ReminderScheduler: Sendable {
         calendar.timeZone = timeZone
         let baseDate: Date
         if let minutes = reminder.timeOfDayMinutes {
-            baseDate = calendar.date(
-                bySettingHour: minutes / 60,
-                minute: minutes % 60,
-                second: 0,
-                of: eventDate
-            ) ?? eventDate
+            baseDate =
+                calendar.date(
+                    bySettingHour: minutes / 60,
+                    minute: minutes % 60,
+                    second: 0,
+                    of: eventDate
+                ) ?? eventDate
         } else {
             baseDate = eventDate
         }
