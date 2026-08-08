@@ -13,6 +13,11 @@ final class AnniversaryEditorViewModel {
 
     var categories: [CategoryModel] { repository.categories() }
     var tags: [TagModel] { repository.tags() }
+    var canAddEventTimeReminder: Bool {
+        !draft.reminders.contains {
+            $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
+        }
+    }
 
     init(repository: AnniversaryRepository, record: AnniversaryRecord? = nil) {
         self.repository = repository
