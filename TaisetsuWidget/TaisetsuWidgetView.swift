@@ -61,8 +61,8 @@ struct TaisetsuWidgetView: View {
                     Divider()
                 }
             }
-            Spacer(minLength: 0)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func smallEventRow(_ event: WidgetEventSnapshot) -> some View {
@@ -91,7 +91,7 @@ struct TaisetsuWidgetView: View {
                 .minimumScaleFactor(0.7)
                 .layoutPriority(1)
         }
-        .frame(maxWidth: .infinity, minHeight: 36, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
