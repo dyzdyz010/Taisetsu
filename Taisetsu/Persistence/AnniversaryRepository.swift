@@ -52,7 +52,11 @@ final class AnniversaryRepository {
         model.tags = allTags().filter { draft.tagIDs.contains($0.id) }
         model.reminders = draft.reminders.map {
             let reminder = ReminderRuleModel(
-                id: $0.id, offsetMinutes: $0.offsetMinutes, timeOfDayMinutes: $0.timeOfDayMinutes, isEnabled: $0.isEnabled)
+                id: $0.id,
+                offsetMinutes: $0.offsetMinutes,
+                timeOfDayMinutes: $0.timeOfDayMinutes,
+                isEnabled: $0.isEnabled
+            )
             reminder.anniversary = model
             return reminder
         }
@@ -173,7 +177,12 @@ final class AnniversaryRepository {
             ),
             displayMode: DisplayMode(rawValue: model.displayModeRaw) ?? .countdown,
             reminders: (model.reminders ?? []).map {
-                ReminderSpec(id: $0.id, offsetMinutes: $0.offsetMinutes, timeOfDayMinutes: $0.timeOfDayMinutes, isEnabled: $0.isEnabled)
+                ReminderSpec(
+                    id: $0.id,
+                    offsetMinutes: $0.offsetMinutes,
+                    timeOfDayMinutes: $0.timeOfDayMinutes,
+                    isEnabled: $0.isEnabled
+                )
             },
             category: model.category.map {
                 CategoryReference(
