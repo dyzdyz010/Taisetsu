@@ -35,6 +35,16 @@ struct AnniversaryEditorViewModelTests {
         #expect(!saved.isVisibleInWidget)
     }
 
+    @Test func allDayDraftAllowsEventTimeReminderUntilItIsAdded() throws {
+        let viewModel = AnniversaryEditorViewModel(repository: try makeRepository())
+
+        #expect(viewModel.draft.isAllDay)
+        #expect(viewModel.canAddEventTimeReminder)
+
+        viewModel.addReminder(offsetMinutes: 0)
+        #expect(!viewModel.canAddEventTimeReminder)
+    }
+
     @Test func editingStartsFromExistingRecord() throws {
         let repository = try makeRepository()
         var draft = AnniversaryDraft()
