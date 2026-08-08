@@ -32,11 +32,10 @@ final class AnniversaryEditorViewModel {
     }
 
     func addReminder(offsetMinutes: Int, timeOfDayMinutes: Int? = nil) {
-        guard
-            !draft.reminders.contains {
-                $0.offsetMinutes == offsetMinutes && $0.timeOfDayMinutes == timeOfDayMinutes
-            }
-        else { return }
+        let isDuplicate = draft.reminders.contains {
+            $0.offsetMinutes == offsetMinutes && $0.timeOfDayMinutes == timeOfDayMinutes
+        }
+        guard !isDuplicate else { return }
         draft.reminders.append(
             ReminderSpec(offsetMinutes: offsetMinutes, timeOfDayMinutes: timeOfDayMinutes)
         )
