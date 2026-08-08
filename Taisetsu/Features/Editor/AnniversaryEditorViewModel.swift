@@ -5,18 +5,25 @@ import TaisetsuCore
 @MainActor
 @Observable
 final class AnniversaryEditorViewModel {
-    let repository: AnniversaryRepository
+    private let repository: AnniversaryRepository
+
     var draft: AnniversaryDraft
     var errorMessage: String?
+    private(set) var savedRecord: AnniversaryRecord?
 
-    init(repository: AnniversaryRepository, draft: AnniversaryDraft = .new()) {
+    var categories: [CategoryModel] { repository.categories() }
+    var tags: [TagModel] { repository.tags() }
+
+    init(repository: AnniversaryRepository, record: AnniversaryRecord? = nil) {
         self.repository = repository
-        self.draft = draft
+        draft = record.map(AnniversaryDraft.init(record:)) ?? AnniversaryDraft()
     }
 
+    @discardableResult
     func save() -> Bool {
         do {
-            try repository.save(draft: draft)
+            savedRecord = try repository.save(draft: draft)
+            errorMessage = nil
             return true
         } catch {
             errorMessage = error.localizedDescription
