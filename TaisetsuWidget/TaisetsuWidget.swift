@@ -90,6 +90,17 @@ struct TaisetsuProvider: TimelineProvider {
                 categoryColorToken: "blue",
                 isPinned: false
             ),
+            WidgetEventSnapshot(
+                id: UUID(),
+                title: "Mia",
+                targetDate: Calendar.current.date(byAdding: .day, value: 76, to: .now)!,
+                originalDate: Calendar.current.date(byAdding: .year, value: -8, to: .now)!,
+                isAllDay: true,
+                displayMode: .countdown,
+                categorySymbolName: "star.fill",
+                categoryColorToken: "orange",
+                isPinned: false
+            ),
         ]
     )
 }
