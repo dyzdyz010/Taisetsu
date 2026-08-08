@@ -24,11 +24,7 @@ struct ReminderSection: View {
                 Button("At Event Time") {
                     viewModel.addReminder(offsetMinutes: 0)
                 }
-                .disabled(
-                    viewModel.draft.reminders.contains {
-                        $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
-                    }
-                )
+                .disabled(!viewModel.canAddEventTimeReminder)
                 Button("1 Hour Before") { viewModel.addReminder(offsetMinutes: -60) }
                 Button("1 Day Before") { viewModel.addReminder(offsetMinutes: -1_440) }
                 Button("1 Week Before") { viewModel.addReminder(offsetMinutes: -10_080) }
