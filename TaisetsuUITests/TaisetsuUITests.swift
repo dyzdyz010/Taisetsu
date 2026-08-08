@@ -94,6 +94,27 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testEventTimeReminderIsEnabledForAllDayEvents() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+
+        let addButton = app.buttons["add-anniversary"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+
+        let addReminder = app.buttons["add-reminder"]
+        for _ in 0..<4 where !addReminder.exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(addReminder.waitForExistence(timeout: 3))
+        addReminder.tap()
+
+        let eventTimeReminder = app.buttons["event-time-reminder"]
+        XCTAssertTrue(eventTimeReminder.waitForExistence(timeout: 3))
+        XCTAssertTrue(eventTimeReminder.isEnabled)
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             makeApplication().launch()
