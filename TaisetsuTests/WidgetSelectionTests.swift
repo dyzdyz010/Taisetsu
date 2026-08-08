@@ -18,7 +18,7 @@ struct WidgetSelectionTests {
         #expect(snapshot.events.map(\.title) == ["置顶", "最近"])
     }
 
-    @Test func familiesReturnThreeFourAndFiveEvents() throws {
+    @Test func smallAndMediumReturnFourEventsWhileLargeReturnsFive() throws {
         let records = (4...10).map { record("\($0)", day: $0) }
         let snapshot = try WidgetSnapshot.make(
             records: records,
@@ -26,7 +26,7 @@ struct WidgetSelectionTests {
             timeZone: TimeZone(secondsFromGMT: 0)!,
             locale: Locale(identifier: "zh-Hans")
         )
-        #expect(snapshot.events(for: .small).map(\.title) == ["4", "5", "6"])
+        #expect(snapshot.events(for: .small).map(\.title) == ["4", "5", "6", "7"])
         #expect(snapshot.events(for: .medium).count == 4)
         #expect(snapshot.events(for: .large).count == 5)
     }
