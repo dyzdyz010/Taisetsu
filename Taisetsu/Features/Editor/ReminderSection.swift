@@ -14,7 +14,7 @@ struct ReminderSection: View {
             }
             .onDelete(perform: viewModel.removeReminders)
             Menu("Add Reminder", systemImage: "bell.badge") {
-                Button("Same Day") {
+                Button {
                     isShowingSameDayTime = true
                 }
                 .disabled(viewModel.draft.reminders.contains { $0.timeOfDayMinutes != nil })
@@ -36,13 +36,13 @@ struct ReminderSection: View {
             NavigationStack {
                 Form {
                     DatePicker(
-                        "Time",
+                        "At Event Time",
                         selection: $sameDayTime,
                         displayedComponents: [.hourAndMinute]
                     )
                     .datePickerStyle(.wheel)
                 }
-                .navigationTitle("Same Day")
+                .navigationTitle("At Event Time")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
@@ -71,7 +71,7 @@ struct ReminderSection: View {
         let time = sameDayDate(minutes: minutes).formatted(
             .dateTime.hour().minute().locale(locale)
         )
-        return "(AppLocalization.string("Same Day", locale: locale)) · (time)"
+        return "(AppLocalization.string("At Event Time", locale: locale)) · (time)"
     }
 
     private func sameDayDate(minutes: Int) -> Date {
