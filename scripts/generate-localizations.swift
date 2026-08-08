@@ -52,11 +52,6 @@ private let appEntries: [Entry] = [
         "À l’heure de l’événement", "Zum Ereigniszeitpunkt", "No horário do evento", "All’ora dell’evento",
         "في وقت الحدث"),
     Entry(
-        "Same Day", "当天", "當天", "当日", "당일", "El mismo día", "Le même jour", "Am selben Tag",
-        "No mesmo dia", "Lo stesso giorno", "في نفس اليوم"),
-    Entry("Time", "时间", "時間", "時刻", "시간", "Hora", "Heure", "Zeit", "Hora", "Ora", "الوقت"),
-    Entry("Add", "添加", "加入", "追加", "추가", "Añadir", "Ajouter", "Hinzufügen", "Adicionar", "Aggiungi", "إضافة"),
-    Entry(
         "Automatic Sync", "自动同步", "自動同步", "自動同期", "자동 동기화", "Sincronización automática",
         "Synchronisation automatique", "Automatische Synchronisierung", "Sincronização automática",
         "Sincronizzazione automatica", "مزامنة تلقائية"),
