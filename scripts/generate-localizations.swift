@@ -301,6 +301,9 @@ private let appEntries: [Entry] = [
         "L’accesso alle notifiche viene richiesto quando aggiungi un promemoria",
         "يُطلب الوصول إلى الإشعارات عند إضافة تذكير"),
     Entry(
+        "On Event Day", "当天", "當天", "当日", "당일", "El día del evento", "Le jour de l’événement",
+        "Am Ereignistag", "No dia do evento", "Il giorno dell’evento", "في يوم الحدث"),
+    Entry(
         "Ongoing", "正在进行", "進行中", "進行中", "진행 중", "En curso", "En cours", "Laufend", "Em andamento",
         "In corso", "جارٍ"),
     Entry(
