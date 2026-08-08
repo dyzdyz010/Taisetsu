@@ -140,16 +140,30 @@ jobs:
         run: |
           ipa_path=$(find "$RUNNER_TEMP/export" -maxdepth 1 -name '*.ipa' -print -quit)
           test -n "$ipa_path"
-          xcrun altool \
-            --upload-app \
-            --type ios \
-            --file "$ipa_path" \
-            --apiKey "$ASC_KEY_ID" \
-            --apiIssuer "$ASC_ISSUER_ID"
+          max_attempts=4
+          for attempt in $(seq 1 "$max_attempts"); do
+            if xcrun altool \
+              --upload-app \
+              --type ios \
+              --file "$ipa_path" \
+              --apiKey "$ASC_KEY_ID" \
+              --apiIssuer "$ASC_ISSUER_ID"; then
+              exit 0
+            fi
+
+            if [[ "$attempt" -eq "$max_attempts" ]]; then
+              echo "App Store Connect upload failed after $max_attempts attempts." >&2
+              exit 1
+            fi
+
+            delay=$((30 * (2 ** (attempt - 1))))
+            echo "App Store Connect upload attempt $attempt failed; retrying in ${delay}s." >&2
+            sleep "$delay"
+          done
+
       - name: Remove temporary signing keychain
         if: always()
         run: |
           if [[ -n "${SIGNING_KEYCHAIN_PATH:-}" ]]; then
             security delete-keychain "$SIGNING_KEYCHAIN_PATH" || true
           fi
-
