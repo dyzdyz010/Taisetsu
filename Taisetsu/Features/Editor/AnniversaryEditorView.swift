@@ -51,7 +51,7 @@ struct AnniversaryEditorView: View {
                 }
             }
             .scrollDismissesKeyboard(.interactively)
-            .onTapGesture { focusedField = nil }
+            .simultaneousGesture(TapGesture().onEnded { focusedField = nil })
             .navigationTitle(
                 viewModel.draft.id == nil
                     ? Text("New Important Day")
