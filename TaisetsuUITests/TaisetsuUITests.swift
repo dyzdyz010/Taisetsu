@@ -75,6 +75,25 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testCountStylePickerRespondsToTap() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+
+        let addButton = app.buttons["add-anniversary"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+        app.swipeUp()
+
+        let countStyle = app.descendants(matching: .any)["count-style"]
+        XCTAssertTrue(countStyle.waitForExistence(timeout: 3))
+        countStyle.tap()
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["Count Up"].waitForExistence(timeout: 3)
+        )
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             makeApplication().launch()
