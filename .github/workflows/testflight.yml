@@ -77,6 +77,35 @@ jobs:
           echo "ASC_KEY_ID=$ASC_KEY_ID" >> "$GITHUB_ENV"
           echo "ASC_ISSUER_ID=$ASC_ISSUER_ID" >> "$GITHUB_ENV"
 
+      - name: Install reusable development certificate
+        env:
+          APPLE_DEVELOPMENT_CERTIFICATE_BASE64: ${{ secrets.APPLE_DEVELOPMENT_CERTIFICATE_BASE64 }}
+          APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD }}
+        run: |
+          : "${APPLE_DEVELOPMENT_CERTIFICATE_BASE64:?Missing APPLE_DEVELOPMENT_CERTIFICATE_BASE64 secret}"
+          : "${APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD:?Missing APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD secret}"
+          certificate_path="$RUNNER_TEMP/apple-development.p12"
+          keychain_path="$RUNNER_TEMP/taisetsu-signing.keychain-db"
+          keychain_password="$(openssl rand -hex 24)"
+          printf '%s' "$APPLE_DEVELOPMENT_CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          security create-keychain -p "$keychain_password" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$keychain_password" "$keychain_path"
+          security import "$certificate_path" \
+            -P "$APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$keychain_path"
+          security set-key-partition-list \
+            -S apple-tool:,apple: \
+            -k "$keychain_password" \
+            "$keychain_path"
+          security list-keychains -d user -s "$keychain_path"
+          security default-keychain -d user -s "$keychain_path"
+          security find-identity -v -p codesigning "$keychain_path" | grep -F "Apple Development"
+          echo "SIGNING_KEYCHAIN_PATH=$keychain_path" >> "$GITHUB_ENV"
+
       - name: Archive signed app
         run: |
           rm -rf "$RUNNER_TEMP/Taisetsu.xcarchive"
@@ -90,7 +119,7 @@ jobs:
             CURRENT_PROJECT_VERSION="${GITHUB_RUN_NUMBER}" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
             CODE_SIGN_STYLE=Automatic \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
+            CODE_SIGN_IDENTITY="Apple Development" \
             -allowProvisioningUpdates \
             -authenticationKeyPath "$ASC_KEY_PATH" \
             -authenticationKeyID "$ASC_KEY_ID" \
@@ -117,3 +146,10 @@ jobs:
             --file "$ipa_path" \
             --apiKey "$ASC_KEY_ID" \
             --apiIssuer "$ASC_ISSUER_ID"
+      - name: Remove temporary signing keychain
+        if: always()
+        run: |
+          if [[ -n "${SIGNING_KEYCHAIN_PATH:-}" ]]; then
+            security delete-keychain "$SIGNING_KEYCHAIN_PATH" || true
+          fi
+
