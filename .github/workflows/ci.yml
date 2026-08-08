@@ -111,6 +111,7 @@ jobs:
           TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testCreatesAnAnniversaryFromTheEmptyState \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
+            -only-testing:TaisetsuUITests/TaisetsuUITests/testRepeatUnitMenuRespondsToTap \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization
 
       - name: Upload UI failure evidence
