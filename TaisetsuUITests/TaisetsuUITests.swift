@@ -109,10 +109,9 @@ final class TaisetsuUITests: XCTestCase {
         XCTAssertTrue(addReminder.waitForExistence(timeout: 3))
         addReminder.tap()
 
-        let eventTimeReminders = app.buttons.matching(identifier: "At Event Time")
-        let allDayEventTimeReminder = eventTimeReminders.element(boundBy: 1)
-        XCTAssertTrue(allDayEventTimeReminder.waitForExistence(timeout: 3))
-        XCTAssertTrue(allDayEventTimeReminder.isEnabled)
+        let eventTimeReminder = app.buttons["At Event Time"]
+        XCTAssertTrue(eventTimeReminder.waitForExistence(timeout: 3))
+        XCTAssertTrue(eventTimeReminder.isEnabled)
     }
 
     @MainActor
