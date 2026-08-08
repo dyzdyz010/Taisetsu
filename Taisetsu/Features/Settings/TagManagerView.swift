@@ -37,4 +37,6 @@ struct TagManagerView: View {
         .navigationTitle("Manage Tags")
         .onAppear(perform: reload)
     }
+
+    private func reload() { tags = repository.tags() }
 }
