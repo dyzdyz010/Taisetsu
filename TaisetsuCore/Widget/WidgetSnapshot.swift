@@ -7,8 +7,7 @@ public enum WidgetSnapshotFamily: Sendable {
 
     public var capacity: Int {
         switch self {
-        case .small: 3
-        case .medium: 4
+        case .small, .medium: 4
         case .large: 5
         }
     }
