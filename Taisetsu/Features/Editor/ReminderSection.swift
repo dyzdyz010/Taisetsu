@@ -24,16 +24,17 @@ struct ReminderSection: View {
                 Button("At Event Time") {
                     viewModel.addReminder(offsetMinutes: 0)
                 }
+                .accessibilityIdentifier("event-time-reminder")
                 .disabled(
-                    viewModel.draft.isAllDay
-                        || viewModel.draft.reminders.contains {
-                            $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
-                        }
+                    viewModel.draft.reminders.contains {
+                        $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
+                    }
                 )
                 Button("1 Hour Before") { viewModel.addReminder(offsetMinutes: -60) }
                 Button("1 Day Before") { viewModel.addReminder(offsetMinutes: -1_440) }
                 Button("1 Week Before") { viewModel.addReminder(offsetMinutes: -10_080) }
             }
+            .accessibilityIdentifier("add-reminder")
         }
         .sheet(isPresented: $isShowingSameDayTime) {
             NavigationStack {
