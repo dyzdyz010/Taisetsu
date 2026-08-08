@@ -113,6 +113,7 @@ jobs:
             -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testRepeatUnitMenuRespondsToTap \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testCountStylePickerRespondsToTap \
+            -only-testing:TaisetsuUITests/TaisetsuUITests/testEventTimeReminderIsEnabledForAllDayEvents \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization
 
       - name: Upload UI failure evidence
