@@ -39,7 +39,6 @@ struct CategoryManagerView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
-        .onTapGesture { focusedField = nil }
         .navigationTitle("Manage Categories")
         .onAppear(perform: reload)
     }
