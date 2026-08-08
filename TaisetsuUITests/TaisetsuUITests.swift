@@ -98,7 +98,7 @@ final class TaisetsuUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = [
             "-ui-testing",
-            "-AppleLanguages", "(\\(language))",
+            "-AppleLanguages", "(\(language))",
             "-AppleLocale", language == "zh-Hans" ? "zh_CN" : "en_US",
         ]
         return app
