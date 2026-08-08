@@ -33,7 +33,6 @@ struct TagManagerView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
-        .onTapGesture { focusedField = nil }
         .navigationTitle("Manage Tags")
         .onAppear(perform: reload)
     }
