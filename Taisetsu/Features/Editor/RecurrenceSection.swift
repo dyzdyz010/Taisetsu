@@ -82,6 +82,7 @@ struct RecurrenceSection: View {
                 Text("Count Up").tag(DisplayMode.countUp)
                 Text("Show Both").tag(DisplayMode.both)
             }
+            .accessibilityIdentifier("count-style")
         }
     }
 
