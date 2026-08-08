@@ -4,18 +4,39 @@
 
 1. 生成并检查 Xcode 工程与本地化目录。
 2. 构建模拟器版本并运行单元测试和覆盖率检查。
-3. 使用 App Store Connect API Key 进行签名归档。
-4. 导出 IPA 并上传到 App Store Connect。
+3. 将固定的 Apple Development 签名身份导入临时钥匙串。
+4. 自动生成或下载开发 provisioning profiles 并归档。
+5. 使用 App Store Connect 云管理发布签名导出 IPA，然后上传。
 
-工作流不会把 Apple ID、密码、证书私钥或 API 私钥写入仓库。
+工作流不会把 Apple ID、密码、证书私钥或 API 私钥写入仓库。证书和私钥只保存在 GitHub Actions Secrets 中，并且仅在单次任务的临时钥匙串中解密。
 
 ## 一次性配置
 
-在 App Store Connect 中创建 Team API Key，角色使用 `Admin`。CI 需要该密钥访问云管理发布证书并创建/更新发布 provisioning profiles。保存下载的 `.p8` 文件；私钥只会显示一次。记录：
+### App Store Connect API Key
+
+在 App Store Connect 中创建 Team API Key，角色使用 `Admin`。CI 需要该密钥管理 provisioning profiles、使用云管理发布证书并上传构建。保存下载的 `.p8` 文件；私钥只会显示一次。记录：
 
 - Issuer ID
 - Key ID
 - `.p8` 文件完整内容
+
+### 可复用的 Apple Development 证书
+
+GitHub runner 每次都是新机器，因此必须把同一份证书及其私钥导入临时钥匙串，不能让 Xcode 在每次构建时创建新证书。
+
+1. 在 Apple Developer 的 Certificates 页面撤销一个不再使用的 `Apple Development: Created via API` 证书，为固定证书腾出名额。不要撤销本机仍在使用的证书。
+2. 在 Mac 上打开 Xcode 的 `Settings → Accounts`，选择 Apple Account 和 Team，进入 `Manage Certificates`。
+3. 点击 `+` 创建一个 `Apple Development` 证书。
+4. 右键该证书，选择 `Export Certificate`，导出为带密码保护的 `.p12`。
+5. 把证书转换为单行 Base64 并复制：
+
+   ```bash
+   base64 -i Taisetsu-Apple-Development.p12 | pbcopy
+   ```
+
+保留原始 `.p12` 及其密码作为离线备份。只要 CI 仍使用它，就不要在 Apple Developer 后台撤销该证书。
+
+### GitHub Actions Secrets
 
 在 GitHub 仓库的 `Settings → Secrets and variables → Actions` 添加以下 Repository secrets：
 
@@ -24,6 +45,10 @@
 | `APPSTORE_CONNECT_KEY_ID` | API Key 的 Key ID |
 | `APPSTORE_CONNECT_ISSUER_ID` | App Store Connect 的 Issuer ID |
 | `APPSTORE_CONNECT_PRIVATE_KEY` | `.p8` 文件的完整 PEM 内容，包括头尾行 |
+| `APPLE_DEVELOPMENT_CERTIFICATE_BASE64` | `.p12` 文件的单行 Base64 内容 |
+| `APPLE_DEVELOPMENT_CERTIFICATE_PASSWORD` | 导出 `.p12` 时设置的密码 |
+
+工作流会在签名前验证证书确实包含可用的 `Apple Development` 代码签名身份。缺少任何 Secret 时会立即失败，不会申请新证书。
 
 还需要在 App Store Connect 中完成：
 
@@ -50,4 +75,4 @@
 - 推送应用代码到 `main`：自动发布。
 - GitHub Actions → TestFlight → Run workflow：手动发布。
 
-如果没有配置三个 secrets，工作流会在签名前明确失败，不会产生半成品上传。
+固定证书配置完成后，每次构建都会复用同一个签名身份；CI 只删除本次任务的临时钥匙串，不会撤销 Apple Developer 后台证书。
