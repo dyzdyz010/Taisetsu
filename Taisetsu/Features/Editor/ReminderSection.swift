@@ -16,8 +16,11 @@ struct ReminderSection: View {
             Menu("Add Reminder", systemImage: "bell.badge") {
                 Button {
                     isShowingSameDayTime = true
+                } label: {
+                    Label("At Event Time", systemImage: "clock")
                 }
                 .disabled(viewModel.draft.reminders.contains { $0.timeOfDayMinutes != nil })
+
                 Button("At Event Time") {
                     viewModel.addReminder(offsetMinutes: 0)
                 }
@@ -49,7 +52,7 @@ struct ReminderSection: View {
                         Button("Cancel") { isShowingSameDayTime = false }
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Add") {
+                        Button("Done") {
                             viewModel.addReminder(
                                 offsetMinutes: 0,
                                 timeOfDayMinutes: timeMinutes(from: sameDayTime)
@@ -71,7 +74,7 @@ struct ReminderSection: View {
         let time = sameDayDate(minutes: minutes).formatted(
             .dateTime.hour().minute().locale(locale)
         )
-        return "(AppLocalization.string("At Event Time", locale: locale)) · (time)"
+        return "\(AppLocalization.string("At Event Time", locale: locale)) · \(time)"
     }
 
     private func sameDayDate(minutes: Int) -> Date {
