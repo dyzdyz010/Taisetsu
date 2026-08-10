@@ -8,6 +8,9 @@ updates:
       time: '03:00'
       timezone: Asia/Shanghai
     open-pull-requests-limit: 5
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action/*"
     commit-message:
       prefix: ci
-
