@@ -12,9 +12,14 @@ enum HomeContentState: Equatable {
 @MainActor
 @Observable
 final class HomeViewModel {
+    typealias Project = ([AnniversaryRecord], Date, TimeZone) throws -> AnniversarySections
+
     private let repository: AnniversaryRepository
     private let now: () -> Date
+    private let project: Project
     private var records: [AnniversaryRecord] = []
+    private var allSections = AnniversarySections(pinned: [], upcoming: [], ongoing: [], ended: [])
+    private var projectedState = HomeContentState.loading
 
     var state = HomeContentState.loading
     var query = "" {
@@ -32,15 +37,33 @@ final class HomeViewModel {
 
     var hero: AnniversaryPresentation? { sections.all.first }
 
-    init(repository: AnniversaryRepository, now: @escaping () -> Date = { .now }) {
+    init(
+        repository: AnniversaryRepository,
+        now: @escaping () -> Date = { .now },
+        project: @escaping Project = { records, referenceDate, timeZone in
+            try AnniversaryOrdering().sections(
+                records: records,
+                relativeTo: referenceDate,
+                timeZone: timeZone
+            )
+        }
+    ) {
         self.repository = repository
         self.now = now
+        self.project = project
     }
 
     func load() {
         records = repository.fetch()
         categories = repository.categories()
         tags = repository.tags()
+        do {
+            allSections = try project(records, now(), .current)
+            projectedState = records.isEmpty ? .empty : .content
+        } catch {
+            allSections = AnniversarySections(pinned: [], upcoming: [], ongoing: [], ended: [])
+            projectedState = .failed(error.localizedDescription)
+        }
         rebuild()
     }
 
@@ -60,17 +83,12 @@ final class HomeViewModel {
             categoryID: categoryID,
             requiredTagIDs: requiredTagIDs
         )
-        let filtered = records.filter(filter.matches)
-        do {
-            sections = try AnniversaryOrdering().sections(
-                records: filtered,
-                relativeTo: now(),
-                timeZone: .current
-            )
-            state = filtered.isEmpty && records.isEmpty ? .empty : .content
-        } catch {
-            sections = AnniversarySections(pinned: [], upcoming: [], ongoing: [], ended: [])
-            state = .failed(error.localizedDescription)
-        }
+        sections = AnniversarySections(
+            pinned: allSections.pinned.filter { filter.matches($0.record) },
+            upcoming: allSections.upcoming.filter { filter.matches($0.record) },
+            ongoing: allSections.ongoing.filter { filter.matches($0.record) },
+            ended: allSections.ended.filter { filter.matches($0.record) }
+        )
+        state = projectedState
     }
 }

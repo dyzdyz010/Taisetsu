@@ -56,6 +56,33 @@ struct HomeViewModelTests {
         #expect(viewModel.tags.map(\.id) == [tag.id])
     }
 
+    @Test func filteringReusesTheLoadedOccurrenceProjection() throws {
+        let repository = try makeRepository()
+        var draft = AnniversaryDraft()
+        draft.title = "Trip"
+        _ = try repository.save(draft: draft)
+        var projectionCount = 0
+        let viewModel = HomeViewModel(
+            repository: repository,
+            now: { Self.referenceDate },
+            project: { records, referenceDate, timeZone in
+                projectionCount += 1
+                return try AnniversaryOrdering().sections(
+                    records: records,
+                    relativeTo: referenceDate,
+                    timeZone: timeZone
+                )
+            }
+        )
+
+        viewModel.load()
+        viewModel.query = "Trip"
+        viewModel.query = "Missing"
+        viewModel.categoryID = UUID()
+
+        #expect(projectionCount == 1)
+    }
+
     private func makeRepository() throws -> AnniversaryRepository {
         AnniversaryRepository(context: ModelContext(try ModelContainerFactory.makeInMemory()))
     }
