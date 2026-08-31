@@ -205,7 +205,7 @@
 		3D3636207E9AC274AD8DA834 /* WidgetSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSelectionTests.swift; sourceTree = "<group>"; };
 		3D9E9B95A9EA28D9FBB01A3C /* DefaultCategorySeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeeder.swift; sourceTree = "<group>"; };
 		402FBBAB24EEB8917B5798E1 /* AnniversaryFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilterTests.swift; sourceTree = "<group>"; };
-		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		456877AE91E39DE21B1979A9 /* TaisetsuUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		49A5CE5E2C5D0448FA518702 /* ReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulerTests.swift; sourceTree = "<group>"; };
 		4B237A814B0DFFB30FA05055 /* AnniversaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRow.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 		643D6499EF4FE4A44A9E9A17 /* CalendarExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportService.swift; sourceTree = "<group>"; };
 		644228CA1E8FA4F2712C0E00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		646338D03992861510DD0127 /* TaisetsuWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuWidgetEntry.swift; sourceTree = "<group>"; };
-		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		67D9A2917CB9B9AFE6E08EAC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6C1DA5EA009F42B936AC114B /* TagManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManagerView.swift; sourceTree = "<group>"; };
 		6FBEB42C3EF0A9CCE4E89319 /* DefaultCategorySeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeederTests.swift; sourceTree = "<group>"; };
@@ -973,6 +973,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TaisetsuWidget/TaisetsuWidget.entitlements;
+				DEVELOPMENT_TEAM = 2FBFFBNMS3;
 				INFOPLIST_FILE = TaisetsuWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1024,6 +1025,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TaisetsuWidget/TaisetsuWidget.entitlements;
+				DEVELOPMENT_TEAM = 2FBFFBNMS3;
 				INFOPLIST_FILE = TaisetsuWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
