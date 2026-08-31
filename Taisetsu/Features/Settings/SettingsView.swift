@@ -54,22 +54,13 @@ private struct CalendarSyncSettingsView: View {
     @Environment(\.locale) private var locale
     let repository: AnniversaryRepository
     let reconciliationCoordinator: ReconciliationCoordinator
-    @State private var settings: CalendarSyncSettings
+    @State private var settings = CalendarSyncSettings()
     @State private var customScope = false
     @State private var selectedCategories: Set<UUID> = []
     @State private var selectedTags: Set<UUID> = []
-
-    init(repository: AnniversaryRepository, reconciliationCoordinator: ReconciliationCoordinator) {
-        self.repository = repository
-        self.reconciliationCoordinator = reconciliationCoordinator
-        let initial = reconciliationCoordinator.calendarSettings
-        _settings = State(initialValue: initial)
-        if case .custom(let categories, let tags, _, _) = initial.scope {
-            _customScope = State(initialValue: true)
-            _selectedCategories = State(initialValue: categories)
-            _selectedTags = State(initialValue: tags)
-        }
-    }
+    @State private var categories: [CategoryModel] = []
+    @State private var tags: [TagModel] = []
+    @State private var managedEventsCount = 0
 
     var body: some View {
         Form {
@@ -85,7 +76,7 @@ private struct CalendarSyncSettingsView: View {
                 } label: {
                     Text("Automatic Sync")
                 }
-                LabeledContent("Managed Events", value: "\(reconciliationCoordinator.calendarEntriesCount())")
+                LabeledContent("Managed Events", value: "\(managedEventsCount)")
                 if let last = settings.lastSuccessfulSync {
                     LabeledContent("Last Synced", value: last.formatted(date: .abbreviated, time: .shortened))
                 }
@@ -97,7 +88,7 @@ private struct CalendarSyncSettingsView: View {
                 ) {
                     settings.enabled.toggle()
                     try? reconciliationCoordinator.saveCalendarSettings(settings)
-                    Task { await reconciliationCoordinator.reconcile() }
+                    reconcile()
                 }
                 if let error = reconciliationCoordinator.lastError {
                     Label(error, systemImage: "exclamationmark.triangle")
@@ -107,25 +98,36 @@ private struct CalendarSyncSettingsView: View {
             Section("Sync Range") {
                 Stepper(
                     AppLocalization.yearDuration(settings.horizonYears, locale: locale),
-                    value: $settings.horizonYears,
+                    value: Binding(
+                        get: { settings.horizonYears },
+                        set: { value in
+                            settings.horizonYears = value
+                            try? reconciliationCoordinator.saveCalendarSettings(settings)
+                            reconcile()
+                        }
+                    ),
                     in: 1...5
                 )
-                .onChange(of: settings.horizonYears) { _, _ in
-                    try? reconciliationCoordinator.saveCalendarSettings(settings)
-                    Task { await reconciliationCoordinator.reconcile() }
-                }
                 Text("All future occurrences in this rolling window are managed automatically.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
             Section("Scope") {
-                Picker("Records", selection: $customScope) {
+                Picker(
+                    "Records",
+                    selection: Binding(
+                        get: { customScope },
+                        set: { value in
+                            customScope = value
+                            saveScope()
+                        }
+                    )
+                ) {
                     Text("All Important Days").tag(false)
                     Text("Custom").tag(true)
                 }
-                .onChange(of: customScope) { _, _ in saveScope() }
                 if customScope {
-                    ForEach(repository.categories()) { category in
+                    ForEach(categories) { category in
                         Toggle(
                             category.displayName(),
                             isOn: Binding(
@@ -140,7 +142,7 @@ private struct CalendarSyncSettingsView: View {
                                 }
                             ))
                     }
-                    ForEach(repository.tags()) { tag in
+                    ForEach(tags) { tag in
                         Toggle(
                             "#\(tag.name)",
                             isOn: Binding(
@@ -159,14 +161,7 @@ private struct CalendarSyncSettingsView: View {
             }
         }
         .navigationTitle("Calendar Sync")
-        .onAppear {
-            settings = reconciliationCoordinator.calendarSettings
-            if case .custom(let categories, let tags, _, _) = settings.scope {
-                customScope = true
-                selectedCategories = categories
-                selectedTags = tags
-            }
-        }
+        .onAppear(perform: reload)
     }
 
     private func saveScope() {
@@ -180,6 +175,30 @@ private struct CalendarSyncSettingsView: View {
             )
             : .all
         try? reconciliationCoordinator.saveCalendarSettings(settings)
-        Task { await reconciliationCoordinator.reconcile() }
+        reconcile()
+    }
+
+    private func reconcile() {
+        Task {
+            await reconciliationCoordinator.reconcile()
+            reload()
+        }
+    }
+
+    private func reload() {
+        settings = reconciliationCoordinator.calendarSettings
+        categories = repository.categories()
+        tags = repository.tags()
+        managedEventsCount = reconciliationCoordinator.calendarEntriesCount()
+        switch settings.scope {
+        case .all:
+            customScope = false
+            selectedCategories = []
+            selectedTags = []
+        case .custom(let categories, let tags, _, _):
+            customScope = true
+            selectedCategories = categories
+            selectedTags = tags
+        }
     }
 }

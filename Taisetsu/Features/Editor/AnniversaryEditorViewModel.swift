@@ -10,9 +10,9 @@ final class AnniversaryEditorViewModel {
     var draft: AnniversaryDraft
     var errorMessage: String?
     private(set) var savedRecord: AnniversaryRecord?
+    private(set) var categories: [CategoryModel]
+    private(set) var tags: [TagModel]
 
-    var categories: [CategoryModel] { repository.categories() }
-    var tags: [TagModel] { repository.tags() }
     var canAddEventTimeReminder: Bool {
         !draft.reminders.contains {
             $0.offsetMinutes == 0 && $0.timeOfDayMinutes == nil
@@ -22,6 +22,8 @@ final class AnniversaryEditorViewModel {
     init(repository: AnniversaryRepository, record: AnniversaryRecord? = nil) {
         self.repository = repository
         draft = record.map(AnniversaryDraft.init(record:)) ?? AnniversaryDraft()
+        categories = repository.categories()
+        tags = repository.tags()
     }
 
     @discardableResult

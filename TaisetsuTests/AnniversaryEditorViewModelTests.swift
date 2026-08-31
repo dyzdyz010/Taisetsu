@@ -55,6 +55,27 @@ struct AnniversaryEditorViewModelTests {
         #expect(viewModel.draft.title == "旧名称")
     }
 
+    @Test func referenceDataIsAStableInitializationSnapshot() throws {
+        let repository = try makeRepository()
+        let category = try repository.saveCategory(
+            name: "Family",
+            symbolName: "person.2",
+            colorToken: "blue"
+        )
+        let tag = try repository.saveTag(name: "Annual")
+        let viewModel = AnniversaryEditorViewModel(repository: repository)
+
+        _ = try repository.saveCategory(
+            name: "Travel",
+            symbolName: "airplane",
+            colorToken: "orange"
+        )
+        _ = try repository.saveTag(name: "Private")
+
+        #expect(viewModel.categories.map(\.id) == [category.id])
+        #expect(viewModel.tags.map(\.id) == [tag.id])
+    }
+
     @Test func dateWheelClampsGregorianDayWhenMonthOrYearChanges() {
         var date = AnniversaryDate(year: 2024, month: 2, day: 31)
         DateWheelSelection.normalize(&date, calendarKind: .gregorian)

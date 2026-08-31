@@ -40,6 +40,22 @@ struct HomeViewModelTests {
         #expect(viewModel.sections.pinned.map(\.record.title) == ["旅行"])
     }
 
+    @Test func loadCachesCategoryAndTagReferenceData() throws {
+        let repository = try makeRepository()
+        let category = try repository.saveCategory(
+            name: "Family",
+            symbolName: "person.2",
+            colorToken: "blue"
+        )
+        let tag = try repository.saveTag(name: "Annual")
+        let viewModel = HomeViewModel(repository: repository, now: { Self.referenceDate })
+
+        viewModel.load()
+
+        #expect(viewModel.categories.map(\.id) == [category.id])
+        #expect(viewModel.tags.map(\.id) == [tag.id])
+    }
+
     private func makeRepository() throws -> AnniversaryRepository {
         AnniversaryRepository(context: ModelContext(try ModelContainerFactory.makeInMemory()))
     }

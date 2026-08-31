@@ -75,7 +75,7 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $showingFilters) {
-                FilterView(repository: repository, viewModel: viewModel)
+                FilterView(viewModel: viewModel)
             }
         }
     }
@@ -161,7 +161,6 @@ struct HomeView: View {
 private struct FilterView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
-    let repository: AnniversaryRepository
     @Bindable var viewModel: HomeViewModel
 
     var body: some View {
@@ -174,14 +173,14 @@ private struct FilterView: View {
                     ) {
                         viewModel.categoryID = nil
                     }
-                    ForEach(repository.categories()) { category in
+                    ForEach(viewModel.categories) { category in
                         filterRow(category.displayName(), selected: viewModel.categoryID == category.id) {
                             viewModel.categoryID = category.id
                         }
                     }
                 }
                 Section("Tags (multiple selection)") {
-                    ForEach(repository.tags()) { tag in
+                    ForEach(viewModel.tags) { tag in
                         filterRow(tag.name, selected: viewModel.requiredTagIDs.contains(tag.id)) {
                             if viewModel.requiredTagIDs.contains(tag.id) {
                                 viewModel.requiredTagIDs.remove(tag.id)

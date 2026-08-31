@@ -26,6 +26,8 @@ final class HomeViewModel {
     var requiredTagIDs: Set<UUID> = [] {
         didSet { rebuild() }
     }
+    private(set) var categories: [CategoryModel] = []
+    private(set) var tags: [TagModel] = []
     private(set) var sections = AnniversarySections(pinned: [], upcoming: [], ongoing: [], ended: [])
 
     var hero: AnniversaryPresentation? { sections.all.first }
@@ -37,6 +39,8 @@ final class HomeViewModel {
 
     func load() {
         records = repository.fetch()
+        categories = repository.categories()
+        tags = repository.tags()
         rebuild()
     }
 
