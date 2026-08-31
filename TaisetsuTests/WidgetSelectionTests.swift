@@ -51,6 +51,57 @@ struct WidgetSelectionTests {
         )
     }
 
+    @Test func countdownDayPresentationUsesTargetDate() {
+        let referenceDate = date("2026-08-03T00:00:00Z")
+        let event = widgetEvent(
+            targetDate: date("2026-08-15T00:00:00Z"),
+            originalDate: date("2020-01-01T00:00:00Z"),
+            displayMode: .countdown
+        )
+
+        let presentation = event.dayPresentation(
+            relativeTo: referenceDate,
+            calendar: utcCalendar()
+        )
+
+        #expect(presentation.value == 12)
+        #expect(presentation.direction == .countdown)
+    }
+
+    @Test func countUpDayPresentationUsesOriginalDate() {
+        let referenceDate = date("2026-08-03T00:00:00Z")
+        let event = widgetEvent(
+            targetDate: date("2027-01-01T00:00:00Z"),
+            originalDate: date("2026-07-20T00:00:00Z"),
+            displayMode: .countUp
+        )
+
+        let presentation = event.dayPresentation(
+            relativeTo: referenceDate,
+            calendar: utcCalendar()
+        )
+
+        #expect(presentation.value == 14)
+        #expect(presentation.direction == .countUp)
+    }
+
+    @Test func bothDayPresentationUsesCountdownAndClampsPastTargetToZero() {
+        let referenceDate = date("2026-08-03T00:00:00Z")
+        let event = widgetEvent(
+            targetDate: date("2026-08-01T00:00:00Z"),
+            originalDate: date("2020-01-01T00:00:00Z"),
+            displayMode: .both
+        )
+
+        let presentation = event.dayPresentation(
+            relativeTo: referenceDate,
+            calendar: utcCalendar()
+        )
+
+        #expect(presentation.value == 0)
+        #expect(presentation.direction == .countdown)
+    }
+
     private func record(
         _ title: String,
         day: Int,
@@ -63,6 +114,30 @@ struct WidgetSelectionTests {
             isPinned: pinned,
             isVisibleInWidget: visible
         )
+    }
+
+    private func widgetEvent(
+        targetDate: Date,
+        originalDate: Date,
+        displayMode: DisplayMode
+    ) -> WidgetEventSnapshot {
+        WidgetEventSnapshot(
+            id: UUID(),
+            title: "纪念日",
+            targetDate: targetDate,
+            originalDate: originalDate,
+            isAllDay: true,
+            displayMode: displayMode,
+            categorySymbolName: "calendar",
+            categoryColorToken: "blue",
+            isPinned: false
+        )
+    }
+
+    private func utcCalendar() -> Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar
     }
 
     private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }

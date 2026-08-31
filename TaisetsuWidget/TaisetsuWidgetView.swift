@@ -84,9 +84,8 @@ struct TaisetsuWidgetView: View {
                 }
             }
             Spacer(minLength: 2)
-            Text(relativeText(event))
+            dayIndicator(event)
                 .font(.caption2.monospacedDigit().weight(.semibold))
-                .foregroundStyle(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .layoutPriority(1)
@@ -113,9 +112,8 @@ struct TaisetsuWidgetView: View {
                         .font(.subheadline.weight(.medium))
                         .lineLimit(1)
                     Spacer()
-                    Text(relativeText(event))
+                    dayIndicator(event)
                         .font(.caption.monospacedDigit().weight(.semibold))
-                        .foregroundStyle(.secondary)
                 }
                 if event.id != events.last?.id { Divider() }
             }
@@ -123,26 +121,38 @@ struct TaisetsuWidgetView: View {
         }
     }
 
-    private func relativeText(_ event: WidgetEventSnapshot) -> String {
-        let calendar = Calendar.current
-        switch event.displayMode {
-        case .countUp:
-            let days =
-                calendar.dateComponents(
-                    [.day],
-                    from: calendar.startOfDay(for: event.originalDate),
-                    to: calendar.startOfDay(for: entry.date)
-                ).day ?? 0
-            return relativeDayText(-max(0, days))
-        case .countdown, .both:
-            let days =
-                calendar.dateComponents(
-                    [.day],
-                    from: calendar.startOfDay(for: entry.date),
-                    to: calendar.startOfDay(for: event.targetDate)
-                ).day ?? 0
-            return relativeDayText(max(0, days))
+    private func dayIndicator(_ event: WidgetEventSnapshot) -> some View {
+        let presentation = event.dayPresentation(
+            relativeTo: entry.date,
+            calendar: Calendar.current
+        )
+        return HStack(spacing: 3) {
+            Image(systemName: symbolName(for: presentation.direction))
+                .accessibilityHidden(true)
+            Text(presentation.value, format: .number)
         }
+        .foregroundStyle(indicatorColor(for: presentation.direction))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(relativeText(presentation))
+    }
+
+    private func symbolName(for direction: WidgetDayDirection) -> String {
+        switch direction {
+        case .countdown: "hourglass.bottomhalf.filled"
+        case .countUp: "arrow.up.forward"
+        }
+    }
+
+    private func indicatorColor(for direction: WidgetDayDirection) -> Color {
+        switch direction {
+        case .countdown: .accentColor
+        case .countUp: .orange
+        }
+    }
+
+    private func relativeText(_ presentation: WidgetDayPresentation) -> String {
+        let days = presentation.direction == .countUp ? -presentation.value : presentation.value
+        return relativeDayText(days)
     }
 
     private func relativeDayText(_ days: Int) -> String {

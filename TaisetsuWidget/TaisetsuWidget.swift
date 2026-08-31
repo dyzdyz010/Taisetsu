@@ -72,9 +72,9 @@ struct TaisetsuProvider: TimelineProvider {
                 id: UUID(),
                 title: String(localized: "Anniversary"),
                 targetDate: Calendar.current.date(byAdding: .day, value: 35, to: .now)!,
-                originalDate: Calendar.current.date(byAdding: .year, value: -5, to: .now)!,
+                originalDate: Calendar.current.date(byAdding: .day, value: -35, to: .now)!,
                 isAllDay: true,
-                displayMode: .countdown,
+                displayMode: .countUp,
                 categorySymbolName: "heart.fill",
                 categoryColorToken: "pink",
                 isPinned: false
