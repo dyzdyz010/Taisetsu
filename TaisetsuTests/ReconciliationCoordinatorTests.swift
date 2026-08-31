@@ -1,4 +1,5 @@
 import SwiftData
+import Synchronization
 import Testing
 import UserNotifications
 
@@ -19,9 +20,17 @@ struct ReconciliationCoordinatorTests {
 
         let first = Task { await coordinator.reconcile() }
         await client.waitForFirstCall()
-        let second = Task { await coordinator.reconcile() }
-        let third = Task { await coordinator.reconcile() }
+        let completedFollowers = Mutex(0)
+        let second = Task {
+            await coordinator.reconcile()
+            completedFollowers.withLock { $0 += 1 }
+        }
+        let third = Task {
+            await coordinator.reconcile()
+            completedFollowers.withLock { $0 += 1 }
+        }
         await Task.yield()
+        #expect(completedFollowers.withLock { $0 } == 0)
         client.releaseFirstCall()
 
         await first.value
@@ -30,6 +39,7 @@ struct ReconciliationCoordinatorTests {
 
         #expect(client.callCount == 2)
         #expect(client.maximumConcurrentCalls == 1)
+        #expect(completedFollowers.withLock { $0 } == 2)
     }
 }
 

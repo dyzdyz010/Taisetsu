@@ -15,6 +15,7 @@ final class ReconciliationCoordinator {
     private let snapshotStore: WidgetSnapshotStore?
     private var isReconciling = false
     private var needsReconciliation = false
+    private var reconciliationWaiters: [CheckedContinuation<Void, Never>] = []
 
     private(set) var lastError: String?
     private(set) var lastCalendarSyncSummary: CalendarSyncSummary?
@@ -39,13 +40,23 @@ final class ReconciliationCoordinator {
 
     func reconcile() async {
         needsReconciliation = true
-        guard !isReconciling else { return }
+        if isReconciling {
+            await withCheckedContinuation { continuation in
+                reconciliationWaiters.append(continuation)
+            }
+            return
+        }
         isReconciling = true
-        defer { isReconciling = false }
 
         while needsReconciliation {
             needsReconciliation = false
             await performReconciliation()
+        }
+        isReconciling = false
+        let waiters = reconciliationWaiters
+        reconciliationWaiters.removeAll(keepingCapacity: true)
+        for waiter in waiters {
+            waiter.resume()
         }
     }
 
