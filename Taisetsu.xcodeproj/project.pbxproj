@@ -50,6 +50,7 @@
 		8559266BD2C304AA74B8FB2D /* CalendarSyncRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B78AD0102437505397A68E /* CalendarSyncRepository.swift */; };
 		8A4A6F43414237201094F81D /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89850B8CDB62D7C28FC41D /* WidgetSnapshotStore.swift */; };
 		8A8575C564CB1B6313FFA6AC /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD505E3C2FBC4D8EA064F5 /* AppConfiguration.swift */; };
+		8ACEA6CCED18C2AF68296094 /* ReconciliationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7863D24D59073216C7A7874 /* ReconciliationCoordinatorTests.swift */; };
 		8E80724D418BF49BDE0DD756 /* TaisetsuWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DFD7ECF34B72EFFD784551 /* TaisetsuWidgetBundle.swift */; };
 		90E30223D610CBA3142814C6 /* ChineseCalendarDateResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A907DCA82615101F495223F /* ChineseCalendarDateResolver.swift */; };
 		9648C1215712CFDF205D7F6B /* TaisetsuWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D0CE5CB02D502F3D98073F /* TaisetsuWidget.swift */; };
@@ -59,6 +60,7 @@
 		9BE468192B4DB810B9B1DB6C /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EF5BB448DBE5B05EBD8C47 /* TagModel.swift */; };
 		9CEBA90636874E332A5A7768 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DB5DC85C1691B615DF109360 /* Localizable.xcstrings */; };
 		A324676D8A70F52A6070FAE5 /* ReminderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D1B3E3E6761FAABEDC2308 /* ReminderSection.swift */; };
+		A372A552B5765BCCE632DE8B /* ReconciliationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC37EDF3FBC0B6C756B291C5 /* ReconciliationPlan.swift */; };
 		A9E9F51F0A716BD55834EC95 /* TaisetsuCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 519ED232110A050B623F9CED /* TaisetsuCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABC06A3C8DEFA15B25EFD93C /* CalendarSyncScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F542073368BA1E7D08E2506A /* CalendarSyncScopeTests.swift */; };
 		ABEC3693C69A8BF50A628B1C /* CalendarSyncPromptCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638083456DD3B6B92FE4058 /* CalendarSyncPromptCoordinator.swift */; };
@@ -275,6 +277,8 @@
 		E1D1B3E3E6761FAABEDC2308 /* ReminderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSection.swift; sourceTree = "<group>"; };
 		E6C4E4461ED869A2DFF71D18 /* AnniversaryOrdering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryOrdering.swift; sourceTree = "<group>"; };
 		E6D63F7F7FEB3B3E9006304A /* CalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModelTests.swift; sourceTree = "<group>"; };
+		E7863D24D59073216C7A7874 /* ReconciliationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconciliationCoordinatorTests.swift; sourceTree = "<group>"; };
+		EC37EDF3FBC0B6C756B291C5 /* ReconciliationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconciliationPlan.swift; sourceTree = "<group>"; };
 		F0DFD7ECF34B72EFFD784551 /* TaisetsuWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuWidgetBundle.swift; sourceTree = "<group>"; };
 		F184031FBF501303A765AC2C /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
 		F3C378B434AF0386388C4684 /* CategoryTagManagementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTagManagementTests.swift; sourceTree = "<group>"; };
@@ -383,6 +387,7 @@
 			children = (
 				7638083456DD3B6B92FE4058 /* CalendarSyncPromptCoordinator.swift */,
 				C6802C05292DA1BC8665F8DF /* ReconciliationCoordinator.swift */,
+				EC37EDF3FBC0B6C756B291C5 /* ReconciliationPlan.swift */,
 			);
 			path = Coordination;
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				22459E7075D42374C5E29AF4 /* HomeViewModelTests.swift */,
 				BC9CB43C0E49556B9176180B /* OccurrenceCalculatorTests.swift */,
 				270CAE768696E1CB8124E386 /* ProjectFoundationTests.swift */,
+				E7863D24D59073216C7A7874 /* ReconciliationCoordinatorTests.swift */,
 				49A5CE5E2C5D0448FA518702 /* ReminderSchedulerTests.swift */,
 				3D3636207E9AC274AD8DA834 /* WidgetSelectionTests.swift */,
 				C44E53B8348705849BF35B75 /* WidgetSnapshotStoreTests.swift */,
@@ -834,6 +840,7 @@
 				F6964829154E3E564F13DBDE /* ModelContainerFactory.swift in Sources */,
 				CE7CAE96D645596B761EAA8D /* NotificationCenterClient.swift in Sources */,
 				090520931B5F2C1F25BC6CF9 /* ReconciliationCoordinator.swift in Sources */,
+				A372A552B5765BCCE632DE8B /* ReconciliationPlan.swift in Sources */,
 				F299545AE132BC1CC3C97745 /* RecurrencePreview.swift in Sources */,
 				BC79E0E63BED272F124BE489 /* RecurrenceSection.swift in Sources */,
 				2DCAD6C8EB7D821113BBBA68 /* ReminderRuleModel.swift in Sources */,
@@ -868,6 +875,7 @@
 				E5FA2B4E38A9F54CB0985DB8 /* HomeViewModelTests.swift in Sources */,
 				0A7C0A5BE3176B4BC7B04E9A /* OccurrenceCalculatorTests.swift in Sources */,
 				C6FEDD1137F11C0091D8E1D0 /* ProjectFoundationTests.swift in Sources */,
+				8ACEA6CCED18C2AF68296094 /* ReconciliationCoordinatorTests.swift in Sources */,
 				399F2C08D277E643A5628CF3 /* ReminderSchedulerTests.swift in Sources */,
 				DBDEEC1D7A45B7D1A4DC5368 /* WidgetSelectionTests.swift in Sources */,
 				74D067A4C9CA6D7D4B1FF51B /* WidgetSnapshotStoreTests.swift in Sources */,

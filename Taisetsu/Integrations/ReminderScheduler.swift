@@ -72,19 +72,10 @@ struct ReminderScheduler: Sendable {
     }
 
     @MainActor
-    func reconcile(
-        records: [AnniversaryRecord],
-        client: NotificationCenterClientProtocol,
-        relativeTo referenceDate: Date = .now,
-        timeZone: TimeZone = .current,
-        locale: Locale = .current
+    func apply(
+        _ requests: [ScheduledReminder],
+        client: NotificationCenterClientProtocol
     ) async throws {
-        let requests = try makeSchedule(
-            records: records,
-            relativeTo: referenceDate,
-            timeZone: timeZone,
-            locale: locale
-        )
         if requests.isEmpty {
             try await client.replaceTaisetsuRequests(with: [])
             return

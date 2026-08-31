@@ -13,6 +13,8 @@ final class ReconciliationCoordinator {
     private let calendarSyncService: CalendarAutoSyncService?
     private let calendarSyncRepository: CalendarSyncRepository?
     private let snapshotStore: WidgetSnapshotStore?
+    private var isReconciling = false
+    private var needsReconciliation = false
 
     private(set) var lastError: String?
     private(set) var lastCalendarSyncSummary: CalendarSyncSummary?
@@ -36,19 +38,43 @@ final class ReconciliationCoordinator {
     }
 
     func reconcile() async {
+        needsReconciliation = true
+        guard !isReconciling else { return }
+        isReconciling = true
+        defer { isReconciling = false }
+
+        while needsReconciliation {
+            needsReconciliation = false
+            await performReconciliation()
+        }
+    }
+
+    private func performReconciliation() async {
         let records = repository.fetch()
+        let referenceDate = Date.now
+        let timeZone = TimeZone.current
+        let locale = Locale.current
+        let snapshotStore = snapshotStore
+        let reminderScheduler = reminderScheduler
         do {
-            if let snapshotStore {
-                let snapshot = try WidgetSnapshot.make(
+            let plan = try await Task.detached(priority: .utility) {
+                let plan = try ReconciliationPlan.make(
                     records: records,
-                    relativeTo: .now,
-                    timeZone: .current,
-                    locale: .current
+                    referenceDate: referenceDate,
+                    timeZone: timeZone,
+                    locale: locale,
+                    includesWidgetSnapshot: snapshotStore != nil,
+                    reminderScheduler: reminderScheduler
                 )
-                try snapshotStore.write(snapshot)
+                if let snapshot = plan.widgetSnapshot {
+                    try snapshotStore?.write(snapshot)
+                }
+                return plan
+            }.value
+            if plan.widgetSnapshot != nil {
                 WidgetCenter.shared.reloadTimelines(ofKind: AppConfiguration.widgetKind)
             }
-            try await reminderScheduler.reconcile(records: records, client: notificationClient)
+            try await reminderScheduler.apply(plan.reminders, client: notificationClient)
             if let calendarSyncService, let calendarSyncRepository {
                 var calendarSettings = calendarSyncRepository.loadSettings()
                 lastCalendarSyncSummary = try await calendarSyncService.reconcile(
@@ -56,7 +82,7 @@ final class ReconciliationCoordinator {
                     settings: calendarSettings
                 )
                 if lastCalendarSyncSummary?.errorCount == 0, calendarSettings.enabled {
-                    calendarSettings.lastSuccessfulSync = .now
+                    calendarSettings.lastSuccessfulSync = referenceDate
                     try calendarSyncRepository.save(settings: calendarSettings)
                 }
             }

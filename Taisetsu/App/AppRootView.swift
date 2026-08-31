@@ -23,10 +23,9 @@ struct AppRootView: View {
                 )
             }
         }
-        .task { await dependencies.reconciliationCoordinator.reconcile() }
-        .onChange(of: scenePhase) { _, phase in
-            guard phase == .active else { return }
-            Task { await dependencies.reconciliationCoordinator.reconcile() }
+        .task(id: scenePhase) {
+            guard scenePhase == .active else { return }
+            await dependencies.reconciliationCoordinator.reconcile()
         }
         .sheet(
             isPresented: Binding(
