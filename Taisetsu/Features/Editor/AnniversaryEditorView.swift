@@ -83,6 +83,7 @@ struct AnniversaryEditorView: View {
                     .accessibilityIdentifier("save-anniversary")
                 }
             }
+            .task { viewModel.loadReferenceData() }
         }
     }
 }

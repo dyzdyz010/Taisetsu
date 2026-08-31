@@ -64,6 +64,7 @@ struct AnniversaryEditorViewModelTests {
         )
         let tag = try repository.saveTag(name: "Annual")
         let viewModel = AnniversaryEditorViewModel(repository: repository)
+        viewModel.loadReferenceData()
 
         _ = try repository.saveCategory(
             name: "Travel",
