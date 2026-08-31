@@ -4,11 +4,13 @@ import TaisetsuCore
 struct CalendarView: View {
     @Environment(\.calendar) private var calendar
     @Environment(\.locale) private var locale
-    let repository: AnniversaryRepository
-    @State private var displayedMonth = Calendar.current.startOfDay(for: .now)
-    @State private var records: [AnniversaryRecord] = []
+    @State private var viewModel: CalendarViewModel
 
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
+
+    init(repository: AnniversaryRepository) {
+        _viewModel = State(initialValue: CalendarViewModel(repository: repository))
+    }
 
     var body: some View {
         NavigationStack {
@@ -16,36 +18,41 @@ struct CalendarView: View {
                 VStack(spacing: 16) {
                     monthHeader
                     weekdayHeader
-                    LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(monthCells, id: \.self) { cell in
-                            if let date = cell {
-                                dayCell(date)
-                            } else {
-                                Color.clear.frame(height: 52)
-                            }
-                        }
+                    if let snapshot = viewModel.currentSnapshot(calendar: localizedCalendar) {
+                        monthGrid(snapshot)
+                        Divider().padding(.horizontal)
+                        monthEvents(snapshot.events)
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, minHeight: 280)
                     }
-                    .padding(.horizontal)
-                    Divider().padding(.horizontal)
-                    monthEvents
                 }
                 .padding(.vertical)
             }
             .navigationTitle("Calendar")
-            .onAppear { records = repository.fetch() }
+            .task(id: viewModel.displayedMonth) {
+                await viewModel.refresh(calendar: localizedCalendar, timeZone: .current)
+            }
         }
     }
 
     private var monthHeader: some View {
         HStack {
-            Button("Previous Month", systemImage: "chevron.left") { moveMonth(-1) }
-                .labelStyle(.iconOnly)
+            Button("Previous Month", systemImage: "chevron.left") {
+                viewModel.moveMonth(-1, calendar: localizedCalendar)
+            }
+            .labelStyle(.iconOnly)
+            .accessibilityIdentifier("calendar-previous-month")
             Spacer()
-            Text(displayedMonth, format: .dateTime.year().month(.wide))
+            Text(viewModel.displayedMonth, format: .dateTime.year().month(.wide))
                 .font(.title3.bold())
+                .accessibilityIdentifier("calendar-month-title")
             Spacer()
-            Button("Next Month", systemImage: "chevron.right") { moveMonth(1) }
-                .labelStyle(.iconOnly)
+            Button("Next Month", systemImage: "chevron.right") {
+                viewModel.moveMonth(1, calendar: localizedCalendar)
+            }
+            .labelStyle(.iconOnly)
+            .accessibilityIdentifier("calendar-next-month")
         }
         .padding(.horizontal)
     }
@@ -59,13 +66,26 @@ struct CalendarView: View {
         .padding(.horizontal)
     }
 
-    private var monthEvents: some View {
+    private func monthGrid(_ snapshot: CalendarMonthSnapshot) -> some View {
+        LazyVGrid(columns: columns, spacing: 8) {
+            ForEach(snapshot.cells, id: \.self) { cell in
+                if let date = cell {
+                    dayCell(date, hasEvent: snapshot.hasEvent(on: date, calendar: localizedCalendar))
+                } else {
+                    Color.clear.frame(height: 52)
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    private func monthEvents(_ events: [AnniversaryPresentation]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Important Days This Month").font(.headline)
-            if eventsInMonth.isEmpty {
+            if events.isEmpty {
                 Text("No important days this month").foregroundStyle(.secondary)
             } else {
-                ForEach(eventsInMonth) { item in
+                ForEach(events) { item in
                     HStack {
                         Image(systemName: item.record.category?.symbolName ?? "calendar")
                             .foregroundStyle(
@@ -84,11 +104,8 @@ struct CalendarView: View {
         .padding(.horizontal)
     }
 
-    private func dayCell(_ date: Date) -> some View {
-        let hasEvent = eventsInMonth.contains { item in
-            item.occurrence.next.map { Calendar.current.isDate($0, inSameDayAs: date) } ?? false
-        }
-        return VStack(spacing: 5) {
+    private func dayCell(_ date: Date, hasEvent: Bool) -> some View {
+        VStack(spacing: 5) {
             Text(date, format: .dateTime.day())
                 .font(.body.monospacedDigit())
             Circle()
@@ -97,44 +114,13 @@ struct CalendarView: View {
         }
         .frame(maxWidth: .infinity, minHeight: 52)
         .background(
-            Calendar.current.isDateInToday(date) ? Color.accentColor.opacity(0.12) : .clear,
+            localizedCalendar.isDateInToday(date) ? Color.accentColor.opacity(0.12) : .clear,
             in: RoundedRectangle(cornerRadius: 10)
         )
         .accessibilityLabel(
             date.formatted(date: .complete, time: .omitted)
                 + (hasEvent ? ", " + AppLocalization.string("has an important day", locale: locale) : "")
         )
-    }
-
-    private var eventsInMonth: [AnniversaryPresentation] {
-        guard let interval = Calendar.current.dateInterval(of: .month, for: displayedMonth) else { return [] }
-        return records.compactMap { record in
-            guard
-                let occurrence = try? OccurrenceCalculator().calculate(
-                    for: record,
-                    relativeTo: interval.start,
-                    timeZone: .current
-                ), let next = occurrence.next, interval.contains(next)
-            else { return nil }
-            return AnniversaryPresentation(record: record, occurrence: occurrence)
-        }
-        .sorted { ($0.occurrence.next ?? .distantFuture) < ($1.occurrence.next ?? .distantFuture) }
-    }
-
-    private var monthCells: [Date?] {
-        guard let interval = calendar.dateInterval(of: .month, for: displayedMonth),
-            let dayRange = calendar.range(of: .day, in: .month, for: displayedMonth)
-        else { return [] }
-        let weekday = calendar.component(.weekday, from: interval.start)
-        let leading = (weekday - calendar.firstWeekday + 7) % 7
-        return Array(repeating: nil, count: leading)
-            + dayRange.compactMap { day in calendar.date(byAdding: .day, value: day - 1, to: interval.start) }
-            .map(Optional.some)
-    }
-
-    private func moveMonth(_ value: Int) {
-        displayedMonth =
-            Calendar.current.date(byAdding: .month, value: value, to: displayedMonth) ?? displayedMonth
     }
 
     private var localizedCalendar: Calendar {
