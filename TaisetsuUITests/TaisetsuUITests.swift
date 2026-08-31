@@ -101,6 +101,30 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testCalendarNavigationPerformance() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+
+        let calendarTab = app.tabBars.buttons["Calendar"]
+        XCTAssertTrue(calendarTab.waitForExistence(timeout: 5))
+        calendarTab.tap()
+        let next = app.buttons["calendar-next-month"]
+        let previous = app.buttons["calendar-previous-month"]
+        XCTAssertTrue(next.waitForExistence(timeout: 3))
+        XCTAssertTrue(previous.exists)
+
+        measure(metrics: [XCTClockMetric()]) {
+            for _ in 0..<5 {
+                next.tap()
+                previous.tap()
+            }
+        }
+
+        XCTAssertTrue(next.exists)
+        XCTAssertTrue(previous.exists)
+    }
+
+    @MainActor
     func testLaunchesWithEnglishLocalization() throws {
         let app = makeApplication(language: "en")
         app.launch()
