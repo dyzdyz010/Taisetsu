@@ -20,4 +20,13 @@ struct WidgetSnapshotStoreTests {
         try store.write(snapshot)
         #expect(try store.read() == snapshot)
     }
+
+    @Test func snapshotWritingUsesProtectionAvailableAfterFirstUnlock() {
+        #expect(
+            WidgetSnapshotStore.writeOptions == [
+                .atomic,
+                .completeFileProtectionUntilFirstUserAuthentication,
+            ]
+        )
+    }
 }

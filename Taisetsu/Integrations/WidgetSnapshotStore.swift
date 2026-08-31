@@ -3,6 +3,10 @@ import TaisetsuCore
 
 struct WidgetSnapshotStore: Sendable {
     static let fileName = "upcoming-events.json"
+    static let writeOptions: Data.WritingOptions = [
+        .atomic,
+        .completeFileProtectionUntilFirstUserAuthentication,
+    ]
     let directoryURL: URL
 
     init(directoryURL: URL) {
@@ -21,7 +25,7 @@ struct WidgetSnapshotStore: Sendable {
     func write(_ snapshot: WidgetSnapshot) throws {
         try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
         let data = try JSONEncoder.taisetsu.encode(snapshot)
-        try data.write(to: fileURL, options: [.atomic, .completeFileProtectionUnlessOpen])
+        try data.write(to: fileURL, options: Self.writeOptions)
     }
 
     func read() throws -> WidgetSnapshot {
