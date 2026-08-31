@@ -26,7 +26,7 @@ final class AnniversaryRepository {
         }
 
         let model: AnniversaryModel
-        if let id = draft.id, let existing = allAnniversaries().first(where: { $0.id == id }) {
+        if let id = draft.id, let existing = anniversary(id: id) {
             model = existing
         } else {
             model = AnniversaryModel(id: draft.id ?? UUID(), title: title)
@@ -48,8 +48,8 @@ final class AnniversaryRepository {
         model.isPinned = draft.isPinned
         model.isVisibleInWidget = draft.isVisibleInWidget
         model.calendarEventIdentifier = draft.calendarEventIdentifier
-        model.category = allCategories().first(where: { $0.id == draft.categoryID })
-        model.tags = allTags().filter { draft.tagIDs.contains($0.id) }
+        model.category = draft.categoryID.flatMap(category(id:))
+        model.tags = draft.tagIDs.isEmpty ? [] : allTags().filter { draft.tagIDs.contains($0.id) }
         model.reminders = draft.reminders.map {
             let reminder = ReminderRuleModel(
                 id: $0.id,
@@ -66,20 +66,20 @@ final class AnniversaryRepository {
     }
 
     func delete(id: UUID) throws {
-        guard let model = allAnniversaries().first(where: { $0.id == id }) else { return }
+        guard let model = anniversary(id: id) else { return }
         context.delete(model)
         try context.save()
     }
 
     func setPinned(id: UUID, isPinned: Bool) throws {
-        guard let model = allAnniversaries().first(where: { $0.id == id }) else { return }
+        guard let model = anniversary(id: id) else { return }
         model.isPinned = isPinned
         model.updatedAt = .now
         try context.save()
     }
 
     func setWidgetVisibility(id: UUID, isVisible: Bool) throws {
-        guard let model = allAnniversaries().first(where: { $0.id == id }) else { return }
+        guard let model = anniversary(id: id) else { return }
         model.isVisibleInWidget = isVisible
         model.updatedAt = .now
         try context.save()
@@ -102,9 +102,10 @@ final class AnniversaryRepository {
     ) throws -> CategoryModel {
         let normalized = normalizedName(name)
         guard !normalized.isEmpty else { throw AnniversaryValidationError.emptyTitle }
+        let categories = allCategories()
         let model =
-            id.flatMap { target in allCategories().first(where: { $0.id == target }) }
-            ?? allCategories().first(where: { normalizedName($0.name) == normalized })
+            id.flatMap { target in categories.first(where: { $0.id == target }) }
+            ?? categories.first(where: { normalizedName($0.name) == normalized })
             ?? CategoryModel(name: normalized)
         if model.modelContext == nil { context.insert(model) }
         model.name = normalized
@@ -124,9 +125,10 @@ final class AnniversaryRepository {
     func saveTag(id: UUID? = nil, name: String) throws -> TagModel {
         let normalized = normalizedName(name)
         guard !normalized.isEmpty else { throw AnniversaryValidationError.emptyTitle }
+        let tags = allTags()
         let model =
-            id.flatMap { target in allTags().first(where: { $0.id == target }) }
-            ?? allTags().first(where: { normalizedName($0.name) == normalized })
+            id.flatMap { target in tags.first(where: { $0.id == target }) }
+            ?? tags.first(where: { normalizedName($0.name) == normalized })
             ?? TagModel(name: normalized)
         if model.modelContext == nil { context.insert(model) }
         model.name = normalized
@@ -140,8 +142,20 @@ final class AnniversaryRepository {
         try context.save()
     }
 
-    private func allAnniversaries() -> [AnniversaryModel] {
-        (try? context.fetch(FetchDescriptor<AnniversaryModel>())) ?? []
+    private func anniversary(id: UUID) -> AnniversaryModel? {
+        var descriptor = FetchDescriptor<AnniversaryModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+
+    private func category(id: UUID) -> CategoryModel? {
+        var descriptor = FetchDescriptor<CategoryModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
     }
 
     private func allCategories() -> [CategoryModel] {
