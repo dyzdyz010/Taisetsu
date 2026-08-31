@@ -14,6 +14,10 @@ final class CalendarSyncEntryModel {
     var errorMessage: String?
 
     init(entry: CalendarSyncEntry) {
+        update(from: entry)
+    }
+
+    func update(from entry: CalendarSyncEntry) {
         anniversaryID = entry.anniversaryID
         occurrenceKey = entry.occurrenceKey
         eventIdentifier = entry.eventIdentifier

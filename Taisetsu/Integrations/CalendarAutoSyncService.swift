@@ -13,7 +13,6 @@ struct CalendarSyncSummary: Equatable, Sendable {
 final class CalendarAutoSyncService {
     private let client: CalendarEventClient
     private let repository: CalendarSyncRepository
-    private let calculator = OccurrenceCalculator()
 
     init(client: CalendarEventClient, repository: CalendarSyncRepository) {
         self.client = client
@@ -29,79 +28,73 @@ final class CalendarAutoSyncService {
         if !settings.enabled {
             return try await removeAllManagedEvents()
         }
-        if client.authorizationState() != .fullAccess {
-            guard try await client.requestAccess() else { throw CalendarExportError.accessDenied }
+        let locale = Locale.current
+        let planningTask = Task.detached(priority: .utility) {
+            try CalendarSyncPlanBuilder().make(
+                records: records,
+                settings: settings,
+                now: now,
+                timeZone: timeZone,
+                locale: locale
+            )
         }
-        let calendar = try await client.ensureManagedCalendar()
-        var gregorian = Calendar(identifier: .gregorian)
-        gregorian.timeZone = timeZone
-        guard let end = gregorian.date(byAdding: .year, value: settings.horizonYears, to: now) else {
-            throw CalendarExportError.noFutureOccurrence
+        let calendar: CalendarTarget
+        let plan: CalendarSyncPlan
+        do {
+            if client.authorizationState() != .fullAccess {
+                guard try await client.requestAccess() else { throw CalendarExportError.accessDenied }
+            }
+            calendar = try await client.ensureManagedCalendar()
+            plan = try await planningTask.value
+        } catch {
+            planningTask.cancel()
+            throw error
         }
 
-        var desired: [(record: AnniversaryRecord, occurrence: ScheduledOccurrence)] = []
-        for record in records
-        where settings.scope.includes(
-            categoryID: record.category?.id,
-            tagIDs: record.tags.map(\.id)
-        ) {
-            let occurrences = try calculator.occurrences(
-                for: record, from: now, through: end, maxCount: 128, timeZone: timeZone)
-            desired.append(contentsOf: occurrences.map { (record, $0) })
-        }
-        desired.sort { $0.occurrence.date < $1.occurrence.date }
-        if desired.count > 1_000 { desired = Array(desired.prefix(1_000)) }
-
-        let existing = Dictionary(
-            uniqueKeysWithValues: repository.entries().map {
-                (entryKey(anniversaryID: $0.anniversaryID, occurrenceKey: $0.occurrenceKey), $0)
-            })
-        var desiredKeys = Set<String>()
+        let existingEntries = repository.entries()
+        var entries = Dictionary(
+            existingEntries.map { ($0.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
         var syncedCount = 0
         var errorCount = 0
         var lastError: String?
-        for item in desired {
-            let key = entryKey(anniversaryID: item.record.id, occurrenceKey: String(item.occurrence.sequence))
-            desiredKeys.insert(key)
-            let old = existing[key]
-            let legacyIdentifier = old?.eventIdentifier ?? item.record.calendarEventIdentifier
+        for item in plan.events {
+            let old = entries[item.entryKey]
+            let legacyIdentifier = old?.eventIdentifier ?? item.legacyEventIdentifier
             let existingIdentifier = legacyIdentifier.flatMap {
                 client.eventExists(identifier: $0) ? $0 : nil
             }
             do {
                 let identifier = try await client.upsert(
-                    draft(for: item.record, occurrence: item.occurrence, timeZone: timeZone),
+                    item.draft,
                     calendar: calendar,
                     existingIdentifier: existingIdentifier
                 )
-                try repository.upsert(
-                    entry: CalendarSyncEntry(
-                        anniversaryID: item.record.id,
-                        occurrenceKey: String(item.occurrence.sequence),
-                        eventIdentifier: identifier,
-                        calendarIdentifier: calendar.identifier,
-                        occurrenceDate: item.occurrence.date,
-                        lastSyncedAt: now,
-                        status: .synced,
-                        errorMessage: nil
-                    ))
+                entries[item.entryKey] = CalendarSyncEntry(
+                    anniversaryID: item.anniversaryID,
+                    occurrenceKey: item.occurrenceKey,
+                    eventIdentifier: identifier,
+                    calendarIdentifier: calendar.identifier,
+                    occurrenceDate: item.occurrenceDate,
+                    lastSyncedAt: now,
+                    status: .synced,
+                    errorMessage: nil
+                )
                 syncedCount += 1
             } catch {
                 errorCount += 1
                 lastError = error.localizedDescription
-                if let old { try? repository.upsert(entry: old) }
             }
         }
 
         var deletedCount = 0
-        for entry in repository.entries()
-        where !desiredKeys.contains(
-            entryKey(anniversaryID: entry.anniversaryID, occurrenceKey: entry.occurrenceKey)
-        ) {
+        for entry in existingEntries where !plan.desiredEntryKeys.contains(entry.id) {
             do { try await client.removeEvent(identifier: entry.eventIdentifier) } catch {}
-            try repository.delete(entry: entry)
+            entries.removeValue(forKey: entry.id)
             deletedCount += 1
         }
+        try repository.replaceEntries(with: Array(entries.values))
         return CalendarSyncSummary(
             syncedCount: syncedCount,
             deletedCount: deletedCount,
@@ -115,35 +108,9 @@ final class CalendarAutoSyncService {
         let entries = repository.entries()
         for entry in entries {
             try? await client.removeEvent(identifier: entry.eventIdentifier)
-            try repository.delete(entry: entry)
         }
+        try repository.replaceEntries(with: [])
         return CalendarSyncSummary(
             syncedCount: 0, deletedCount: entries.count, errorCount: 0, calendar: nil, lastError: nil)
-    }
-
-    private func entryKey(anniversaryID: UUID, occurrenceKey: String) -> String {
-        "\(anniversaryID.uuidString):\(occurrenceKey)"
-    }
-
-    private func draft(for record: AnniversaryRecord, occurrence: ScheduledOccurrence, timeZone: TimeZone)
-        -> CalendarEventDraft
-    {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = timeZone
-        let end =
-            calendar.date(
-                byAdding: record.isAllDay ? .day : .hour,
-                value: 1,
-                to: occurrence.date
-            ) ?? occurrence.date.addingTimeInterval(record.isAllDay ? 86_400 : 3_600)
-        let attribution = AppLocalization.string("Created with Taisetsu")
-        let notes = record.notes.isEmpty ? attribution : "\(record.notes)\n\n\(attribution)"
-        return CalendarEventDraft(
-            title: record.title,
-            notes: notes,
-            startDate: occurrence.date,
-            endDate: end,
-            isAllDay: record.isAllDay
-        )
     }
 }

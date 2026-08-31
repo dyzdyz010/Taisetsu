@@ -36,48 +36,25 @@ final class CalendarSyncRepository {
             .sorted { $0.occurrenceDate < $1.occurrenceDate }
     }
 
-    func upsert(entry: CalendarSyncEntry) throws {
-        let model =
-            (try? context.fetch(FetchDescriptor<CalendarSyncEntryModel>()))?
-            .first { $0.anniversaryID == entry.anniversaryID && $0.occurrenceKey == entry.occurrenceKey }
-            ?? {
-                let value = CalendarSyncEntryModel(entry: entry)
-                context.insert(value)
-                return value
-            }()
-        model.eventIdentifier = entry.eventIdentifier
-        model.calendarIdentifier = entry.calendarIdentifier
-        model.occurrenceDate = entry.occurrenceDate
-        model.lastSyncedAt = entry.lastSyncedAt
-        model.statusRaw = entry.status.rawValue
-        model.errorMessage = entry.errorMessage
-        try context.save()
-    }
+    func replaceEntries(with entries: [CalendarSyncEntry]) throws {
+        let existing = try context.fetch(FetchDescriptor<CalendarSyncEntryModel>())
+        var modelsByID = Dictionary(grouping: existing) { model in
+            "\(model.anniversaryID.uuidString):\(model.occurrenceKey)"
+        }
 
-    func delete(entry: CalendarSyncEntry) throws {
-        guard
-            let model = (try? context.fetch(FetchDescriptor<CalendarSyncEntryModel>()))?
-                .first(where: {
-                    $0.anniversaryID == entry.anniversaryID && $0.occurrenceKey == entry.occurrenceKey
-                })
-        else { return }
-        context.delete(model)
-        try context.save()
-    }
-
-    func deleteEntries(for anniversaryID: UUID) throws {
-        for model in (try? context.fetch(FetchDescriptor<CalendarSyncEntryModel>()))?.filter({
-            $0.anniversaryID == anniversaryID
-        }) ?? [] {
-            context.delete(model)
+        for entry in entries {
+            let matching = modelsByID.removeValue(forKey: entry.id) ?? []
+            let model = matching.first ?? CalendarSyncEntryModel(entry: entry)
+            if model.modelContext == nil { context.insert(model) }
+            model.update(from: entry)
+            for duplicate in matching.dropFirst() {
+                context.delete(duplicate)
+            }
+        }
+        for stale in modelsByID.values.joined() {
+            context.delete(stale)
         }
         try context.save()
-    }
-
-    func deleteEntries(notMatching keys: Set<String>, for anniversaryID: UUID) throws -> [CalendarSyncEntry] {
-        let stale = entries(for: anniversaryID).filter { !keys.contains($0.occurrenceKey) }
-        for entry in stale { try delete(entry: entry) }
-        return stale
     }
 
     private func settingsModel() -> CalendarSyncSettingsModel? {

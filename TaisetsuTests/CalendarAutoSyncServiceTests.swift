@@ -7,6 +7,37 @@ import Testing
 
 @MainActor
 struct CalendarAutoSyncServiceTests {
+    @Test func planCapsEachRecordAndTheCombinedCalendar() throws {
+        let records = (0..<9).map { index in
+            AnniversaryRecord(
+                title: "Event \(index)",
+                date: AnniversaryDate(year: 2026, month: 8, day: 7),
+                recurrence: .init(unit: .day, interval: 1)
+            )
+        }
+        let now = date("2026-08-07T00:00:00Z")
+        let timeZone = TimeZone(secondsFromGMT: 0)!
+        let settings = CalendarSyncSettings(enabled: true, horizonYears: 2)
+
+        let single = try CalendarSyncPlanBuilder().make(
+            records: [records[0]],
+            settings: settings,
+            now: now,
+            timeZone: timeZone,
+            locale: Locale(identifier: "en_US")
+        )
+        let combined = try CalendarSyncPlanBuilder().make(
+            records: records,
+            settings: settings,
+            now: now,
+            timeZone: timeZone,
+            locale: Locale(identifier: "en_US")
+        )
+
+        #expect(single.events.count == 128)
+        #expect(combined.events.count == 1_000)
+    }
+
     @Test func reconcileCreatesBoundedEventsAndIsIdempotent() async throws {
         let container = try ModelContainerFactory.makeInMemory()
         let repository = CalendarSyncRepository(context: ModelContext(container))
