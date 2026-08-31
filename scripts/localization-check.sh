@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-required_locales=(zh-Hans zh-Hant ja ko es fr de pt-BR it ar)
+required_locales=(zh-Hans zh-Hant nb de)
 default_catalogs=(
     Taisetsu/Resources/Localizable.xcstrings
     Taisetsu/Resources/InfoPlist.xcstrings
@@ -30,6 +30,19 @@ for catalog in "${catalogs[@]}"; do
         and (.strings | type == "object" and length > 0)
     ' "${catalog}" >/dev/null; then
         echo "Localization catalog metadata is invalid: ${catalog}" >&2
+        exit 1
+    fi
+
+    if ! jq -e '
+        [
+            .strings
+            | to_entries[]
+            | select(.value.shouldTranslate != false)
+            | select((.value.localizations | keys | sort) != ["de", "nb", "zh-Hans", "zh-Hant"])
+        ]
+        | length == 0
+    ' "${catalog}" >/dev/null; then
+        echo "Unsupported or missing locale in ${catalog}" >&2
         exit 1
     fi
 
@@ -78,6 +91,33 @@ for catalog in "${catalogs[@]}"; do
         echo "A translation changed a format placeholder in ${catalog}" >&2
         exit 1
     fi
+
+    if ! jq -e '
+        def intentional_same($key; $locale):
+            [
+                "Countdown|de",
+                "Minute: %lld|de",
+                "Name|de",
+                "Status|de",
+                "Status|nb",
+                "Tags|de",
+                "Version|de",
+                "Widgets|de"
+            ]
+            | index("\($key)|\($locale)") != null;
+        [
+            .strings
+            | to_entries[] as $entry
+            | $entry.value.localizations
+            | to_entries[]
+            | select(.value.stringUnit.value == $entry.key)
+            | select(intentional_same($entry.key; .key) | not)
+        ]
+        | length == 0
+    ' "${catalog}" >/dev/null; then
+        echo "A translation unexpectedly matches its English source in ${catalog}" >&2
+        exit 1
+    fi
 done
 
 if [[ "$(plutil -extract CFBundleDisplayName raw Taisetsu/Info.plist)" != "Taisetsu" ]]; then
@@ -89,7 +129,7 @@ if ! jq -e '
     .strings.CFBundleDisplayName.localizations as $names
     | $names["zh-Hans"].stringUnit.value == "重要日"
       and $names["zh-Hant"].stringUnit.value == "重要日"
-      and (["ja", "ko", "es", "fr", "de", "pt-BR", "it", "ar"]
+      and (["nb", "de"]
         | map($names[.].stringUnit.value == "Taisetsu")
         | all)
 ' Taisetsu/Resources/InfoPlist.xcstrings >/dev/null; then
@@ -97,4 +137,4 @@ if ! jq -e '
     exit 1
 fi
 
-echo "Localization catalogs are complete for ${#required_locales[@]} translated locales."
+echo "Localization catalogs are complete for English plus ${#required_locales[@]} translated locales."

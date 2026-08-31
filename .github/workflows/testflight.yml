@@ -44,7 +44,6 @@ jobs:
           bash scripts/naming-check.sh
           xcodegen generate
           git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
-          swift scripts/generate-localizations.swift --check
           bash scripts/localization-check.sh
           bash scripts/app-icon-check.sh
 
@@ -53,6 +52,9 @@ jobs:
 
       - name: Build for simulator
         run: xcodebuild build -project Taisetsu.xcodeproj -scheme "$SCHEME" -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+
+      - name: Check localization extraction drift
+        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings
 
       - name: Run unit tests and coverage
         run: |

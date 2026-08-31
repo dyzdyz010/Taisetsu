@@ -708,15 +708,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				ar,
 				de,
 				en,
-				es,
-				fr,
-				it,
-				ja,
-				ko,
-				"pt-BR",
+				nb,
 				"zh-Hans",
 				"zh-Hant",
 			);

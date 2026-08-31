@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-03
 
-**Status:** Localization direction approved; technical identity superseded by the total rename design
+**Status:** Superseded by [the five-locale internationalization design](2026-08-31-five-locale-internationalization-design.md)
 
 **Brand direction:** Warm, restrained, calm
 

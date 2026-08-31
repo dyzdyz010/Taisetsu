@@ -95,7 +95,7 @@ struct AnniversaryDetailView: View {
                     isSyncing = true
                     Task {
                         await onSync()
-                        syncMessage = "Sync requested"
+                        syncMessage = AppLocalization.string("Sync requested", locale: locale)
                         isSyncing = false
                     }
                 }

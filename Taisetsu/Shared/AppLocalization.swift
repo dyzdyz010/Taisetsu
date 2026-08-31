@@ -30,6 +30,19 @@ enum AppLocalization {
         formatter.locale = locale
         return formatter.string(from: values) ?? values.joined(separator: ", ")
     }
+
+    static func yearDuration(_ years: Int, locale: Locale = .current) -> String {
+        var components = DateComponents()
+        components.year = years
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = .year
+        formatter.unitsStyle = .full
+        formatter.maximumUnitCount = 1
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = locale
+        formatter.calendar = calendar
+        return formatter.string(from: components) ?? String(years)
+    }
 }
 
 enum LocalizedCalendarLayout {

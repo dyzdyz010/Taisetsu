@@ -17,9 +17,9 @@ Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或�
 - 再次导出会更新原系统日历事件；只导出由 Taisetsu 计算出的下一次日期
 - WidgetKit 小、中、大组件分别显示 1、4、5 个最近事件
 - SwiftData 本地优先存储，可连接用户私人 CloudKit
-- 英语、简体中文、繁体中文、日语、韩语、西班牙语、法语、德语、巴西葡萄牙语、意大利语和阿拉伯语
+- 英语、简体中文、繁体中文、书面挪威语（Bokmål）和德语
 - 区域化日期顺序、星期起始日、相对时间和周期表达
-- 深色模式、动态字体、VoiceOver 语义和阿拉伯语从右到左布局
+- 深色模式、动态字体和 VoiceOver 语义
 
 ## 技术结构
 
@@ -67,7 +67,7 @@ TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/verify.sh
 CI 使用 GitHub `macos-26` + Xcode 26.6，包含：
 
 - XcodeGen 生成结果漂移检查
-- 11 个语言地区的 String Catalog 完整性与生成结果漂移检查
+- 5 个语言地区的 String Catalog 完整性与构建提取漂移检查
 - `swift-format` lint
 - App + Core + Widget 无签名构建
 - 单元测试与 `xcresult` 证据

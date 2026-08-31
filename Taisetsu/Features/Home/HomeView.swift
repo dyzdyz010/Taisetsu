@@ -160,6 +160,7 @@ struct HomeView: View {
 
 private struct FilterView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.locale) private var locale
     let repository: AnniversaryRepository
     @Bindable var viewModel: HomeViewModel
 
@@ -167,7 +168,10 @@ private struct FilterView: View {
         NavigationStack {
             List {
                 Section("Category (single selection)") {
-                    filterRow("All Categories", selected: viewModel.categoryID == nil) {
+                    filterRow(
+                        AppLocalization.string("All Categories", locale: locale),
+                        selected: viewModel.categoryID == nil
+                    ) {
                         viewModel.categoryID = nil
                     }
                     ForEach(repository.categories()) { category in

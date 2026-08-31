@@ -68,8 +68,35 @@ struct AppLocalizationTests {
         #expect(symbols.last == "S")
     }
 
-    @Test func catalogResolvesARightToLeftLocale() {
-        #expect(AppLocalization.string("Home", locale: Locale(identifier: "ar")) == "الرئيسية")
+    @Test func calendarSyncCopyResolvesInEverySupportedLocale() {
+        let cases = [
+            ("en_US", "Calendar Sync", "Enabled"),
+            ("zh_Hans_CN", "日历同步", "已启用"),
+            ("zh_Hant_TW", "行事曆同步", "已啟用"),
+            ("nb_NO", "Kalendersynkronisering", "Aktivert"),
+            ("de_DE", "Kalendersynchronisierung", "Aktiviert"),
+        ]
+
+        for (identifier, title, status) in cases {
+            let locale = Locale(identifier: identifier)
+            #expect(AppLocalization.string("Calendar Sync", locale: locale) == title)
+            #expect(AppLocalization.string("Enabled", locale: locale) == status)
+        }
+    }
+
+    @Test func unsupportedLocalesFallBackToEnglish() {
+        #expect(
+            AppLocalization.string("Calendar Sync", locale: Locale(identifier: "fr_FR"))
+                == "Calendar Sync"
+        )
+    }
+
+    @Test func syncHorizonUsesLocaleAwareYearUnits() {
+        #expect(AppLocalization.yearDuration(2, locale: Locale(identifier: "en_US")) == "2 years")
+        #expect(AppLocalization.yearDuration(2, locale: Locale(identifier: "zh_Hans_CN")) == "2年")
+        #expect(AppLocalization.yearDuration(2, locale: Locale(identifier: "zh_Hant_TW")) == "2年")
+        #expect(AppLocalization.yearDuration(2, locale: Locale(identifier: "nb_NO")) == "2 år")
+        #expect(AppLocalization.yearDuration(2, locale: Locale(identifier: "de_DE")) == "2 Jahre")
     }
 
     @Test func lunarDatesExposeTheirCalendarMeaningInEnglishAndChinese() {

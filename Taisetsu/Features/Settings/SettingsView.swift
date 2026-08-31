@@ -21,7 +21,11 @@ struct SettingsView: View {
                     }
                 }
                 Section("Sync & Permissions") {
-                    LabeledContent("iCloud", value: "Automatic Sync")
+                    LabeledContent {
+                        Text("Automatic Sync")
+                    } label: {
+                        Text(verbatim: "iCloud")
+                    }
                     Label("Notification access is requested when you add a reminder", systemImage: "bell")
                     NavigationLink {
                         CalendarSyncSettingsView(
@@ -31,6 +35,7 @@ struct SettingsView: View {
                     } label: {
                         Label("Calendar Sync", systemImage: "calendar.badge.clock")
                     }
+                    .accessibilityIdentifier("calendar-sync-settings")
                 }
                 Section("About") {
                     LabeledContent(
@@ -46,6 +51,7 @@ struct SettingsView: View {
 }
 
 private struct CalendarSyncSettingsView: View {
+    @Environment(\.locale) private var locale
     let repository: AnniversaryRepository
     let reconciliationCoordinator: ReconciliationCoordinator
     @State private var settings: CalendarSyncSettings
@@ -68,12 +74,27 @@ private struct CalendarSyncSettingsView: View {
     var body: some View {
         Form {
             Section("Status") {
-                LabeledContent("Automatic Sync", value: settings.enabled ? "Enabled" : "Stopped")
+                LabeledContent {
+                    Text(
+                        AppLocalization.string(
+                            settings.enabled ? "Enabled" : "Stopped",
+                            locale: locale
+                        )
+                    )
+                    .accessibilityIdentifier("calendar-sync-status")
+                } label: {
+                    Text("Automatic Sync")
+                }
                 LabeledContent("Managed Events", value: "\(reconciliationCoordinator.calendarEntriesCount())")
                 if let last = settings.lastSuccessfulSync {
                     LabeledContent("Last Synced", value: last.formatted(date: .abbreviated, time: .shortened))
                 }
-                Button(settings.enabled ? "Stop Automatic Sync" : "Enable Automatic Sync") {
+                Button(
+                    AppLocalization.string(
+                        settings.enabled ? "Stop Automatic Sync" : "Enable Automatic Sync",
+                        locale: locale
+                    )
+                ) {
                     settings.enabled.toggle()
                     try? reconciliationCoordinator.saveCalendarSettings(settings)
                     Task { await reconciliationCoordinator.reconcile() }
@@ -84,11 +105,15 @@ private struct CalendarSyncSettingsView: View {
                 }
             }
             Section("Sync Range") {
-                Stepper("\(settings.horizonYears) years", value: $settings.horizonYears, in: 1...5)
-                    .onChange(of: settings.horizonYears) { _, _ in
-                        try? reconciliationCoordinator.saveCalendarSettings(settings)
-                        Task { await reconciliationCoordinator.reconcile() }
-                    }
+                Stepper(
+                    AppLocalization.yearDuration(settings.horizonYears, locale: locale),
+                    value: $settings.horizonYears,
+                    in: 1...5
+                )
+                .onChange(of: settings.horizonYears) { _, _ in
+                    try? reconciliationCoordinator.saveCalendarSettings(settings)
+                    Task { await reconciliationCoordinator.reconcile() }
+                }
                 Text("All future occurrences in this rolling window are managed automatically.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)

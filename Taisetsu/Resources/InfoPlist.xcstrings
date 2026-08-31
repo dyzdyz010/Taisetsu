@@ -2,50 +2,16 @@
   "sourceLanguage" : "en",
   "strings" : {
     "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "manual",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taisetsu"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu"
-          }
-        },
-        "pt-BR" : {
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taisetsu"
@@ -66,53 +32,19 @@
       }
     },
     "NSCalendarsFullAccessUsageDescription" : {
+      "comment" : "Privacy - Calendars Full Access Usage Description",
+      "extractionState" : "manual",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "يتيح مزامنة الأيام المهمة تلقائيًا مع تقويم مخصص."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ermöglicht die automatische Synchronisierung wichtiger Tage mit einem eigenen Kalender."
           }
         },
-        "es" : {
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite sincronizar automáticamente las fechas importantes con un calendario dedicado."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Permet de synchroniser automatiquement les dates importantes avec un calendrier dédié."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Consente di sincronizzare automaticamente i giorni importanti con un Calendario dedicato."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "大切な日を専用のシステムカレンダーに自動同期するために使用します。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "소중한 날을 전용 시스템 캘린더에 자동으로 동기화하는 데 사용합니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Permite sincronizar automaticamente datas importantes com um Calendário dedicado."
+            "value" : "Brukes til å synkronisere viktige dager automatisk med en egen kalender."
           }
         },
         "zh-Hans" : {

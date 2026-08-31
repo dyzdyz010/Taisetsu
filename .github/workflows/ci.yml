@@ -42,10 +42,8 @@ jobs:
           xcodegen generate
           git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
 
-      - name: Check localization completeness and drift
-        run: |
-          swift scripts/generate-localizations.swift --check
-          bash scripts/localization-check.sh
+      - name: Check localization completeness
+        run: bash scripts/localization-check.sh
 
       - name: Check application icon assets
         run: bash scripts/app-icon-check.sh
@@ -55,6 +53,9 @@ jobs:
 
       - name: Build app and all embedded targets
         run: xcodebuild build -project Taisetsu.xcodeproj -scheme Taisetsu -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+
+      - name: Check localization extraction drift
+        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings
 
       - name: Run unit tests with coverage
         run: bash scripts/ci-test.sh
@@ -98,10 +99,8 @@ jobs:
       - name: Check repository naming
         run: bash scripts/naming-check.sh
 
-      - name: Check localization completeness and drift
-        run: |
-          swift scripts/generate-localizations.swift --check
-          bash scripts/localization-check.sh
+      - name: Check localization completeness
+        run: bash scripts/localization-check.sh
 
       - name: Check application icon assets
         run: bash scripts/app-icon-check.sh
@@ -113,7 +112,11 @@ jobs:
             -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testRepeatUnitMenuRespondsToTap \
             -only-testing:TaisetsuUITests/TaisetsuUITests/testCountStylePickerRespondsToTap \
-              -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization
+            -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization \
+            -only-testing:TaisetsuUITests/TaisetsuUITests/testCalendarSyncSettingsFollowSupportedLocales
+
+      - name: Check localization extraction drift
+        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings
 
       - name: Upload UI failure evidence
         if: failure()

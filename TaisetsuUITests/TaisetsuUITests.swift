@@ -112,13 +112,49 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
-    private func makeApplication(language: String = "zh-Hans") -> XCUIApplication {
+    func testCalendarSyncSettingsFollowSupportedLocales() throws {
+        let cases = [
+            ("en", "en_US", "Settings", "Calendar Sync", "Stopped"),
+            ("zh-Hans", "zh_CN", "设置", "日历同步", "已停止"),
+            ("zh-Hant", "zh_TW", "設定", "行事曆同步", "已停止"),
+            ("nb", "nb_NO", "Innstillinger", "Kalendersynkronisering", "Stoppet"),
+            ("de", "de_DE", "Einstellungen", "Kalendersynchronisierung", "Gestoppt"),
+        ]
+
+        for (language, locale, settingsTitle, syncTitle, stopped) in cases {
+            let app = makeApplication(language: language, locale: locale)
+            app.launch()
+
+            let settingsTab = app.tabBars.buttons.element(boundBy: 2)
+            XCTAssertTrue(settingsTab.waitForExistence(timeout: 5))
+            XCTAssertEqual(settingsTab.label, settingsTitle)
+            settingsTab.tap()
+            XCTAssertTrue(app.navigationBars[settingsTitle].waitForExistence(timeout: 3))
+
+            let calendarSync = app.buttons["calendar-sync-settings"]
+            XCTAssertTrue(calendarSync.waitForExistence(timeout: 3))
+            calendarSync.tap()
+            XCTAssertTrue(app.navigationBars[syncTitle].waitForExistence(timeout: 3))
+            let syncStatus = app.staticTexts["calendar-sync-status"]
+            XCTAssertTrue(syncStatus.waitForExistence(timeout: 3))
+            XCTAssertEqual(syncStatus.label, stopped)
+
+            app.terminate()
+        }
+    }
+
+    @MainActor
+    private func makeApplication(
+        language: String = "zh-Hans",
+        locale: String? = nil
+    ) -> XCUIApplication {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
+        let locale = locale ?? (language == "zh-Hans" ? "zh_CN" : "en_US")
         app.launchArguments = [
             "-ui-testing",
             "-AppleLanguages", "(\(language))",
-            "-AppleLocale", language == "zh-Hans" ? "zh_CN" : "en_US",
+            "-AppleLocale", locale,
         ]
         return app
     }

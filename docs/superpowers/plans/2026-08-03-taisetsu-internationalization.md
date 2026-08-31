@@ -1,5 +1,7 @@
 # Taisetsu Internationalization Implementation Plan
 
+> **Status:** Historical. The active locale contract is defined by [`2026-08-31-five-locale-internationalization-design.md`](../specs/2026-08-31-five-locale-internationalization-design.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Rebrand the shipped product as Taisetsu and make every user-visible app, widget, notification, permission, and date presentation path locale-aware in eleven launch locales.
