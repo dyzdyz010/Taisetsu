@@ -1,4 +1,5 @@
 import Foundation
+import Synchronization
 import Testing
 
 @testable import TaisetsuCore
@@ -165,6 +166,27 @@ struct OccurrenceCalculatorTests {
         )
 
         #expect(result.original == date("2024-02-09T00:00:00Z"))
+    }
+
+    @Test func chineseYearCacheBuildsEachYearAndTimeZoneOnlyOnce() {
+        let cache = ChineseCalendarYearCache(limit: 32)
+        let builds = Mutex(0)
+        let key = ChineseCalendarYearKey(
+            gregorianYear: 2026,
+            timeZoneIdentifier: "Asia/Shanghai"
+        )
+
+        let first = cache.value(for: key) {
+            builds.withLock { $0 += 1 }
+            return ChineseCalendarYearIndex(months: [:])
+        }
+        let second = cache.value(for: key) {
+            builds.withLock { $0 += 1 }
+            return ChineseCalendarYearIndex(months: [:])
+        }
+
+        #expect(builds.withLock { $0 } == 1)
+        #expect(first == second)
     }
 
     @Test func rollingWindowReturnsOnlyBoundedOccurrencesAndHonorsCap() throws {

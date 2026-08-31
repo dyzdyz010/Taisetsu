@@ -48,6 +48,7 @@
 		8A4A6F43414237201094F81D /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89850B8CDB62D7C28FC41D /* WidgetSnapshotStore.swift */; };
 		8A8575C564CB1B6313FFA6AC /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD505E3C2FBC4D8EA064F5 /* AppConfiguration.swift */; };
 		8E80724D418BF49BDE0DD756 /* TaisetsuWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DFD7ECF34B72EFFD784551 /* TaisetsuWidgetBundle.swift */; };
+		90E30223D610CBA3142814C6 /* ChineseCalendarDateResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A907DCA82615101F495223F /* ChineseCalendarDateResolver.swift */; };
 		9648C1215712CFDF205D7F6B /* TaisetsuWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D0CE5CB02D502F3D98073F /* TaisetsuWidget.swift */; };
 		965C169514B68E1341C4C454 /* AnniversaryEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625A5338763E900A55394767 /* AnniversaryEditorView.swift */; };
 		990000A1E8C8982218591032 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3598116DCFA8CBCA01E70 /* ReminderScheduler.swift */; };
@@ -186,6 +187,7 @@
 		09AD505E3C2FBC4D8EA064F5 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		09C6475F588A6AAECAFC4D45 /* Taisetsu.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Taisetsu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A89850B8CDB62D7C28FC41D /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
+		0A907DCA82615101F495223F /* ChineseCalendarDateResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseCalendarDateResolver.swift; sourceTree = "<group>"; };
 		0D5BF5CEB338E7FCFD3E74B7 /* AnniversaryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilter.swift; sourceTree = "<group>"; };
 		0E95C4FA01263842F30510C8 /* AnniversaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryDetailView.swift; sourceTree = "<group>"; };
 		147F7447C0800A1EEE1DD24C /* CalendarExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportServiceTests.swift; sourceTree = "<group>"; };
@@ -205,7 +207,7 @@
 		3D3636207E9AC274AD8DA834 /* WidgetSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSelectionTests.swift; sourceTree = "<group>"; };
 		3D9E9B95A9EA28D9FBB01A3C /* DefaultCategorySeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeeder.swift; sourceTree = "<group>"; };
 		402FBBAB24EEB8917B5798E1 /* AnniversaryFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilterTests.swift; sourceTree = "<group>"; };
-		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		456877AE91E39DE21B1979A9 /* TaisetsuUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		49A5CE5E2C5D0448FA518702 /* ReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulerTests.swift; sourceTree = "<group>"; };
 		4B237A814B0DFFB30FA05055 /* AnniversaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRow.swift; sourceTree = "<group>"; };
@@ -222,7 +224,7 @@
 		643D6499EF4FE4A44A9E9A17 /* CalendarExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportService.swift; sourceTree = "<group>"; };
 		644228CA1E8FA4F2712C0E00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		646338D03992861510DD0127 /* TaisetsuWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuWidgetEntry.swift; sourceTree = "<group>"; };
-		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		67D9A2917CB9B9AFE6E08EAC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6C1DA5EA009F42B936AC114B /* TagManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManagerView.swift; sourceTree = "<group>"; };
 		6FBEB42C3EF0A9CCE4E89319 /* DefaultCategorySeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeederTests.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				C5AF01854E8F05E0F00742C3 /* CalendarSyncBackoff.swift */,
 				060D7E60855C866A23284206 /* CalendarSyncScope.swift */,
 				8DDF7A2646933235F0CE7167 /* CalendarSyncState.swift */,
+				0A907DCA82615101F495223F /* ChineseCalendarDateResolver.swift */,
 				F89F16163023053D7FFC09AA /* DisplayMode.swift */,
 				1D3C12E1B8D9FBE6BF72149E /* Occurrence.swift */,
 				93E657D6B5409B0C726B7FA5 /* OccurrenceCalculator.swift */,
@@ -765,6 +768,7 @@
 				FFF664DA2036D714997C4F23 /* CalendarSyncBackoff.swift in Sources */,
 				29A2DF99291A87907D3FB747 /* CalendarSyncScope.swift in Sources */,
 				FDBE07C5C87528500E4534A1 /* CalendarSyncState.swift in Sources */,
+				90E30223D610CBA3142814C6 /* ChineseCalendarDateResolver.swift in Sources */,
 				BE78D827884B8E3EEA986D4E /* DisplayMode.swift in Sources */,
 				41E1FA37B50D8E91C42F3015 /* Occurrence.swift in Sources */,
 				EE0D99F1D5FBAD10750E9C23 /* OccurrenceCalculator.swift in Sources */,
@@ -973,7 +977,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TaisetsuWidget/TaisetsuWidget.entitlements;
-				DEVELOPMENT_TEAM = 2FBFFBNMS3;
 				INFOPLIST_FILE = TaisetsuWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1025,7 +1028,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TaisetsuWidget/TaisetsuWidget.entitlements;
-				DEVELOPMENT_TEAM = 2FBFFBNMS3;
 				INFOPLIST_FILE = TaisetsuWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
