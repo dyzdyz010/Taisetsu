@@ -136,6 +136,37 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testIPadUsesSidebarNavigation() throws {
+        let app = makeApplication(language: "en", orientation: .landscapeLeft)
+        app.launch()
+
+        let windowSize = app.windows.firstMatch.frame.size
+        guard min(windowSize.width, windowSize.height) >= 700 else {
+            throw XCTSkip("This navigation contract applies only to regular-width iPad layouts.")
+        }
+
+        XCTAssertTrue(
+            app.descendants(matching: .any)["app-sidebar"].waitForExistence(timeout: 5)
+        )
+        XCTAssertFalse(app.tabBars.firstMatch.exists)
+
+        let calendar = app.buttons["sidebar-calendar"]
+        XCTAssertTrue(calendar.exists)
+        calendar.tap()
+        XCTAssertTrue(app.navigationBars["Calendar"].waitForExistence(timeout: 3))
+
+        let settings = app.buttons["sidebar-settings"]
+        XCTAssertTrue(settings.exists)
+        settings.tap()
+        XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 3))
+
+        let home = app.buttons["sidebar-home"]
+        XCTAssertTrue(home.exists)
+        home.tap()
+        XCTAssertTrue(app.navigationBars["Taisetsu"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func testCalendarSyncSettingsFollowSupportedLocales() throws {
         let cases = [
             ("en", "en_US", "Settings", "Calendar Sync", "Stopped"),
@@ -170,9 +201,10 @@ final class TaisetsuUITests: XCTestCase {
     @MainActor
     private func makeApplication(
         language: String = "zh-Hans",
-        locale: String? = nil
+        locale: String? = nil,
+        orientation: UIDeviceOrientation = .portrait
     ) -> XCUIApplication {
-        XCUIDevice.shared.orientation = .portrait
+        XCUIDevice.shared.orientation = orientation
         let app = XCUIApplication()
         let locale = locale ?? (language == "zh-Hans" ? "zh_CN" : "en_US")
         app.launchArguments = [

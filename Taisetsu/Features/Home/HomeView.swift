@@ -2,6 +2,7 @@ import SwiftUI
 import TaisetsuCore
 
 struct HomeView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let repository: AnniversaryRepository
     let reconciliationCoordinator: ReconciliationCoordinator
     let calendarPromptCoordinator: CalendarSyncPromptCoordinator
@@ -19,6 +20,14 @@ struct HomeView: View {
         self.reconciliationCoordinator = reconciliationCoordinator
         self.calendarPromptCoordinator = calendarPromptCoordinator
         _viewModel = State(initialValue: HomeViewModel(repository: repository))
+        #if DEBUG
+            let screenshotSection = AppStoreScreenshotData.initialSection(in: CommandLine.arguments)
+            _editingRecord = State(
+                initialValue: screenshotSection == "editor"
+                    ? repository.fetch().first(where: \.isPinned)
+                    : nil
+            )
+        #endif
     }
 
     var body: some View {
@@ -27,6 +36,7 @@ struct HomeView: View {
                 switch viewModel.state {
                 case .loading:
                     ProgressView("Loading important days…")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .empty:
                     ContentUnavailableView {
                         Label("No important days yet", systemImage: "calendar.badge.plus")
@@ -36,12 +46,18 @@ struct HomeView: View {
                         Button("Add Important Day") { showingNew = true }
                             .buttonStyle(.borderedProminent)
                     }
+                    .frame(maxWidth: 560)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding()
                 case .failed(let message):
                     ContentUnavailableView(
                         "Unable to Load Important Days",
                         systemImage: "exclamationmark.triangle",
                         description: Text(message)
                     )
+                    .frame(maxWidth: 560)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding()
                 case .content:
                     content
                 }
@@ -81,34 +97,84 @@ struct HomeView: View {
     }
 
     private var content: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 20) {
-                if let hero = viewModel.hero {
-                    NavigationLink {
-                        AnniversaryDetailView(
-                            presentation: hero,
-                            onEdit: { editingRecord = hero.record },
-                            onSync: { await reconciliationCoordinator.reconcile() }
-                        )
-                    } label: {
-                        AnniversaryHeroCard(presentation: hero)
+        GeometryReader { proxy in
+            let composition = TaisetsuAdaptiveLayout.contentComposition(
+                availableWidth: proxy.size.width,
+                horizontalSizeClass: horizontalSizeClass
+            )
+
+            ScrollView {
+                Group {
+                    if composition == .twoColumns, let hero = viewModel.hero {
+                        if hasSecondaryItems {
+                            HStack(alignment: .top, spacing: TaisetsuAdaptiveLayout.columnSpacing) {
+                                heroLink(hero)
+                                    .frame(width: 360)
+                                eventSections
+                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                            }
+                        } else {
+                            heroLink(hero)
+                                .frame(maxWidth: 620)
+                                .frame(maxWidth: .infinity)
+                        }
+                    } else {
+                        LazyVStack(alignment: .leading, spacing: 20) {
+                            if let hero = viewModel.hero {
+                                heroLink(hero)
+                            }
+                            eventSections
+                        }
                     }
-                    .buttonStyle(.plain)
                 }
-                section(
-                    "Pinned",
-                    items: viewModel.sections.pinned.dropFirst(
-                        viewModel.hero?.record.isPinned == true ? 1 : 0))
-                section(
-                    "Upcoming",
-                    items: viewModel.sections.upcoming.dropFirst(
-                        viewModel.hero?.record.isPinned == false ? 1 : 0))
-                section("Ongoing", items: viewModel.sections.ongoing)
-                section("Past", items: viewModel.sections.ended)
+                .frame(maxWidth: TaisetsuAdaptiveLayout.dashboardMaxWidth, alignment: .topLeading)
+                .frame(maxWidth: .infinity, alignment: .top)
+                .padding(
+                    .horizontal,
+                    TaisetsuAdaptiveLayout.horizontalPadding(
+                        horizontalSizeClass: horizontalSizeClass
+                    )
+                )
+                .padding(.vertical, 20)
             }
-            .padding()
         }
         .refreshable { viewModel.load() }
+    }
+
+    private var eventSections: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            section("Pinned", items: withoutHero(viewModel.sections.pinned))
+            section("Upcoming", items: withoutHero(viewModel.sections.upcoming))
+            section("Ongoing", items: withoutHero(viewModel.sections.ongoing))
+            section("Past", items: withoutHero(viewModel.sections.ended))
+        }
+    }
+
+    private var hasSecondaryItems: Bool {
+        [
+            viewModel.sections.pinned,
+            viewModel.sections.upcoming,
+            viewModel.sections.ongoing,
+            viewModel.sections.ended,
+        ]
+        .contains { !$0.allSatisfy { $0.id == viewModel.hero?.id } }
+    }
+
+    private func withoutHero(_ items: [AnniversaryPresentation]) -> [AnniversaryPresentation] {
+        items.filter { $0.id != viewModel.hero?.id }
+    }
+
+    private func heroLink(_ hero: AnniversaryPresentation) -> some View {
+        NavigationLink {
+            AnniversaryDetailView(
+                presentation: hero,
+                onEdit: { editingRecord = hero.record },
+                onSync: { await reconciliationCoordinator.reconcile() }
+            )
+        } label: {
+            AnniversaryHeroCard(presentation: hero)
+        }
+        .buttonStyle(.plain)
     }
 
     @ViewBuilder
@@ -191,6 +257,7 @@ private struct FilterView: View {
                     }
                 }
             }
+            .taisetsuReadableForm()
             .navigationTitle("Filter")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { Button("Done") { dismiss() } }

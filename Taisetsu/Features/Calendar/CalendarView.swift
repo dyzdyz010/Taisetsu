@@ -3,6 +3,7 @@ import TaisetsuCore
 
 struct CalendarView: View {
     @Environment(\.calendar) private var calendar
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.locale) private var locale
     @State private var viewModel: CalendarViewModel
 
@@ -14,25 +15,66 @@ struct CalendarView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 16) {
-                    monthHeader
-                    weekdayHeader
+            GeometryReader { proxy in
+                ScrollView {
                     if let snapshot = viewModel.currentSnapshot(calendar: localizedCalendar) {
-                        monthGrid(snapshot)
-                        Divider().padding(.horizontal)
-                        monthEvents(snapshot.events)
+                        adaptiveMonth(snapshot, availableWidth: proxy.size.width)
                     } else {
-                        ProgressView()
-                            .frame(maxWidth: .infinity, minHeight: 280)
+                        VStack(spacing: 16) {
+                            monthHeader
+                            ProgressView()
+                                .frame(maxWidth: .infinity, minHeight: 280)
+                        }
+                        .frame(maxWidth: TaisetsuAdaptiveLayout.formMaxWidth)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical)
                     }
                 }
-                .padding(.vertical)
             }
             .navigationTitle("Calendar")
             .task(id: viewModel.displayedMonth) {
                 await viewModel.refresh(calendar: localizedCalendar, timeZone: .current)
             }
+        }
+    }
+
+    @ViewBuilder
+    private func adaptiveMonth(_ snapshot: CalendarMonthSnapshot, availableWidth: CGFloat) -> some View {
+        let composition = TaisetsuAdaptiveLayout.contentComposition(
+            availableWidth: availableWidth,
+            horizontalSizeClass: horizontalSizeClass
+        )
+
+        Group {
+            if composition == .twoColumns {
+                HStack(alignment: .top, spacing: TaisetsuAdaptiveLayout.columnSpacing) {
+                    monthSurface(snapshot)
+                        .frame(maxWidth: .infinity)
+                    monthEvents(snapshot.events, presentedAsPanel: true)
+                        .frame(width: 300)
+                }
+            } else {
+                VStack(spacing: 16) {
+                    monthSurface(snapshot)
+                    Divider().padding(.horizontal)
+                    monthEvents(snapshot.events)
+                }
+            }
+        }
+        .frame(maxWidth: TaisetsuAdaptiveLayout.dashboardMaxWidth, alignment: .top)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .padding(
+            .horizontal,
+            TaisetsuAdaptiveLayout.horizontalPadding(horizontalSizeClass: horizontalSizeClass)
+        )
+        .padding(.vertical, 20)
+    }
+
+    private func monthSurface(_ snapshot: CalendarMonthSnapshot) -> some View {
+        VStack(spacing: 16) {
+            monthHeader
+            weekdayHeader
+            monthGrid(snapshot)
         }
     }
 
@@ -79,8 +121,12 @@ struct CalendarView: View {
         .padding(.horizontal)
     }
 
-    private func monthEvents(_ events: [AnniversaryPresentation]) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+    @ViewBuilder
+    private func monthEvents(
+        _ events: [AnniversaryPresentation],
+        presentedAsPanel: Bool = false
+    ) -> some View {
+        let content = VStack(alignment: .leading, spacing: 10) {
             Text("Important Days This Month").font(.headline)
             if events.isEmpty {
                 Text("No important days this month").foregroundStyle(.secondary)
@@ -101,7 +147,14 @@ struct CalendarView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal)
+
+        if presentedAsPanel {
+            content
+                .padding(20)
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        } else {
+            content.padding(.horizontal)
+        }
     }
 
     private func dayCell(_ date: Date, hasEvent: Bool) -> some View {

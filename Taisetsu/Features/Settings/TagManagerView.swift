@@ -32,6 +32,7 @@ struct TagManagerView: View {
                     }
             }
         }
+        .taisetsuReadableForm()
         .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Manage Tags")
         .onAppear(perform: reload)

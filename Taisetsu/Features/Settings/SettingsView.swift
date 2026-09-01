@@ -45,6 +45,7 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .taisetsuReadableForm()
             .navigationTitle("Settings")
         }
     }
@@ -160,6 +161,7 @@ private struct CalendarSyncSettingsView: View {
                 }
             }
         }
+        .taisetsuReadableForm()
         .navigationTitle("Calendar Sync")
         .onAppear(perform: reload)
     }

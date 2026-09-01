@@ -8,6 +8,7 @@ struct AnniversaryEditorView: View {
     }
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @FocusState private var focusedField: Field?
     @State private var viewModel: AnniversaryEditorViewModel
     let onSaved: (AnniversaryRecord, Bool) -> Void
@@ -22,6 +23,16 @@ struct AnniversaryEditorView: View {
     }
 
     var body: some View {
+        if horizontalSizeClass == .regular {
+            editorNavigation
+                .presentationSizing(.page)
+        } else {
+            editorNavigation
+                .presentationSizing(.automatic)
+        }
+    }
+
+    private var editorNavigation: some View {
         NavigationStack {
             Form {
                 Section("Basics") {
@@ -50,6 +61,7 @@ struct AnniversaryEditorView: View {
                     }
                 }
             }
+            .taisetsuReadableForm(maxWidth: TaisetsuAdaptiveLayout.editorMaxWidth)
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle(
                 viewModel.draft.id == nil

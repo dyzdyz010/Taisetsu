@@ -107,6 +107,7 @@ struct AnniversaryDetailView: View {
                 }
             }
         }
+        .taisetsuReadableForm()
         .navigationTitle("Important Day Details")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { Button("Edit", action: onEdit) }

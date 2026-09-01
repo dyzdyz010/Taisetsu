@@ -23,6 +23,11 @@ struct TaisetsuApp: App {
                 }
             }
             let appDependencies = try AppDependencies(container: appContainer)
+            #if DEBUG
+                if CommandLine.arguments.contains("-app-store-screenshots") {
+                    try AppStoreScreenshotData.seed(repository: appDependencies.repository)
+                }
+            #endif
             container = appContainer
             dependencies = appDependencies
             startupError = nil

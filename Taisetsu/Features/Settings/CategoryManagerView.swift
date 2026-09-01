@@ -38,6 +38,7 @@ struct CategoryManagerView: View {
                 }
             }
         }
+        .taisetsuReadableForm()
         .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Manage Categories")
         .onAppear(perform: reload)
