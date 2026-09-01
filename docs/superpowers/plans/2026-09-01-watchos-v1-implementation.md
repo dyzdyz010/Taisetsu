@@ -139,9 +139,12 @@
 - [x] Add both watch catalogs to `localization-check.sh` and translate all five locales.
 - [x] Watch for the "translation matches its English source" gate; short watch strings collide easily and either need different wording or an entry in the intentional-match list.
 - [x] Add a watchOS app icon asset catalog.
-- [ ] Extend `scripts/app-icon-check.sh` and `scripts/generate-app-icon.swift` to cover the watch icon.
-      Deliberately deferred: both scripts have uncommitted in-flight changes, and editing them here
-      would collide with that work.
+- [x] Extend `scripts/generate-app-icon.swift` to emit the watch catalog and its `Contents.json`
+      from the same render, so the watch icon can never drift from a hand copy.
+- [x] Add a circular safe-area assertion to `scripts/app-icon-design-check.swift`: watchOS clips to
+      the inscribed circle, and the iOS and watch icons share one render, so an iOS-only design
+      change could otherwise silently clip on the wrist. The mark currently reaches 43.7 of the 60
+      unit radius; the contract holds it within 54.
 - [x] Update `README.md` and `docs/brand-localization.md` with the watch target and its bundle identifiers.
 
 ## Runtime verification

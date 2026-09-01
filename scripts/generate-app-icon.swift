@@ -87,6 +87,9 @@ private enum Appearance: CaseIterable {
 private let svgRelativePath = "Design/AppIcon/TaisetsuAppIcon.svg"
 private let assetDirectoryRelativePath = "Taisetsu/Assets.xcassets/AppIcon.appiconset"
 private let contentsRelativePath = "\(assetDirectoryRelativePath)/Contents.json"
+// watchOS renders one appearance only, so the watch catalog carries the standard render alone.
+private let watchAssetDirectoryRelativePath = "TaisetsuWatch/Assets.xcassets/AppIcon.appiconset"
+private let watchContentsRelativePath = "\(watchAssetDirectoryRelativePath)/Contents.json"
 
 private func renderImage(for appearance: Appearance) throws -> CGImage {
     guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB) else {
@@ -262,6 +265,26 @@ private func makeContentsJSON() -> String {
     """
 }
 
+private func makeWatchContentsJSON() -> String {
+    """
+    {
+      "images" : [
+        {
+          "filename" : "AppIcon.png",
+          "idiom" : "universal",
+          "platform" : "watchos",
+          "size" : "1024x1024"
+        }
+      ],
+      "info" : {
+        "author" : "xcode",
+        "version" : 1
+      }
+    }
+
+    """
+}
+
 private func writeOutputs(to root: URL) throws {
     let fileManager = FileManager.default
     let svgURL = root.appendingPathComponent(svgRelativePath)
@@ -282,6 +305,20 @@ private func writeOutputs(to root: URL) throws {
         let outputURL = assetDirectory.appendingPathComponent(appearance.filename)
         try writePNG(try renderImage(for: appearance), to: outputURL)
     }
+
+    let watchAssetDirectory = root.appendingPathComponent(
+        watchAssetDirectoryRelativePath,
+        isDirectory: true
+    )
+    try fileManager.createDirectory(at: watchAssetDirectory, withIntermediateDirectories: true)
+    try Data(makeWatchContentsJSON().utf8).write(
+        to: root.appendingPathComponent(watchContentsRelativePath),
+        options: .atomic
+    )
+    try writePNG(
+        try renderImage(for: .standard),
+        to: watchAssetDirectory.appendingPathComponent(Appearance.standard.filename)
+    )
 }
 
 private func decodedImage(at url: URL) throws -> CGImage {
@@ -358,10 +395,11 @@ private func compareFile(at relativePath: String, root: URL, generatedRoot: URL)
 
 private func comparePNG(
     named filename: String,
+    in directoryRelativePath: String = assetDirectoryRelativePath,
     root: URL,
     generatedRoot: URL
 ) throws {
-    let relativePath = "\(assetDirectoryRelativePath)/\(filename)"
+    let relativePath = "\(directoryRelativePath)/\(filename)"
     let committedImage = try decodedImage(at: root.appendingPathComponent(relativePath))
     let generatedImage = try decodedImage(at: generatedRoot.appendingPathComponent(relativePath))
     try validateOpaque1024Image(committedImage, name: filename)
@@ -387,6 +425,13 @@ private func checkOutputs(at root: URL) throws {
     for appearance in Appearance.allCases {
         try comparePNG(named: appearance.filename, root: root, generatedRoot: temporaryRoot)
     }
+    try compareFile(at: watchContentsRelativePath, root: root, generatedRoot: temporaryRoot)
+    try comparePNG(
+        named: Appearance.standard.filename,
+        in: watchAssetDirectoryRelativePath,
+        root: root,
+        generatedRoot: temporaryRoot
+    )
 }
 
 private func run() throws {
@@ -401,7 +446,7 @@ private func run() throws {
         print("App icon generated outputs are current.")
     } else {
         try writeOutputs(to: root)
-        print("Generated \(svgRelativePath) and three 1024px app icon assets.")
+        print("Generated \(svgRelativePath), three 1024px app icon assets, and the watch icon.")
     }
 }
 

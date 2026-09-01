@@ -99,6 +99,35 @@ private func require(_ condition: @autoclosure () -> Bool, _ message: String) th
     guard condition() else { throw CheckFailure(description: message) }
 }
 
+/// watchOS masks the app icon to the circle inscribed in the square, so any artwork beyond that
+/// radius is simply cut off. The iOS and watch icons share one render, which means an iOS-only
+/// design change could silently clip on the wrist; this measures the mark instead of trusting it.
+private let inscribedCircleRadius = 60.0
+private let maximumArtworkRadius = 54.0
+
+private func artworkRadius(_ image: (width: Int, height: Int, data: Data)) -> Double {
+    var maximum = 0.0
+    let span = Double(image.width)
+    image.data.withUnsafeBytes { bytes in
+        let pixels = bytes.bindMemory(to: UInt8.self)
+        for y in 0..<image.height {
+            for x in 0..<image.width {
+                let offset = (y * image.width + x) * 4
+                let pixel = Pixel(
+                    red: Int(pixels[offset]),
+                    green: Int(pixels[offset + 1]),
+                    blue: Int(pixels[offset + 2])
+                )
+                guard pixel.isChampagneGold else { continue }
+                let dx = (Double(x) + 0.5) / span * 120 - 60
+                let dy = (Double(y) + 0.5) / span * 120 - 60
+                maximum = max(maximum, (dx * dx + dy * dy).squareRoot())
+            }
+        }
+    }
+    return maximum
+}
+
 private func run() throws {
     let directory = "Taisetsu/Assets.xcassets/AppIcon.appiconset"
     let standard = try loadPixels(at: "\(directory)/AppIcon.png")
@@ -164,6 +193,25 @@ private func run() throws {
     try require(
         sample(tinted, designX: 60, designY: 62).isMediumNeutral,
         "Tinted icon must retain a distinct selected day"
+    )
+
+    let watch = try loadPixels(at: "TaisetsuWatch/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
+    try require(watch.width == 1024 && watch.height == 1024, "Watch icon must be 1024x1024")
+    try require(
+        watch.data == standard.data,
+        "Watch icon must be the standard render; regenerate with scripts/generate-app-icon.swift"
+    )
+
+    let radius = artworkRadius(standard)
+    try require(
+        radius <= maximumArtworkRadius,
+        String(
+            format:
+                "Artwork reaches %.1f design units but watchOS clips at %.0f; keep it within %.0f",
+            radius,
+            inscribedCircleRadius,
+            maximumArtworkRadius
+        )
     )
 }
 
