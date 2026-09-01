@@ -123,8 +123,14 @@
 
 - [x] Set a `categoryIdentifier` on scheduled reminder content; it is currently absent and is the prerequisite for a custom long-look.
 - [x] Register a `WKNotificationScene` bound to that category.
-- [ ] Verify a forwarded reminder renders the custom long-look and its deep link opens the right event.
-      Needs a paired device or a phone+watch simulator pair; not covered by the automated suite.
+- [x] Route a tapped reminder to the day it is about via `UNUserNotificationCenterDelegate`, using
+      the same identifier the notification payload already carried.
+- [x] Move link parsing and id resolution into `AnniversaryDeepLink` and `WatchSnapshot.selectableID`
+      so both the complication link and the reminder tap share one tested implementation.
+- [ ] Confirm by hand that tapping a complication and tapping a reminder land on the right day.
+      Not automatable here: `simctl` has no touch injection, and `simctl openurl` is unsupported on
+      the watchOS simulator for every URL, system schemes included. The routing logic is unit
+      tested; only the final delivery hop needs a human in the Simulator or on a device.
 
 ### Task 9: Localize and close the gates
 

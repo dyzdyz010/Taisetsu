@@ -132,6 +132,13 @@ targets:
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.dyz.Taisetsu
         ITSAppUsesNonExemptEncryption: false
+        # Complications and reminders both open taisetsu://anniversary/<id>. WidgetKit routes its
+        # own widgetURL directly, but declaring the scheme makes the app addressable by URL from
+        # anywhere else too, and costs nothing.
+        CFBundleURLTypes:
+          - CFBundleURLName: com.dyz.Taisetsu.watchkitapp
+            CFBundleURLSchemes:
+              - taisetsu
     entitlements:
       path: TaisetsuWatch/TaisetsuWatch.entitlements
       properties:

@@ -3,6 +3,7 @@ import TaisetsuCore
 
 struct WatchRootView: View {
     let receiver: WatchSessionReceiver
+    let router: WatchNotificationRouter
     @State private var selection: UUID?
 
     var body: some View {
@@ -13,16 +14,19 @@ struct WatchRootView: View {
                 WatchHomeView(events: events, selection: $selection)
             }
         }
-        .onOpenURL(perform: open)
+        .onOpenURL { select(AnniversaryDeepLink.anniversaryID(from: $0)) }
+        .onChange(of: router.requestedAnniversaryID) { _, id in select(id) }
+        .onAppear { select(router.requestedAnniversaryID) }
     }
 
     private var events: [WatchEventSnapshot] { receiver.snapshot?.events ?? [] }
 
-    /// Complications deep link with `taisetsu://anniversary/<id>`.
-    private func open(_ url: URL) {
-        guard url.scheme == "taisetsu", url.host == "anniversary" else { return }
-        guard let id = UUID(uuidString: url.lastPathComponent) else { return }
-        guard events.contains(where: { $0.id == id }) else { return }
-        selection = id
+    /// Complications link with `taisetsu://anniversary/<id>`; reminders carry the same id.
+    private func select(_ id: UUID?) {
+        guard let id else { return }
+        if let resolved = receiver.snapshot?.selectableID(id) {
+            selection = resolved
+        }
+        router.clear()
     }
 }

@@ -43,7 +43,7 @@ public struct WatchEventSnapshot: Codable, Equatable, Identifiable, Sendable {
         self.isVisibleInWidget = isVisibleInWidget
     }
 
-    public var deepLink: URL? { URL(string: "taisetsu://anniversary/\(id.uuidString)") }
+    public var deepLink: URL? { AnniversaryDeepLink.url(for: id) }
 
     /// The occurrence this surface should count against, resolved locally so an offline watch
     /// still advances past occurrences it has already stored.
@@ -112,6 +112,15 @@ public struct WatchSnapshot: Codable, Equatable, Sendable {
     ///
     /// The watch app itself lists everything: hiding an event from the home screen widget is about
     /// who can see the phone, not about whether the wearer can open their own watch app.
+    /// The id to select, or `nil` when this snapshot has nothing to show for it.
+    ///
+    /// A link can outlive the day it points at: deleted on the phone, or not yet synced to a watch
+    /// that has been out of range. Selecting a missing id would strand the app on a blank page.
+    public func selectableID(_ id: UUID?) -> UUID? {
+        guard let id, events.contains(where: { $0.id == id }) else { return nil }
+        return id
+    }
+
     public func complicationEvents(for family: WatchComplicationFamily) -> [WatchEventSnapshot] {
         Array(events.filter(\.isVisibleInWidget).prefix(family.capacity))
     }

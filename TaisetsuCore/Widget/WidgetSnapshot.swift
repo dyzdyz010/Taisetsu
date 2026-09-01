@@ -46,7 +46,7 @@ public struct WidgetEventSnapshot: Codable, Equatable, Identifiable, Sendable {
         self.isPinned = isPinned
     }
 
-    public var deepLink: URL? { URL(string: "taisetsu://anniversary/\(id.uuidString)") }
+    public var deepLink: URL? { AnniversaryDeepLink.url(for: id) }
 
     public func dayPresentation(
         relativeTo referenceDate: Date,

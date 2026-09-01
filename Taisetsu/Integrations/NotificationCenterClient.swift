@@ -45,7 +45,9 @@ final class NotificationCenterClient: NotificationCenterClientProtocol {
             content.body = item.body
             content.sound = .default
             content.categoryIdentifier = AppConfiguration.reminderNotificationCategory
-            content.userInfo = ["anniversaryID": item.anniversaryID.uuidString]
+            content.userInfo = [
+                AnniversaryDeepLink.notificationUserInfoKey: item.anniversaryID.uuidString
+            ]
             let components = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute],
                 from: item.fireDate
