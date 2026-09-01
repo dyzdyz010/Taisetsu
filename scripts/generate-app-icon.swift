@@ -34,10 +34,11 @@ private struct RGB: Equatable {
 }
 
 private struct Palette {
-    let background: RGB
-    let mark: RGB
-    let dot: RGB
-    let dotOpacity: CGFloat
+    let backgroundTop: RGB
+    let backgroundBottom: RGB
+    let frame: RGB
+    let binding: RGB
+    let selectedDay: RGB
 }
 
 private enum Appearance: CaseIterable {
@@ -57,24 +58,27 @@ private enum Appearance: CaseIterable {
         switch self {
         case .standard:
             Palette(
-                background: RGB(hex: 0xF1ECE4),
-                mark: RGB(hex: 0x303047),
-                dot: RGB(hex: 0xD95C49),
-                dotOpacity: 1
+                backgroundTop: RGB(hex: 0x07101E),
+                backgroundBottom: RGB(hex: 0x17243B),
+                frame: RGB(hex: 0xC9A86A),
+                binding: RGB(hex: 0xE5CD95),
+                selectedDay: RGB(hex: 0xF2D69A)
             )
         case .dark:
             Palette(
-                background: RGB(hex: 0x252743),
-                mark: RGB(hex: 0xF1ECE4),
-                dot: RGB(hex: 0xE56D59),
-                dotOpacity: 1
+                backgroundTop: RGB(hex: 0x020611),
+                backgroundBottom: RGB(hex: 0x0A1324),
+                frame: RGB(hex: 0xE3C582),
+                binding: RGB(hex: 0xF4DBA1),
+                selectedDay: RGB(hex: 0xFFE7AD)
             )
         case .tinted:
             Palette(
-                background: RGB(hex: 0xDED6CC),
-                mark: RGB(hex: 0x453C45),
-                dot: RGB(hex: 0x453C45),
-                dotOpacity: 0.42
+                backgroundTop: RGB(hex: 0xE8E9EB),
+                backgroundBottom: RGB(hex: 0xC9CDD2),
+                frame: RGB(hex: 0x343943),
+                binding: RGB(hex: 0x525966),
+                selectedDay: RGB(hex: 0x777F8C)
             )
         }
     }
@@ -109,47 +113,64 @@ private func renderImage(for appearance: Appearance) throws -> CGImage {
     context.setShouldAntialias(true)
     context.setAllowsAntialiasing(true)
     context.interpolationQuality = .high
-    context.setFillColor(try palette.background.cgColor(in: colorSpace))
-    context.fill(CGRect(x: 0, y: 0, width: canvasPixels, height: canvasPixels))
+
+    guard
+        let backgroundGradient = CGGradient(
+            colorsSpace: colorSpace,
+            colors: [
+                try palette.backgroundTop.cgColor(in: colorSpace),
+                try palette.backgroundBottom.cgColor(in: colorSpace),
+            ] as CFArray,
+            locations: [0, 1]
+        )
+    else {
+        throw IconGenerationError(description: "Unable to create the icon background gradient")
+    }
+    context.drawLinearGradient(
+        backgroundGradient,
+        start: CGPoint(x: 0, y: canvasPixels),
+        end: CGPoint(x: canvasPixels, y: 0),
+        options: []
+    )
 
     let scale = CGFloat(canvasPixels) / designUnits
     context.saveGState()
     context.translateBy(x: 0, y: CGFloat(canvasPixels))
     context.scaleBy(x: scale, y: -scale)
 
-    let embracingArcs = CGMutablePath()
-    embracingArcs.move(to: CGPoint(x: 45, y: 30))
-    embracingArcs.addCurve(
-        to: CGPoint(x: 29, y: 69),
-        control1: CGPoint(x: 29, y: 40),
-        control2: CGPoint(x: 25, y: 55)
+    let calendarFrame = CGPath(
+        roundedRect: CGRect(x: 29, y: 27, width: 62, height: 67),
+        cornerWidth: 14,
+        cornerHeight: 14,
+        transform: nil
     )
-    embracingArcs.addCurve(
-        to: CGPoint(x: 49, y: 92),
-        control1: CGPoint(x: 32, y: 79),
-        control2: CGPoint(x: 39, y: 87)
-    )
-    embracingArcs.move(to: CGPoint(x: 75, y: 30))
-    embracingArcs.addCurve(
-        to: CGPoint(x: 91, y: 69),
-        control1: CGPoint(x: 91, y: 40),
-        control2: CGPoint(x: 95, y: 55)
-    )
-    embracingArcs.addCurve(
-        to: CGPoint(x: 71, y: 92),
-        control1: CGPoint(x: 88, y: 79),
-        control2: CGPoint(x: 81, y: 87)
-    )
+    context.addPath(calendarFrame)
+    context.setStrokeColor(try palette.frame.cgColor(in: colorSpace))
+    context.setLineWidth(7)
+    context.setLineCap(.round)
+    context.setLineJoin(.round)
+    context.strokePath()
 
-    context.addPath(embracingArcs)
-    context.setStrokeColor(try palette.mark.cgColor(in: colorSpace))
-    context.setLineWidth(8)
+    let bindingMarks = CGMutablePath()
+    bindingMarks.move(to: CGPoint(x: 45, y: 23))
+    bindingMarks.addLine(to: CGPoint(x: 45, y: 35))
+    bindingMarks.move(to: CGPoint(x: 75, y: 23))
+    bindingMarks.addLine(to: CGPoint(x: 75, y: 35))
+    context.addPath(bindingMarks)
+    context.setStrokeColor(try palette.binding.cgColor(in: colorSpace))
+    context.setLineWidth(7)
     context.setLineCap(.round)
     context.strokePath()
 
-    context.setAlpha(palette.dotOpacity)
-    context.setFillColor(try palette.dot.cgColor(in: colorSpace))
-    context.fillEllipse(in: CGRect(x: 47, y: 48, width: 26, height: 26))
+    let selectedDay = CGPath(
+        roundedRect: CGRect(x: 51, y: 54, width: 18, height: 18),
+        cornerWidth: 4,
+        cornerHeight: 4,
+        transform: nil
+    )
+    context.addPath(selectedDay)
+    context.setFillColor(try palette.selectedDay.cgColor(in: colorSpace))
+    context.fillPath()
     context.restoreGState()
 
     guard let image = context.makeImage() else {
@@ -182,9 +203,16 @@ private func makeSVG() -> String {
         <?xml version="1.0" encoding="UTF-8"?>
         <!-- Generated by scripts/generate-app-icon.swift. -->
         <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 120 120">
-          <rect width="120" height="120" fill="\(palette.background.svg)"/>
-          <path d="M45 30C29 40 25 55 29 69c3 10 10 18 20 23M75 30c16 10 20 25 16 39-3 10-10 18-20 23" fill="none" stroke="\(palette.mark.svg)" stroke-width="8" stroke-linecap="round"/>
-          <circle cx="60" cy="61" r="13" fill="\(palette.dot.svg)"/>
+          <defs>
+            <linearGradient id="midnight" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="\(palette.backgroundTop.svg)"/>
+              <stop offset="1" stop-color="\(palette.backgroundBottom.svg)"/>
+            </linearGradient>
+          </defs>
+          <rect width="120" height="120" fill="url(#midnight)"/>
+          <rect x="29" y="27" width="62" height="67" rx="14" fill="none" stroke="\(palette.frame.svg)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M45 23V35M75 23V35" fill="none" stroke="\(palette.binding.svg)" stroke-width="7" stroke-linecap="round"/>
+          <rect x="51" y="54" width="18" height="18" rx="4" fill="\(palette.selectedDay.svg)"/>
         </svg>
 
         """

@@ -52,4 +52,5 @@ if [[ ! -f "${svg_path}" ]]; then
 fi
 
 swift scripts/generate-app-icon.swift --check
+swift scripts/app-icon-design-check.swift
 echo "App icon assets are complete and current."
