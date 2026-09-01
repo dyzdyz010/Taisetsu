@@ -15,7 +15,7 @@ struct WatchSnapshotTests {
 
         #expect(snapshot.events.map(\.title) == ["置顶", "隐藏", "最近"])
         #expect(snapshot.complicationEvents(for: .circular).map(\.title) == ["置顶"])
-        #expect(snapshot.complicationEvents(for: .rectangular).map(\.title) == ["置顶", "最近"])
+        #expect(snapshot.complicationEvents(for: .rectangular).map(\.title) == ["置顶"])
     }
 
     @Test func lookaheadCarriesFutureOccurrencesForRecurringEvents() throws {

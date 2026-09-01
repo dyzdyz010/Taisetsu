@@ -8,10 +8,9 @@ public enum WatchComplicationFamily: CaseIterable, Sendable {
     case inline
     case rectangular
 
-    public var capacity: Int {
-        switch self {
-        case .circular, .corner, .inline: 1
-        case .rectangular: 2
-        }
-    }
+    /// Every family shows a single day.
+    ///
+    /// The rectangular card is wide enough for two rows, but two equally weighted rows of small
+    /// text answer no question at a glance; one day with a real hierarchy does.
+    public var capacity: Int { 1 }
 }

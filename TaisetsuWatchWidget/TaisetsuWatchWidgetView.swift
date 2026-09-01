@@ -70,9 +70,7 @@ struct TaisetsuWatchWidgetView: View {
     private var inlineView: some View {
         Group {
             if let event = events.first {
-                // Composed rather than interpolated: an interpolated key would be pure
-                // placeholders, which no locale can translate differently from English.
-                Text(event.title) + Text(verbatim: " ") + Text(dayValue(event), format: .number)
+                Text(event.title) + Text(verbatim: " ") + Text(relativeLabel(event))
             } else {
                 Text("No important days yet")
             }
@@ -80,25 +78,36 @@ struct TaisetsuWatchWidgetView: View {
     }
 
     private var rectangularView: some View {
-        VStack(alignment: .leading, spacing: 1) {
-            if events.isEmpty {
-                Text("No important days yet")
-                    .font(.headline)
-                Text("Open Taisetsu on iPhone")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-            } else {
-                ForEach(events) { event in
+        Group {
+            if let event = events.first {
+                VStack(alignment: .leading, spacing: 1) {
                     HStack(spacing: 4) {
                         Image(systemName: event.categorySymbolName)
-                            .font(.caption2)
                         Text(event.title)
-                            .font(.caption)
                             .lineLimit(1)
-                        Spacer(minLength: 2)
-                        dayNumber(event)
-                            .font(.caption.weight(.semibold))
                     }
+                    .font(.headline)
+                    .widgetAccentable()
+
+                    Text(relativeLabel(event))
+                        .font(.title3.weight(.semibold))
+                        .monospacedDigit()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+
+                    if let target = event.targetDate(relativeTo: entry.date, calendar: .current) {
+                        Text(target, format: .dateTime.month().day())
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("No important days yet")
+                        .font(.headline)
+                    Text("Open Taisetsu on iPhone")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
@@ -114,5 +123,19 @@ struct TaisetsuWatchWidgetView: View {
 
     private func dayValue(_ event: WatchEventSnapshot) -> Int {
         event.dayPresentation(relativeTo: entry.date, calendar: .current).value
+    }
+
+    /// A bare number answers "12 what?" with nothing. Each locale places the count differently, so
+    /// the whole phrase is translated rather than a number glued to a unit.
+    private func relativeLabel(_ event: WatchEventSnapshot) -> String {
+        let presentation = event.dayPresentation(relativeTo: entry.date, calendar: .current)
+        switch presentation.direction {
+        case .countUp:
+            return String(localized: "\(presentation.value) days so far")
+        case .countdown:
+            return presentation.value == 0
+                ? String(localized: "Today")
+                : String(localized: "in \(presentation.value) days")
+        }
     }
 }
