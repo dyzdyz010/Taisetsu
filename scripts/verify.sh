@@ -11,15 +11,20 @@ done
 bash scripts/naming-check.sh
 xcodegen generate
 git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements \
-    TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
+    TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements \
+    TaisetsuWatch/Info.plist TaisetsuWatch/TaisetsuWatch.entitlements \
+    TaisetsuWatchWidget/Info.plist TaisetsuWatchWidget/TaisetsuWatchWidget.entitlements
 bash scripts/localization-check.sh
 bash scripts/app-icon-check.sh
-xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuTests TaisetsuUITests
+xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuWatch \
+    TaisetsuWatchWidget TaisetsuTests TaisetsuUITests
 
 localization_catalogs=(
     Taisetsu/Resources/Localizable.xcstrings
     Taisetsu/Resources/InfoPlist.xcstrings
     TaisetsuWidget/Resources/Localizable.xcstrings
+    TaisetsuWatch/Resources/Localizable.xcstrings
+    TaisetsuWatchWidget/Resources/Localizable.xcstrings
 )
 taisetsu_catalog_checksums_before=$(shasum -a 256 "${localization_catalogs[@]}")
 
@@ -27,6 +32,12 @@ xcodebuild build \
     -project Taisetsu.xcodeproj \
     -scheme Taisetsu \
     -destination 'generic/platform=iOS Simulator' \
+    CODE_SIGNING_ALLOWED=NO
+
+xcodebuild build \
+    -project Taisetsu.xcodeproj \
+    -scheme TaisetsuWatch \
+    -destination 'generic/platform=watchOS Simulator' \
     CODE_SIGNING_ALLOWED=NO
 
 taisetsu_catalog_checksums_after=$(shasum -a 256 "${localization_catalogs[@]}")

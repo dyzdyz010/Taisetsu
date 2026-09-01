@@ -6,6 +6,8 @@ default_catalogs=(
     Taisetsu/Resources/Localizable.xcstrings
     Taisetsu/Resources/InfoPlist.xcstrings
     TaisetsuWidget/Resources/Localizable.xcstrings
+    TaisetsuWatch/Resources/Localizable.xcstrings
+    TaisetsuWatchWidget/Resources/Localizable.xcstrings
 )
 
 if ! command -v jq >/dev/null 2>&1; then

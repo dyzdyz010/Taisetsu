@@ -40,7 +40,7 @@ jobs:
       - name: Check generated project for drift
         run: |
           xcodegen generate
-          git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements
+          git diff --exit-code -- Taisetsu.xcodeproj Taisetsu/Info.plist Taisetsu/Taisetsu.entitlements TaisetsuWidget/Info.plist TaisetsuWidget/TaisetsuWidget.entitlements TaisetsuWatch/Info.plist TaisetsuWatch/TaisetsuWatch.entitlements TaisetsuWatchWidget/Info.plist TaisetsuWatchWidget/TaisetsuWatchWidget.entitlements
 
       - name: Check localization completeness
         run: bash scripts/localization-check.sh
@@ -49,13 +49,28 @@ jobs:
         run: bash scripts/app-icon-check.sh
 
       - name: Lint Swift formatting
-        run: xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuTests TaisetsuUITests
+        run: xcrun swift-format lint --recursive Taisetsu TaisetsuCore TaisetsuWidget TaisetsuWatch TaisetsuWatchWidget TaisetsuTests TaisetsuUITests
+
+      - name: Ensure watchOS platform support
+        # The iOS scheme embeds the watch app, so the whole build needs a watchOS runtime.
+        # macos-26 images ship one; the download is a fallback if that ever stops being true.
+        # `xcodebuild -showsdks` is not a usable probe here: it lists the watchOS SDK even when
+        # the platform support package is absent and every watchOS build still fails.
+        run: |
+          if xcrun simctl list runtimes | grep -q "watchOS"; then
+            xcrun simctl list runtimes | grep "watchOS"
+          else
+            xcodebuild -downloadPlatform watchOS
+          fi
 
       - name: Build app and all embedded targets
         run: xcodebuild build -project Taisetsu.xcodeproj -scheme Taisetsu -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 
+      - name: Build watch app
+        run: xcodebuild build -project Taisetsu.xcodeproj -scheme TaisetsuWatch -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+
       - name: Check localization extraction drift
-        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings
+        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings TaisetsuWatch/Resources/Localizable.xcstrings TaisetsuWatchWidget/Resources/Localizable.xcstrings
 
       - name: Run unit tests with coverage
         run: bash scripts/ci-test.sh
@@ -105,6 +120,15 @@ jobs:
       - name: Check application icon assets
         run: bash scripts/app-icon-check.sh
 
+      - name: Ensure watchOS platform support
+        # This job builds the iOS scheme too, which embeds the watch app.
+        run: |
+          if xcrun simctl list runtimes | grep -q "watchOS"; then
+            xcrun simctl list runtimes | grep "watchOS"
+          else
+            xcodebuild -downloadPlatform watchOS
+          fi
+
       - name: Run editor smoke flows
         run: |
           TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
@@ -116,7 +140,7 @@ jobs:
             -only-testing:TaisetsuUITests/TaisetsuUITests/testCalendarSyncSettingsFollowSupportedLocales
 
       - name: Check localization extraction drift
-        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings
+        run: git diff --exit-code -- Taisetsu/Resources/Localizable.xcstrings Taisetsu/Resources/InfoPlist.xcstrings TaisetsuWidget/Resources/Localizable.xcstrings TaisetsuWatch/Resources/Localizable.xcstrings TaisetsuWatchWidget/Resources/Localizable.xcstrings
 
       - name: Upload UI failure evidence
         if: failure()

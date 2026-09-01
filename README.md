@@ -1,6 +1,6 @@
 # Taisetsu · Important Days
 
-Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或回望的日期，支持公历、农历、自定义周期、多提醒、分类与自由标签，并在桌面小组件中自动展示最近的事件。
+Taisetsu 是一个原生 iPhone / iPad / Apple Watch 重要日应用：记录值得期待或回望的日期，支持公历、农历、自定义周期、多提醒、分类与自由标签，并在桌面小组件中自动展示最近的事件。
 
 **Keep the days that matter close.** / **把重要的日子，放在心上。**
 
@@ -16,6 +16,8 @@ Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或�
 - 月历视图与系统日历单向导出
 - 再次导出会更新原系统日历事件；只导出由 Taisetsu 计算出的下一次日期
 - WidgetKit 小、中、大组件分别显示 1、4、5 个最近事件
+- Apple Watch 应用与四种表盘复杂功能，提醒在手表上有独立长视图
+- 手表快照携带多次未来日期，手机不在身边时也能自行跨到下一次
 - SwiftData 本地优先存储，可连接用户私人 CloudKit
 - 英语、简体中文、繁体中文、书面挪威语（Bokmål）和德语
 - 区域化日期顺序、星期起始日、相对时间和周期表达
@@ -24,10 +26,16 @@ Taisetsu 是一个原生 iPhone / iPad 重要日应用：记录值得期待或�
 ## 技术结构
 
 ```text
-TaisetsuCore   日期/周期、排序筛选、小组件快照（无 UI、可独立测试）
-Taisetsu       SwiftUI、SwiftData、通知、EventKit、应用协调
-TaisetsuWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
+TaisetsuCore        日期/周期、排序筛选、小组件与手表快照（无 UI、可独立测试）
+Taisetsu            SwiftUI、SwiftData、通知、EventKit、应用协调
+TaisetsuWidget      只读取 App Group 原子 JSON 快照，不直接打开 SwiftData
+TaisetsuWatch       只读手表应用，消费 WatchConnectivity 推送的快照
+TaisetsuWatchWidget 表盘复杂功能，只读取手表自己的 App Group 快照
 ```
+
+App Group 不跨设备共享，因此手表拿不到 iPhone 写的快照；iPhone 通过 WatchConnectivity 推送
+`WatchSnapshot`，手表落盘到自己的容器后再供复杂功能读取。每次协调都走开销低的
+`updateApplicationContext`，只有内容摘要变化时才动用有每日配额的复杂功能传输。
 
 `Taisetsu` 是所有语言地区统一使用的品牌名，也是仓库、Xcode 工程、target、scheme、模块与运行时标识的唯一技术身份。中文系统下的 App 图标名称本地化为“重要日”，其他语言显示 `Taisetsu`；这不会改变技术身份。2026 年 8 月的身份重置没有迁移更早开发版本的本地数据、CloudKit 记录、小组件、通知或深链。
 
@@ -37,12 +45,13 @@ TaisetsuWidget 只读取 App Group 原子 JSON 快照，不直接打开 SwiftDat
 
 - macOS 26
 - Xcode 26.6 / Swift 6
-- iOS / iPadOS 18.0+
+- iOS / iPadOS 18.0+、watchOS 11.0+
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) 2.46+
 - `jq`
 
 ```bash
 brew install xcodegen jq
+xcodebuild -downloadPlatform watchOS   # iOS scheme 嵌入手表应用，缺平台支持会直接构建失败
 xcodegen generate
 open Taisetsu.xcodeproj
 ```

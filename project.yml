@@ -5,6 +5,7 @@ options:
   developmentLanguage: en
   deploymentTarget:
     iOS: "18.0"
+    watchOS: "11.0"
   groupSortPosition: top
   generateEmptyDirectories: true
 
@@ -19,7 +20,7 @@ settings:
 targets:
   TaisetsuCore:
     type: framework
-    platform: iOS
+    supportedDestinations: [iOS, watchOS]
     sources:
       - path: TaisetsuCore
     settings:
@@ -37,6 +38,11 @@ targets:
     dependencies:
       - target: TaisetsuCore
       - target: TaisetsuWidget
+      - target: TaisetsuWatch
+        embed: true
+        copy:
+          destination: productsDirectory
+          subpath: $(CONTENTS_FOLDER_PATH)/Watch
     info:
       path: Taisetsu/Info.plist
       properties:
@@ -109,6 +115,70 @@ targets:
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "1,2"
 
+  TaisetsuWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: TaisetsuWatch
+    dependencies:
+      - target: TaisetsuCore
+      - target: TaisetsuWatchWidget
+    info:
+      path: TaisetsuWatch/Info.plist
+      properties:
+        CFBundleDisplayName: Taisetsu
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.dyz.Taisetsu
+        ITSAppUsesNonExemptEncryption: false
+    entitlements:
+      path: TaisetsuWatch/TaisetsuWatch.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.dyz.Taisetsu
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.Taisetsu.watchkitapp
+        DEVELOPMENT_TEAM: 2FBFFBNMS3
+        # XcodeGen emits no runpath for watchOS application targets, so dyld would look for
+        # TaisetsuCore.framework beside the executable instead of inside Frameworks/ and abort at launch.
+        LD_RUNPATH_SEARCH_PATHS:
+          - $(inherited)
+          - "@executable_path/Frameworks"
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "4"
+
+  TaisetsuWatchWidget:
+    type: app-extension
+    platform: watchOS
+    sources:
+      - path: TaisetsuWatchWidget
+    dependencies:
+      - target: TaisetsuCore
+    info:
+      path: TaisetsuWatchWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Taisetsu
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: TaisetsuWatchWidget/TaisetsuWatchWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.dyz.Taisetsu
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dyz.Taisetsu.watchkitapp.Widget
+        DEVELOPMENT_TEAM: 2FBFFBNMS3
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "4"
+
   TaisetsuTests:
     type: bundle.unit-test
     platform: iOS
@@ -158,3 +228,8 @@ schemes:
     build:
       targets:
         TaisetsuWidget: all
+  TaisetsuWatch:
+    build:
+      targets:
+        TaisetsuWatch: all
+        TaisetsuWatchWidget: all

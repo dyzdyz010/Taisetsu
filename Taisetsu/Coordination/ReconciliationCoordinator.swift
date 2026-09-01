@@ -13,6 +13,7 @@ final class ReconciliationCoordinator {
     private let calendarSyncService: CalendarAutoSyncService?
     private let calendarSyncRepository: CalendarSyncRepository?
     private let snapshotStore: WidgetSnapshotStore?
+    private let watchDispatcher: WatchSnapshotDispatcher?
     private var isReconciling = false
     private var needsReconciliation = false
     private var reconciliationWaiters: [CheckedContinuation<Void, Never>] = []
@@ -27,7 +28,8 @@ final class ReconciliationCoordinator {
         calendarExportService: CalendarExportService = CalendarExportService(),
         calendarSyncService: CalendarAutoSyncService? = nil,
         calendarSyncRepository: CalendarSyncRepository? = nil,
-        snapshotStore: WidgetSnapshotStore? = WidgetSnapshotStore()
+        snapshotStore: WidgetSnapshotStore? = WidgetSnapshotStore(),
+        watchDispatcher: WatchSnapshotDispatcher? = nil
     ) {
         self.repository = repository
         self.reminderScheduler = reminderScheduler
@@ -36,6 +38,7 @@ final class ReconciliationCoordinator {
         self.calendarSyncService = calendarSyncService
         self.calendarSyncRepository = calendarSyncRepository
         self.snapshotStore = snapshotStore
+        self.watchDispatcher = watchDispatcher
     }
 
     func reconcile() async {
@@ -67,6 +70,7 @@ final class ReconciliationCoordinator {
         let locale = Locale.current
         let snapshotStore = snapshotStore
         let reminderScheduler = reminderScheduler
+        let includesWatchSnapshot = watchDispatcher != nil
         do {
             let plan = try await Task.detached(priority: .utility) {
                 let plan = try ReconciliationPlan.make(
@@ -75,6 +79,7 @@ final class ReconciliationCoordinator {
                     timeZone: timeZone,
                     locale: locale,
                     includesWidgetSnapshot: snapshotStore != nil,
+                    includesWatchSnapshot: includesWatchSnapshot,
                     reminderScheduler: reminderScheduler
                 )
                 if let snapshot = plan.widgetSnapshot {
@@ -84,6 +89,9 @@ final class ReconciliationCoordinator {
             }.value
             if plan.widgetSnapshot != nil {
                 WidgetCenter.shared.reloadTimelines(ofKind: AppConfiguration.widgetKind)
+            }
+            if let watchSnapshot = plan.watchSnapshot {
+                watchDispatcher?.deliver(watchSnapshot)
             }
             try await reminderScheduler.apply(plan.reminders, client: notificationClient)
             if let calendarSyncService, let calendarSyncRepository {

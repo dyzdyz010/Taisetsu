@@ -1,4 +1,5 @@
 import Foundation
+import TaisetsuCore
 import UserNotifications
 
 @MainActor
@@ -14,6 +15,15 @@ final class NotificationCenterClient: NotificationCenterClientProtocol {
 
     init(center: UNUserNotificationCenter = .current()) {
         self.center = center
+        // Registering the category is what lets the paired watch render a custom long-look.
+        center.setNotificationCategories([
+            UNNotificationCategory(
+                identifier: AppConfiguration.reminderNotificationCategory,
+                actions: [],
+                intentIdentifiers: [],
+                options: []
+            )
+        ])
     }
 
     func authorizationStatus() async -> UNAuthorizationStatus {
@@ -34,6 +44,7 @@ final class NotificationCenterClient: NotificationCenterClientProtocol {
             content.title = item.title
             content.body = item.body
             content.sound = .default
+            content.categoryIdentifier = AppConfiguration.reminderNotificationCategory
             content.userInfo = ["anniversaryID": item.anniversaryID.uuidString]
             let components = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute],

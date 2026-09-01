@@ -13,21 +13,6 @@ public enum WidgetSnapshotFamily: Sendable {
     }
 }
 
-public enum WidgetDayDirection: Equatable, Sendable {
-    case countdown
-    case countUp
-}
-
-public struct WidgetDayPresentation: Equatable, Sendable {
-    public let value: Int
-    public let direction: WidgetDayDirection
-
-    public init(value: Int, direction: WidgetDayDirection) {
-        self.value = value
-        self.direction = direction
-    }
-}
-
 public struct WidgetEventSnapshot: Codable, Equatable, Identifiable, Sendable {
     public let id: UUID
     public let title: String
@@ -66,25 +51,14 @@ public struct WidgetEventSnapshot: Codable, Equatable, Identifiable, Sendable {
     public func dayPresentation(
         relativeTo referenceDate: Date,
         calendar: Calendar
-    ) -> WidgetDayPresentation {
-        switch displayMode {
-        case .countUp:
-            let days =
-                calendar.dateComponents(
-                    [.day],
-                    from: calendar.startOfDay(for: originalDate),
-                    to: calendar.startOfDay(for: referenceDate)
-                ).day ?? 0
-            return WidgetDayPresentation(value: max(0, days), direction: .countUp)
-        case .countdown, .both:
-            let days =
-                calendar.dateComponents(
-                    [.day],
-                    from: calendar.startOfDay(for: referenceDate),
-                    to: calendar.startOfDay(for: targetDate)
-                ).day ?? 0
-            return WidgetDayPresentation(value: max(0, days), direction: .countdown)
-        }
+    ) -> DayPresentation {
+        DayPresentationCalculator.make(
+            displayMode: displayMode,
+            originalDate: originalDate,
+            targetDate: targetDate,
+            relativeTo: referenceDate,
+            calendar: calendar
+        )
     }
 }
 

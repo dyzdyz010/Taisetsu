@@ -19,7 +19,9 @@ final class AppDependencies {
         reconciliationCoordinator = ReconciliationCoordinator(
             repository: repository,
             calendarSyncService: calendarSyncService,
-            calendarSyncRepository: calendarSyncRepository
+            calendarSyncRepository: calendarSyncRepository,
+            watchDispatcher: WatchConnectivityTransport.makeIfSupported()
+                .map(WatchSnapshotDispatcher.init)
         )
         calendarPromptCoordinator = CalendarSyncPromptCoordinator(
             repository: repository,

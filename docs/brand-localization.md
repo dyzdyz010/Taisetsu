@@ -16,7 +16,8 @@ Descriptors and brand lines may be localized. `Taisetsu` must remain unchanged i
 Public branding and technical identity are unified under `Taisetsu`:
 
 - GitHub repository, Xcode project, targets, schemes, and Swift modules beginning with `Taisetsu`
-- bundle identifiers `com.dyz.Taisetsu`, `com.dyz.TaisetsuCore`, and `com.dyz.Taisetsu.Widget`
+- bundle identifiers `com.dyz.Taisetsu`, `com.dyz.TaisetsuCore`, `com.dyz.Taisetsu.Widget`,
+  `com.dyz.Taisetsu.watchkitapp`, and `com.dyz.Taisetsu.watchkitapp.Widget`
 - App Group `group.com.dyz.Taisetsu`
 - CloudKit container `iCloud.com.dyz.Taisetsu`
 - widget kind `TaisetsuUpcoming`, notification prefix `taisetsu.`, and URL scheme `taisetsu://`

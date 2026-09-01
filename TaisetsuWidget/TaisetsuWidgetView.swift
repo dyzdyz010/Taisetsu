@@ -136,21 +136,21 @@ struct TaisetsuWidgetView: View {
         .accessibilityLabel(relativeText(presentation))
     }
 
-    private func symbolName(for direction: WidgetDayDirection) -> String {
+    private func symbolName(for direction: DayDirection) -> String {
         switch direction {
         case .countdown: "hourglass.bottomhalf.filled"
         case .countUp: "arrow.up.forward"
         }
     }
 
-    private func indicatorColor(for direction: WidgetDayDirection) -> Color {
+    private func indicatorColor(for direction: DayDirection) -> Color {
         switch direction {
         case .countdown: .accentColor
         case .countUp: .orange
         }
     }
 
-    private func relativeText(_ presentation: WidgetDayPresentation) -> String {
+    private func relativeText(_ presentation: DayPresentation) -> String {
         let days = presentation.direction == .countUp ? -presentation.value : presentation.value
         return relativeDayText(days)
     }
