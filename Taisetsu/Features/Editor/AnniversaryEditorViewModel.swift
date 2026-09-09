@@ -41,6 +41,19 @@ final class AnniversaryEditorViewModel {
         }
     }
 
+    @discardableResult
+    func delete() -> Bool {
+        guard let id = draft.id else { return false }
+        do {
+            try repository.delete(id: id)
+            errorMessage = nil
+            return true
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
+
     func addReminder(offsetMinutes: Int, timeOfDayMinutes: Int? = nil) {
         let isDuplicate = draft.reminders.contains {
             $0.offsetMinutes == offsetMinutes && $0.timeOfDayMinutes == timeOfDayMinutes

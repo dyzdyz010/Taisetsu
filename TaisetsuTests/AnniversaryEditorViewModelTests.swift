@@ -55,6 +55,33 @@ struct AnniversaryEditorViewModelTests {
         #expect(viewModel.draft.title == "旧名称")
     }
 
+    @Test func deletingEditedRecordIgnoresUnsavedInvalidDraftAndPreservesOtherRecords() throws {
+        let repository = try makeRepository()
+        var draft = AnniversaryDraft()
+        draft.title = "Delete me"
+        let record = try repository.save(draft: draft)
+        draft.title = "Keep me"
+        let other = try repository.save(draft: draft)
+        let viewModel = AnniversaryEditorViewModel(repository: repository, record: record)
+        viewModel.draft.title = "   "
+        #expect(!viewModel.save())
+
+        #expect(viewModel.delete())
+        #expect(repository.fetch().map(\.id) == [other.id])
+        #expect(viewModel.errorMessage == nil)
+    }
+
+    @Test func deletingNewDraftDoesNotDeleteExistingRecords() throws {
+        let repository = try makeRepository()
+        var draft = AnniversaryDraft()
+        draft.title = "Keep me"
+        let record = try repository.save(draft: draft)
+        let viewModel = AnniversaryEditorViewModel(repository: repository)
+
+        #expect(!viewModel.delete())
+        #expect(repository.fetch().map(\.id) == [record.id])
+    }
+
     @Test func referenceDataIsAStableInitializationSnapshot() throws {
         let repository = try makeRepository()
         let category = try repository.saveCategory(

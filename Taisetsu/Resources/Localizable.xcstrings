@@ -1,6 +1,93 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+  "This important day will be permanently deleted. This cannot be undone." : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Dieser wichtige Tag wird dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden."
+        }
+      },
+      "nb" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Denne viktige dagen blir slettet permanent. Dette kan ikke angres."
+        }
+      },
+      "zh-Hans" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "此条目将被永久删除，此操作无法撤销。"
+        }
+      },
+      "zh-Hant" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "此項目將被永久刪除，此操作無法復原。"
+        }
+      }
+    }
+  },
+  "Delete Important Day?" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Wichtigen Tag löschen?"
+        }
+      },
+      "nb" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Slette viktig dag?"
+        }
+      },
+      "zh-Hans" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "删除此条目？"
+        }
+      },
+      "zh-Hant" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "刪除此項目？"
+        }
+      }
+    }
+  },
+  "Delete Important Day" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Wichtigen Tag löschen"
+        }
+      },
+      "nb" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Slett viktig dag"
+        }
+      },
+      "zh-Hans" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "删除条目"
+        }
+      },
+      "zh-Hant" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "刪除項目"
+        }
+      }
+    }
+  },
     "%@ before" : {
       "extractionState" : "manual",
       "localizations" : {

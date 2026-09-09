@@ -11,14 +11,18 @@ struct AnniversaryEditorView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @FocusState private var focusedField: Field?
     @State private var viewModel: AnniversaryEditorViewModel
+    @State private var showingDeleteConfirmation = false
+    let onDeleted: () -> Void
     let onSaved: (AnniversaryRecord, Bool) -> Void
 
     init(
         repository: AnniversaryRepository,
         record: AnniversaryRecord? = nil,
+        onDeleted: @escaping () -> Void = {},
         onSaved: @escaping (AnniversaryRecord, Bool) -> Void
     ) {
         _viewModel = State(initialValue: AnniversaryEditorViewModel(repository: repository, record: record))
+        self.onDeleted = onDeleted
         self.onSaved = onSaved
     }
 
@@ -60,6 +64,15 @@ struct AnniversaryEditorView: View {
                             .foregroundStyle(.red)
                     }
                 }
+                if viewModel.draft.id != nil {
+                    Section {
+                        Button("Delete Important Day", systemImage: "trash", role: .destructive) {
+                            focusedField = nil
+                            showingDeleteConfirmation = true
+                        }
+                        .accessibilityIdentifier("delete-anniversary")
+                    }
+                }
             }
             .taisetsuReadableForm(maxWidth: TaisetsuAdaptiveLayout.editorMaxWidth)
             .scrollDismissesKeyboard(.interactively)
@@ -94,6 +107,17 @@ struct AnniversaryEditorView: View {
                     .fontWeight(.semibold)
                     .accessibilityIdentifier("save-anniversary")
                 }
+            }
+            .alert("Delete Important Day?", isPresented: $showingDeleteConfirmation) {
+                Button("Delete", role: .destructive) {
+                    if viewModel.delete() {
+                        onDeleted()
+                        dismiss()
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This important day will be permanently deleted. This cannot be undone.")
             }
             .task { viewModel.loadReferenceData() }
         }

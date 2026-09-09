@@ -28,6 +28,48 @@ final class TaisetsuUITests: XCTestCase {
     }
 
     @MainActor
+    func testDeletesAnAnniversaryFromEditorAfterConfirmation() throws {
+        let app = makeApplication(language: "en")
+        app.launch()
+        let addButton = app.buttons["add-anniversary"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        addButton.tap()
+        let name = app.textFields["Name"]
+        XCTAssertTrue(name.waitForExistence(timeout: 3))
+        name.tap()
+        name.typeText("Delete me")
+        app.swipeUp()
+        app.swipeUp()
+        XCTAssertFalse(app.buttons["delete-anniversary"].exists)
+        app.buttons["save-anniversary"].tap()
+        XCTAssertTrue(app.buttons["save-anniversary"].waitForNonExistence(timeout: 5))
+        let later = app.buttons["Remind Me Later"]
+        XCTAssertTrue(later.waitForExistence(timeout: 5))
+        later.tap()
+        XCTAssertTrue(later.waitForNonExistence(timeout: 5))
+        let record = app.staticTexts["Delete me"].firstMatch
+        XCTAssertTrue(record.waitForExistence(timeout: 5))
+        record.tap()
+        app.buttons["Edit"].tap()
+        app.swipeUp()
+        app.swipeUp()
+
+        let delete = app.buttons["delete-anniversary"]
+        XCTAssertTrue(delete.waitForExistence(timeout: 3))
+        delete.tap()
+        let confirmation = app.alerts["Delete Important Day?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 3))
+        confirmation.buttons["Cancel"].tap()
+        XCTAssertTrue(delete.exists)
+        delete.tap()
+        confirmation.buttons["Delete"].tap()
+
+        XCTAssertTrue(app.staticTexts["No important days yet"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Delete me"].exists)
+        XCTAssertFalse(app.navigationBars["Edit Important Day"].exists)
+    }
+
+    @MainActor
     func testEditorUsesDateWheelsAndStructuredRecurrenceControls() throws {
         let app = makeApplication()
         app.launch()

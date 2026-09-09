@@ -7,6 +7,7 @@ struct HomeView: View {
     let reconciliationCoordinator: ReconciliationCoordinator
     let calendarPromptCoordinator: CalendarSyncPromptCoordinator
     @State private var viewModel: HomeViewModel
+    @State private var navigationPath: [UUID] = []
     @State private var showingNew = false
     @State private var editingRecord: AnniversaryRecord?
     @State private var showingFilters = false
@@ -31,7 +32,7 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             Group {
                 switch viewModel.state {
                 case .loading:
@@ -75,6 +76,15 @@ struct HomeView: View {
                         .accessibilityIdentifier("add-anniversary")
                 }
             }
+            .navigationDestination(for: UUID.self) { id in
+                if let presentation = viewModel.sections.all.first(where: { $0.id == id }) {
+                    AnniversaryDetailView(
+                        presentation: presentation,
+                        onEdit: { editingRecord = presentation.record },
+                        onSync: { await reconciliationCoordinator.reconcile() }
+                    )
+                }
+            }
             .onAppear(perform: viewModel.load)
             .sheet(isPresented: $showingNew) {
                 AnniversaryEditorView(repository: repository) { record, isNew in
@@ -84,7 +94,15 @@ struct HomeView: View {
                 }
             }
             .sheet(item: $editingRecord) { record in
-                AnniversaryEditorView(repository: repository, record: record) { savedRecord, isNew in
+                AnniversaryEditorView(
+                    repository: repository,
+                    record: record,
+                    onDeleted: {
+                        navigationPath.removeAll()
+                        viewModel.load()
+                        Task { await reconciliationCoordinator.reconcile() }
+                    }
+                ) { savedRecord, isNew in
                     viewModel.load()
                     Task { await reconciliationCoordinator.reconcile() }
                     calendarPromptCoordinator.consider(afterSaving: savedRecord, isNew: isNew)
@@ -165,13 +183,7 @@ struct HomeView: View {
     }
 
     private func heroLink(_ hero: AnniversaryPresentation) -> some View {
-        NavigationLink {
-            AnniversaryDetailView(
-                presentation: hero,
-                onEdit: { editingRecord = hero.record },
-                onSync: { await reconciliationCoordinator.reconcile() }
-            )
-        } label: {
+        NavigationLink(value: hero.id) {
             AnniversaryHeroCard(presentation: hero)
         }
         .buttonStyle(.plain)
@@ -186,13 +198,7 @@ struct HomeView: View {
                 Text(title)
                     .font(.headline)
                 ForEach(Array(items)) { presentation in
-                    NavigationLink {
-                        AnniversaryDetailView(
-                            presentation: presentation,
-                            onEdit: { editingRecord = presentation.record },
-                            onSync: { await reconciliationCoordinator.reconcile() }
-                        )
-                    } label: {
+                    NavigationLink(value: presentation.id) {
                         AnniversaryRow(presentation: presentation)
                             .padding(.vertical, 8)
                     }

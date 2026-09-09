@@ -52,6 +52,7 @@ bash scripts/coverage-check.sh
 if [[ "${TAISETSU_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
     TAISETSU_INCLUDE_UI_TESTS=1 bash scripts/ci-test.sh \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testCreatesAnAnniversaryFromTheEmptyState \
+        -only-testing:TaisetsuUITests/TaisetsuUITests/testDeletesAnAnniversaryFromEditorAfterConfirmation \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testCalendarSyncSettingsFollowSupportedLocales
