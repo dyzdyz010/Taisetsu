@@ -27,6 +27,7 @@ Taisetsu（重要日）是一款原生、克制而私密的重要日应用。它
 
 • 使用分类与自由标签建立自己的秩序
 • 搜索、筛选、置顶，快速找到此刻最重要的日期
+• 在编辑页底部删除不再需要的条目，删除前需确认
 • 小、中、大尺寸桌面小组件自动呈现临近的重要日
 
 【原生、安静，也尊重隐私】
@@ -67,6 +68,7 @@ Suggested review path:
 3. Open Calendar to inspect the monthly presentation.
 4. Open Settings to manage categories, tags, and optional Calendar synchronization.
 5. Add the Taisetsu widget from the system widget gallery to inspect small, medium, or large layouts.
+6. To delete an important day, open its details, tap Edit, and scroll to the bottom. Tap Delete Important Day, then confirm. Cancel keeps the entry; confirming returns to the refreshed Home screen. The delete button is only shown when editing an existing entry.
 
 Notification permission is requested only when reminder functionality needs it. Full Calendar access is requested only when the reviewer explicitly enables Calendar synchronization or exports an event. iCloud synchronization uses the reviewer's private CloudKit database. Taisetsu does not use a developer-operated backend.
 
