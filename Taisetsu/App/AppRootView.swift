@@ -59,14 +59,6 @@ struct AppRootView: View {
             #endif
             await dependencies.reconciliationCoordinator.reconcile()
         }
-        .sheet(
-            isPresented: Binding(
-                get: { dependencies.calendarPromptCoordinator.isPresented },
-                set: { dependencies.calendarPromptCoordinator.isPresented = $0 }
-            )
-        ) {
-            CalendarSyncPromptView(prompt: dependencies.calendarPromptCoordinator)
-        }
     }
 
     private var compactRoot: some View {
@@ -119,8 +111,7 @@ struct AppRootView: View {
         case .home:
             HomeView(
                 repository: dependencies.repository,
-                reconciliationCoordinator: dependencies.reconciliationCoordinator,
-                calendarPromptCoordinator: dependencies.calendarPromptCoordinator
+                reconciliationCoordinator: dependencies.reconciliationCoordinator
             )
         case .calendar:
             CalendarView(repository: dependencies.repository)

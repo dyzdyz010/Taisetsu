@@ -1976,35 +1976,7 @@
         }
       }
     },
-    "Keep Important Days in Calendar" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wichtige Tage im Kalender behalten"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Behold viktige dager i kalenderen"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在日历中保留重要日"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在行事曆中保留重要日"
-          }
-        }
-      }
-    },
+
     "Last Synced" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2440,35 +2412,7 @@
         }
       }
     },
-    "Never Remind Again" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nicht mehr erinnern"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ikke påminn igjen"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不再提醒"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不再提醒"
-          }
-        }
-      }
-    },
+
     "New Category" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3080,35 +3024,7 @@
         }
       }
     },
-    "Remind Me Later" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Später erinnern"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Påminn meg senere"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "稍后提醒"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "稍後提醒"
-          }
-        }
-      }
-    },
+
     "Reminders" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3778,35 +3694,7 @@
         }
       }
     },
-    "Taisetsu can automatically keep your important days in a dedicated Calendar. You can change the scope later in Settings." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu kann deine wichtigen Tage automatisch in einem eigenen Kalender verwalten. Den Umfang kannst du später in den Einstellungen ändern."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu kan automatisk samle viktige dager i en egen kalender. Du kan endre omfanget senere i Innstillinger."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu 可自动将重要日保存在专用日历中。你可以稍后在设置中修改范围。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taisetsu 可自動將重要日保存在專用行事曆中。你可以稍後在設定中修改範圍。"
-          }
-        }
-      }
-    },
+
     "The repeat interval must be greater than zero" : {
       "extractionState" : "manual",
       "localizations" : {

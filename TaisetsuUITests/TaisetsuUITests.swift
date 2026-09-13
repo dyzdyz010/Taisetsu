@@ -44,9 +44,8 @@ final class TaisetsuUITests: XCTestCase {
         app.buttons["save-anniversary"].tap()
         XCTAssertTrue(app.buttons["save-anniversary"].waitForNonExistence(timeout: 5))
         let later = app.buttons["Remind Me Later"]
-        XCTAssertTrue(later.waitForExistence(timeout: 5))
-        later.tap()
-        XCTAssertTrue(later.waitForNonExistence(timeout: 5))
+        XCTAssertFalse(later.waitForExistence(timeout: 3))
+        XCTAssertFalse(app.buttons["Enable Automatic Sync"].exists)
         let record = app.staticTexts["Delete me"].firstMatch
         XCTAssertTrue(record.waitForExistence(timeout: 5))
         record.tap()
@@ -67,6 +66,38 @@ final class TaisetsuUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No important days yet"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["Delete me"].exists)
         XCTAssertFalse(app.navigationBars["Edit Important Day"].exists)
+    }
+
+    @MainActor
+    func testCalendarPermissionIsRequestedOnlyFromSyncSettings() throws {
+        let app = makeApplication(language: "en")
+        app.resetAuthorizationStatus(for: .calendar)
+        app.launch()
+        let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        XCTAssertTrue(app.buttons["add-anniversary"].waitForExistence(timeout: 5))
+        XCTAssertFalse(system.alerts.firstMatch.exists)
+        app.tabBars.buttons["Settings"].tap()
+        app.buttons["calendar-sync-settings"].tap()
+        let enable = app.buttons["Enable Automatic Sync"]
+        XCTAssertTrue(enable.waitForExistence(timeout: 3))
+        XCTAssertFalse(system.alerts.firstMatch.exists)
+        enable.tap()
+        let permission = system.alerts.firstMatch
+        XCTAssertTrue(permission.waitForExistence(timeout: 5))
+        XCTAssertTrue(
+            permission.staticTexts.containing(
+                NSPredicate(format: "label MATCHES[c] %@", ".*(birthday|生日|Geburtstag|bursdag).*")
+            ).firstMatch
+                .exists)
+        let deny = permission.buttons.matching(
+            NSPredicate(format: "label CONTAINS[c] %@ OR label CONTAINS %@", "Don't Allow", "不允许")
+        ).firstMatch
+        XCTAssertTrue(deny.exists)
+        deny.tap()
+        XCTAssertTrue(permission.waitForNonExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Calendar access is not available"].waitForExistence(timeout: 5))
+        app.tabBars.buttons["Home"].tap()
+        XCTAssertTrue(app.buttons["add-anniversary"].waitForExistence(timeout: 3))
     }
 
     @MainActor

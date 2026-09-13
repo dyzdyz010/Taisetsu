@@ -55,5 +55,6 @@ if [[ "${TAISETSU_INCLUDE_UI_TESTS:-0}" == "1" ]]; then
         -only-testing:TaisetsuUITests/TaisetsuUITests/testDeletesAnAnniversaryFromEditorAfterConfirmation \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testEditorUsesDateWheelsAndStructuredRecurrenceControls \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testLaunchesWithEnglishLocalization \
+        -only-testing:TaisetsuUITests/TaisetsuUITests/testCalendarPermissionIsRequestedOnlyFromSyncSettings \
         -only-testing:TaisetsuUITests/TaisetsuUITests/testCalendarSyncSettingsFollowSupportedLocales
 fi

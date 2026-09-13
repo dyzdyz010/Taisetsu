@@ -55,7 +55,7 @@ targets:
         UILaunchScreen: {}
         UIBackgroundModes:
           - remote-notification
-        NSCalendarsFullAccessUsageDescription: Taisetsu automatically keeps your important days in a dedicated Calendar.
+        NSCalendarsFullAccessUsageDescription: Taisetsu reads your calendar list to choose a calendar and creates, finds, updates, and removes events it manages. For example, syncing a birthday adds its upcoming dates to the Taisetsu calendar and updates those events when you edit the birthday, avoiding duplicates. Calendar data is not sent to our servers.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft
@@ -112,6 +112,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dyz.Taisetsu.Widget
+        DEVELOPMENT_TEAM: 2FBFFBNMS3
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "1,2"
 

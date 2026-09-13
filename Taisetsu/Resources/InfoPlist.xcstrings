@@ -38,25 +38,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ermöglicht die automatische Synchronisierung wichtiger Tage mit einem eigenen Kalender."
+            "value" : "Taisetsu liest Ihre Kalenderliste zur Auswahl eines Kalenders und erstellt, sucht, aktualisiert und entfernt selbst verwaltete Termine. Beim Synchronisieren eines Geburtstags werden beispielsweise die kommenden Geburtstage zum Taisetsu-Kalender hinzugefügt. Änderungen aktualisieren bestehende Termine, um Duplikate zu vermeiden. Kalenderdaten werden nicht an unsere Server gesendet."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brukes til å synkronisere viktige dager automatisk med en egen kalender."
+            "value" : "Taisetsu leser kalenderlisten din for å velge en kalender og oppretter, finner, oppdaterer og fjerner hendelser som appen administrerer. Når du for eksempel synkroniserer en bursdag, legges kommende bursdager til i Taisetsu-kalenderen. Endringer oppdaterer eksisterende hendelser for å unngå duplikater. Kalenderdata sendes ikke til serverne våre."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于自动将重要日同步到专用系统日历。"
+            "value" : "Taisetsu 读取日历列表以选择同步目标，并创建、查找、更新和移除由本应用管理的日程。例如，同步生日时会将未来的生日日期添加到 Taisetsu 日历；修改生日后会更新已有日程，避免重复创建。日历数据不会发送到我们的服务器。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用於自動將重要日同步至專用系統行事曆。"
+            "value" : "Taisetsu 讀取行事曆列表以選擇同步目標，並建立、尋找、更新和移除由本 App 管理的行程。例如，同步生日時會將未來的生日日期加入 Taisetsu 行事曆；修改生日後會更新現有行程，避免重複建立。行事曆資料不會傳送至我們的伺服器。"
           }
         }
       }

@@ -72,6 +72,12 @@ Suggested review path:
 
 Notification permission is requested only when reminder functionality needs it. Full Calendar access is requested only when the reviewer explicitly enables Calendar synchronization or exports an event. iCloud synchronization uses the reviewer's private CloudKit database. Taisetsu does not use a developer-operated backend.
 
+## Guideline 5.1.1 修复说明
+
+The first-entry Calendar synchronization prompt has been removed. Creating or editing an important day no longer presents a Calendar permission pre-prompt. To use optional automatic synchronization, open Settings > Calendar Sync > Enable Automatic Sync; this requests permission directly through the system dialog. Declining Calendar access does not prevent local use of the app.
+
+The Calendar purpose string now explains how the app reads the calendar list and creates, finds, updates, and removes its managed events, with birthday synchronization as a concrete example. The description is provided in English, Simplified Chinese, Traditional Chinese, Norwegian Bokmål, and German.
+
 ## 发布方式
 
 审核通过后手动发布。

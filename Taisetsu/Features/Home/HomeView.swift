@@ -5,7 +5,6 @@ struct HomeView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let repository: AnniversaryRepository
     let reconciliationCoordinator: ReconciliationCoordinator
-    let calendarPromptCoordinator: CalendarSyncPromptCoordinator
     @State private var viewModel: HomeViewModel
     @State private var navigationPath: [UUID] = []
     @State private var showingNew = false
@@ -14,12 +13,10 @@ struct HomeView: View {
 
     init(
         repository: AnniversaryRepository,
-        reconciliationCoordinator: ReconciliationCoordinator,
-        calendarPromptCoordinator: CalendarSyncPromptCoordinator
+        reconciliationCoordinator: ReconciliationCoordinator
     ) {
         self.repository = repository
         self.reconciliationCoordinator = reconciliationCoordinator
-        self.calendarPromptCoordinator = calendarPromptCoordinator
         _viewModel = State(initialValue: HomeViewModel(repository: repository))
         #if DEBUG
             let screenshotSection = AppStoreScreenshotData.initialSection(in: CommandLine.arguments)
@@ -87,10 +84,9 @@ struct HomeView: View {
             }
             .onAppear(perform: viewModel.load)
             .sheet(isPresented: $showingNew) {
-                AnniversaryEditorView(repository: repository) { record, isNew in
+                AnniversaryEditorView(repository: repository) { _, _ in
                     viewModel.load()
                     Task { await reconciliationCoordinator.reconcile() }
-                    calendarPromptCoordinator.consider(afterSaving: record, isNew: isNew)
                 }
             }
             .sheet(item: $editingRecord) { record in
@@ -102,10 +98,9 @@ struct HomeView: View {
                         viewModel.load()
                         Task { await reconciliationCoordinator.reconcile() }
                     }
-                ) { savedRecord, isNew in
+                ) { _, _ in
                     viewModel.load()
                     Task { await reconciliationCoordinator.reconcile() }
-                    calendarPromptCoordinator.consider(afterSaving: savedRecord, isNew: isNew)
                 }
             }
             .sheet(isPresented: $showingFilters) {

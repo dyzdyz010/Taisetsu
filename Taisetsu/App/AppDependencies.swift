@@ -6,7 +6,6 @@ import SwiftData
 final class AppDependencies {
     let repository: AnniversaryRepository
     let calendarSyncRepository: CalendarSyncRepository
-    let calendarPromptCoordinator: CalendarSyncPromptCoordinator
     let reconciliationCoordinator: ReconciliationCoordinator
 
     init(container: ModelContainer) throws {
@@ -22,10 +21,6 @@ final class AppDependencies {
             calendarSyncRepository: calendarSyncRepository,
             watchDispatcher: WatchConnectivityTransport.makeIfSupported()
                 .map(WatchSnapshotDispatcher.init)
-        )
-        calendarPromptCoordinator = CalendarSyncPromptCoordinator(
-            repository: repository,
-            reconciliationCoordinator: reconciliationCoordinator
         )
     }
 }

@@ -95,7 +95,6 @@
 		AAE5B17481DD05292FD3EA3D /* TaisetsuCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 519ED232110A050B623F9CED /* TaisetsuCore.framework */; };
 		AAF0F784825436A9763BAF60 /* TaisetsuWatchWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD8D4715052BF66B15894B5 /* TaisetsuWatchWidgetEntry.swift */; };
 		ABC06A3C8DEFA15B25EFD93C /* CalendarSyncScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F542073368BA1E7D08E2506A /* CalendarSyncScopeTests.swift */; };
-		ABEC3693C69A8BF50A628B1C /* CalendarSyncPromptCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638083456DD3B6B92FE4058 /* CalendarSyncPromptCoordinator.swift */; };
 		AFF33552FA4F4EC97A846CB0 /* AnniversaryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F47F8A765BAD180833F9EC /* AnniversaryRecord.swift */; };
 		B097B20758DF608C8CF1A700 /* AnniversaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E95C4FA01263842F30510C8 /* AnniversaryDetailView.swift */; };
 		B26C64750817AE9D824A5949 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D9A2917CB9B9AFE6E08EAC /* SettingsView.swift */; };
@@ -324,7 +323,7 @@
 		3D9E9B95A9EA28D9FBB01A3C /* DefaultCategorySeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeeder.swift; sourceTree = "<group>"; };
 		3FF24E4BA29B764D09D6ACEE /* CalendarMonthSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthSnapshot.swift; sourceTree = "<group>"; };
 		402FBBAB24EEB8917B5798E1 /* AnniversaryFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryFilterTests.swift; sourceTree = "<group>"; };
-		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		41AE6EF312DD4D4D4C9F2BA5 /* TaisetsuWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = TaisetsuWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B71D46102C05C5071B0368 /* TaisetsuWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuWatchApp.swift; sourceTree = "<group>"; };
 		456877AE91E39DE21B1979A9 /* TaisetsuUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4613283D91A13A63427B671D /* WatchComplicationFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchComplicationFamily.swift; sourceTree = "<group>"; };
@@ -347,13 +346,12 @@
 		643D6499EF4FE4A44A9E9A17 /* CalendarExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExportService.swift; sourceTree = "<group>"; };
 		644228CA1E8FA4F2712C0E00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		646338D03992861510DD0127 /* TaisetsuWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaisetsuWidgetEntry.swift; sourceTree = "<group>"; };
-		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		670E5922A8BC1A97C29C61B4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		67D9A2917CB9B9AFE6E08EAC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6C1DA5EA009F42B936AC114B /* TagManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManagerView.swift; sourceTree = "<group>"; };
 		6CEC129B6B2B2757CAAB6910 /* WatchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
 		6FBEB42C3EF0A9CCE4E89319 /* DefaultCategorySeederTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategorySeederTests.swift; sourceTree = "<group>"; };
 		70F6DC5C64DF57C25D6388B7 /* TaisetsuUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TaisetsuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7638083456DD3B6B92FE4058 /* CalendarSyncPromptCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSyncPromptCoordinator.swift; sourceTree = "<group>"; };
 		76F8ED5F5EB3D6A69D62FCEE /* AnniversaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnniversaryRepository.swift; sourceTree = "<group>"; };
 		79B7F2B07F421792B2F135D0 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		7B211BE8D46B05C090177411 /* DayPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPresentation.swift; sourceTree = "<group>"; };
@@ -566,7 +564,6 @@
 		3259049B16E105DE9F7B61D9 /* Coordination */ = {
 			isa = PBXGroup;
 			children = (
-				7638083456DD3B6B92FE4058 /* CalendarSyncPromptCoordinator.swift */,
 				C6802C05292DA1BC8665F8DF /* ReconciliationCoordinator.swift */,
 				EC37EDF3FBC0B6C756B291C5 /* ReconciliationPlan.swift */,
 			);
@@ -1040,6 +1037,9 @@
 					32567D8752B6AC431B64F6F5 = {
 						DevelopmentTeam = 2FBFFBNMS3;
 					};
+					697D2246A7E841D859E844F4 = {
+						DevelopmentTeam = 2FBFFBNMS3;
+					};
 					B6A2AD286416A9F18371011B = {
 						TestTargetID = 32567D8752B6AC431B64F6F5;
 					};
@@ -1187,7 +1187,6 @@
 				36A49DC666FF21C846E1AD3A /* CalendarExportService.swift in Sources */,
 				4E9D8D5FEDD70FC7A22D95F8 /* CalendarSyncModel.swift in Sources */,
 				5236DD256F43AED68F065CC9 /* CalendarSyncPlan.swift in Sources */,
-				ABEC3693C69A8BF50A628B1C /* CalendarSyncPromptCoordinator.swift in Sources */,
 				8559266BD2C304AA74B8FB2D /* CalendarSyncRepository.swift in Sources */,
 				99C6FE85767732F0603B3E55 /* CalendarView.swift in Sources */,
 				F12EADA713EE9E715DD71DC1 /* CalendarViewModel.swift in Sources */,
