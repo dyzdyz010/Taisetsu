@@ -32,7 +32,7 @@ jobs:
         run: bash scripts/naming-check.sh
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        uses: github/codeql-action/init@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
         with:
           languages: swift
           build-mode: manual
@@ -48,6 +48,6 @@ jobs:
           ONLY_ACTIVE_ARCH=YES
 
       - name: Analyze
-        uses: github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        uses: github/codeql-action/analyze@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
         with:
           category: /language:swift
